@@ -104,6 +104,11 @@ public class Bomb : TileContent
         {
             exp.explode();
         }
+        StartCoroutine(waitForExplosionFlash());
+    }
+    private IEnumerator waitForExplosionFlash()
+    {
+        yield return new WaitForSeconds(0.2f);
         Destroy(gameObject);
     }
 }

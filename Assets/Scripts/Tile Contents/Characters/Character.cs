@@ -7,7 +7,8 @@ public abstract class Character : TileContent
     protected int hp, maxHp;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    public event EventHandler onHpChange, onDeath;
+    public event EventHandler<DamageArgs> onHpChange;
+    public event EventHandler onDeath;
 
     protected override void Start()
     {
@@ -28,11 +29,11 @@ public abstract class Character : TileContent
     public void takeDamage(int damage)
     {
         hp -= damage;
+        onHpChange?.Invoke(this, new DamageArgs(damage));
         if (hp <= 0)
         {
             die();
         }
-        onHpChange?.Invoke(this, EventArgs.Empty);
     }
     private IEnumerator hurtAnimation()
     {

@@ -11,6 +11,9 @@ public class Dungeon : MonoBehaviour
     [SerializeField] private List<Enemy> enemies;
     [SerializeField] private List<Destructable> destructables;
 
+    [SerializeField] private GameObject hitSplatsParent;
+    [SerializeField] private HitSplat hitSplat;
+
     private TileContent[,] layout;
     private int dungeonWidth = 22, dungeonHeight = 7;
     private int floor = 1;
@@ -20,6 +23,21 @@ public class Dungeon : MonoBehaviour
     private Player playerInstance;
 
     public event EventHandler playerSpawned;
+
+    private void Update()
+    {
+        // Reset the run
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            DataStorage.instance.floor = 0;
+            nextFloor();
+        }
+        // Skip floor
+        if (Input.GetKeyUp(KeyCode.T))
+        {
+            nextFloor();
+        }
+    }
 
     private void Awake()
     {
@@ -102,6 +120,16 @@ public class Dungeon : MonoBehaviour
         return tile;
     }
 
+    private TileContent instantiate(Character content, int x, int y, bool setParent = true)
+    {
+        var character = Instantiate(content, new Vector2(x, y), Quaternion.identity);
+        if (setParent)
+        {
+            character.transform.SetParent(transform);
+        }
+        character.onHpChange += instantiateHitsplat;
+        return character;
+    }
 
     private void Start()
     {
@@ -158,4 +186,13 @@ public class Dungeon : MonoBehaviour
     {
         return currentFloorColor;
     }
+
+    private void instantiateHitsplat(object sender, DamageArgs e)
+    {
+        var hitSplatInstance = Instantiate(hitSplat, ((Character)sender).transform.position, Quaternion.identity);
+        hitSplatInstance.transform.SetParent(hitSplatsParent.transform, false);
+        hitSplatInstance.transform.position = ((Character)sender).transform.position;
+        hitSplatInstance.setUp(e.damage);
+    }
+
 }

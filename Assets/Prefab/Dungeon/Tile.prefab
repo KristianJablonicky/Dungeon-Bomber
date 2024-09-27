@@ -102,7 +102,7 @@ MonoBehaviour:
   commonSprites:
   - {fileID: 21300000, guid: d6bf22e85f313db438dc77b4b4884025, type: 3}
   - {fileID: 21300000, guid: bfdcdb622a1e11249af7609c8aae650b, type: 3}
-  - {fileID: 21300000, guid: bfdcdb622a1e11249af7609c8aae650b, type: 3}
+  - {fileID: 21300000, guid: 879085af4e2c5b54683544fdc1581466, type: 3}
   rareSprites:
   - {fileID: 21300000, guid: 5930b8736c099b24a947505bf6a0031c, type: 3}
   - {fileID: 21300000, guid: 5097845557538c946a05fada504398b9, type: 3}

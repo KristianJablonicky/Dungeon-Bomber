@@ -23,7 +23,7 @@ public class HealthBar : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void onHpChange(object sender, System.EventArgs e)
+    private void onHpChange(object sender, DamageArgs e)
     {
         int maxHp = Mathf.Max(character.getMaxHp(), character.getHp());
         StopAllCoroutines();

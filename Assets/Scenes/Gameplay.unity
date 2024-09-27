@@ -200,7 +200,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 1852844709
   m_SortingOrder: 0
@@ -315,6 +315,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55639203}
   m_CullTransparentMesh: 1
+--- !u!1 &124902183
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 124902184}
+  m_Layer: 0
+  m_Name: HitSplats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &124902184
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124902183}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,6 +792,8 @@ MonoBehaviour:
   - {fileID: 5243043151725588716, guid: e39991771fac0a5468bd598a6c69e74c, type: 3}
   destructables:
   - {fileID: 4166426643672765145, guid: aed49b4747af6a043b7963530594a2db, type: 3}
+  hitSplatsParent: {fileID: 124902183}
+  hitSplat: {fileID: 3166518517657612850, guid: d63caf3863b5cf94096053624a3df089, type: 3}
 --- !u!4 &1511086839
 Transform:
   m_ObjectHideFlags: 0
@@ -842,5 +875,6 @@ SceneRoots:
   - {fileID: 887309763}
   - {fileID: 1511086839}
   - {fileID: 519420032}
+  - {fileID: 124902184}
   - {fileID: 43006723}
   - {fileID: 684395265}
