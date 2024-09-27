@@ -27,8 +27,11 @@ public class mapGenerator : MonoBehaviour
     int width;
     int height;
 
-    public void startTileGeneration(int repetitions)
+    public void startTileGeneration(int repetitions, int widthInput, int heightInput)
     {
+        height = heightInput;
+        width = widthInput;
+
         clearMap(false);
         if (terrainMap == null)
         {
