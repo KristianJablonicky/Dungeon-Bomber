@@ -27,12 +27,12 @@ public class Player : Character
 
     private IEnumerator fallDown()
     {
-        float duration = metronome.getBeatLength(), timeElapsed = 0;
+        float duration = metronome.getBeatLength() * 0.5f, timeElapsed = 0;
         Vector3 start = transform.position + new Vector3(0, 1), end = transform.position;
         while (timeElapsed < duration)
         {
             timeElapsed += Time.deltaTime;
-            transform.position = Vector3.Lerp(start, end, timeElapsed / duration);
+            transform.position = start - new Vector3(0, Mathf.Sqrt(timeElapsed / duration));
             
             yield return null;
         }

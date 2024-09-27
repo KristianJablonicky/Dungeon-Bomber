@@ -6,7 +6,7 @@ public class Bat : Enemy
     {
         if (character is Player)
         {
-            character.takeDamge(1);
+            character.takeDamage(1);
         }
     }
 

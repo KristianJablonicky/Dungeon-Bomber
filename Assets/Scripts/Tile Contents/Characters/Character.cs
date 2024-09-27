@@ -25,7 +25,7 @@ public abstract class Character : TileContent
         return hp;
     }
 
-    public void takeDamge(int damage)
+    public void takeDamage(int damage)
     {
         hp -= damage;
         if (hp <= 0)
@@ -123,7 +123,11 @@ public abstract class Character : TileContent
                 
                     if (targetTile is Character)
                     {
-                        collideWithCharacter((Character)targetTile);
+                        // Collide with the player (Enemy on emeny violence is not tolerated)
+                        if (!(this is Enemy) && (targetTile is Enemy))
+                        {
+                            collideWithCharacter((Character)targetTile);
+                        }
                     }
                     return targetTile;
                 }

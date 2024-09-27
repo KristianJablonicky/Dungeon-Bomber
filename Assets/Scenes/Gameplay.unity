@@ -402,7 +402,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 1, z: -0.5}
+  m_LocalPosition: {x: 1, y: 2, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -758,6 +758,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 8255889257437749859, guid: d1d9059070571e64eaccd84fcd871987, type: 3}
   - {fileID: 6382048857108337051, guid: 91a73ab63a9b9a6448469261738d5048, type: 3}
+  - {fileID: 5243043151725588716, guid: e39991771fac0a5468bd598a6c69e74c, type: 3}
   destructables:
   - {fileID: 4166426643672765145, guid: aed49b4747af6a043b7963530594a2db, type: 3}
 --- !u!4 &1511086839

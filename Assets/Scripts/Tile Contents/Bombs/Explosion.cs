@@ -27,7 +27,7 @@ public class Explosion : TileContent
         if ((target == CharacterType.Player && hitObject is Player)
             || (target == CharacterType.NPC && (hitObject is Enemy)))
         {
-            ((Character)hitObject).takeDamge(damage);
+            ((Character)hitObject).takeDamage(damage);
         }
         else if (hitObject is Destructable)
         {
