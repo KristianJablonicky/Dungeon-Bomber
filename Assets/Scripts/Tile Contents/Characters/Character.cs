@@ -124,7 +124,7 @@ public abstract class Character : TileContent
                     if (targetTile is Character)
                     {
                         // Collide with the player (Enemy on emeny violence is not tolerated)
-                        if (!(this is Enemy) && (targetTile is Enemy))
+                        if (!(this is Enemy && targetTile is Enemy))
                         {
                             collideWithCharacter((Character)targetTile);
                         }

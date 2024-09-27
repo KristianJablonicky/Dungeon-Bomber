@@ -10,8 +10,8 @@ public class QuarterNote : MonoBehaviour
     private void Start()
     {
         metronome = Metronome.instance;
-        metronome.userInputStart += turnRed;
-        metronome.userInputEnd += turnNormal;
+        //metronome.userInputStart += turnRed;
+        //metronome.userInputEnd += turnNormal;
     }
 
     private void turnRed(object sender, System.EventArgs e)
