@@ -11,11 +11,14 @@ public class Dungeon : MonoBehaviour
     [SerializeField] private List<Enemy> enemies;
     [SerializeField] private List<Destructable> destructables;
 
+    [SerializeField] private mapGenerator mapGenerator;
+
+
     [SerializeField] private GameObject hitSplatsParent;
     [SerializeField] private HitSplat hitSplat;
 
     private TileContent[,] layout;
-    private int dungeonWidth = 22, dungeonHeight = 7;
+    private int dungeonWidth = 27, dungeonHeight = 12;
     private int floor = 1;
     private Color currentFloorColor;
 
@@ -74,6 +77,10 @@ public class Dungeon : MonoBehaviour
     private void generateDungeon()
     {
         layout = new TileContent[dungeonWidth, dungeonHeight];
+        mapGenerator.startTileGeneration(3, dungeonWidth, dungeonHeight);
+        var obstacles = mapGenerator.getTerrainMap();
+
+
         for (int x = 0; x < dungeonWidth; x++)
         {
             for(int y = 0; y < dungeonHeight; y++)
@@ -92,6 +99,10 @@ public class Dungeon : MonoBehaviour
                 {
                     instantiate(tile, x, y);
                     layout[x, y] = instantiate(ladder, x, y);
+                }
+                else if (obstacles[x, y] == 1)
+                {
+                    layout[x, y] = instantiate(wall, x, y);
                 }
                 else
                 {

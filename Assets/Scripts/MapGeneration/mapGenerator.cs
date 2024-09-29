@@ -32,7 +32,7 @@ public class mapGenerator : MonoBehaviour
         height = heightInput;
         width = widthInput;
 
-        clearMap(false);
+        //clearMap(false);
         if (terrainMap == null)
         {
             terrainMap = new int[width, height];
@@ -59,6 +59,11 @@ public class mapGenerator : MonoBehaviour
         //        }
         //    }
         //}
+    }
+
+    public int[,] getTerrainMap()
+    {
+        return terrainMap;
     }
 
     public void clearMap(bool complete)
@@ -133,10 +138,5 @@ public class mapGenerator : MonoBehaviour
 
 
         return newMap;
-    }
-
-    void Update()
-    {
-        
     }
 }

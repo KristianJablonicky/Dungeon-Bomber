@@ -10,6 +10,7 @@ public class MusicPlayer : MonoBehaviour
     private int currentBeat = 0;
     private void Start()
     {
+        return;
         metronome = Metronome.instance;
         metronome.countInBeat += onBeat;
         metronome.onBeat += onBeat;

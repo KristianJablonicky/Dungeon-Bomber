@@ -763,6 +763,7 @@ GameObject:
   - component: {fileID: 1511086839}
   - component: {fileID: 1511086840}
   - component: {fileID: 1511086838}
+  - component: {fileID: 1511086841}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -792,6 +793,7 @@ MonoBehaviour:
   - {fileID: 5243043151725588716, guid: e39991771fac0a5468bd598a6c69e74c, type: 3}
   destructables:
   - {fileID: 4166426643672765145, guid: aed49b4747af6a043b7963530594a2db, type: 3}
+  mapGenerator: {fileID: 1511086841}
   hitSplatsParent: {fileID: 124902183}
   hitSplat: {fileID: 3166518517657612850, guid: d63caf3863b5cf94096053624a3df089, type: 3}
 --- !u!4 &1511086839
@@ -822,6 +824,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bpm: 60
+--- !u!114 &1511086841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511086837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d05b2f93bf9d22f40b6e385dad9ca653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialChance: 39
+  birthLimit: 4
+  deathLimit: 3
+  numberOfRepetitions: 8
+  tmapSize: {x: 0, y: 0, z: 0}
+  topMap: {fileID: 0}
+  bottomMap: {fileID: 0}
+  topTile: {fileID: 0}
 --- !u!1 &1604961384
 GameObject:
   m_ObjectHideFlags: 0
