@@ -11,7 +11,7 @@ public class Dungeon : MonoBehaviour
     [SerializeField] private List<Enemy> enemies;
     [SerializeField] private List<Destructable> destructables;
 
-    [SerializeField] private mapGenerator mapGenerator;
+    [SerializeField] private MapGenerator mapGenerator;
 
 
     [SerializeField] private GameObject hitSplatsParent;

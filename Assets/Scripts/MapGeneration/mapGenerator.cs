@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEditor;
 
-public class mapGenerator : MonoBehaviour
+public class MapGenerator : MonoBehaviour
 {
     /*
      * Inspiration:
@@ -21,8 +21,9 @@ public class mapGenerator : MonoBehaviour
     public Tile topTile;
     //public Tile bottomTile; // we may not have this
 
-    private int count = 0;
+
     private int[,] terrainMap; // 0 - not filled, 1 - filled
+    private int[,] pathToLadder;
 
     int width;
     int height;
@@ -36,6 +37,7 @@ public class mapGenerator : MonoBehaviour
         if (terrainMap == null)
         {
             terrainMap = new int[width, height];
+            pathToLadder = new int[width, height];
             initPositions(); // random initialization
         }
 
@@ -44,6 +46,9 @@ public class mapGenerator : MonoBehaviour
         {
             terrainMap = generateTilePositions(terrainMap);
         }
+        generateNewPath();
+
+        mergeMaps();
 
         /*
          * Either set the tiles here or return terrainMap itself.
@@ -86,6 +91,7 @@ public class mapGenerator : MonoBehaviour
             for (int h = 0; h < height; h++)
             {
                 terrainMap[w, h] = Random.Range(1, 101) < initialChance ? 1 : 0; // initiate random terrain map
+                pathToLadder[w, h] = 1;
             }
         }
     }
@@ -135,8 +141,88 @@ public class mapGenerator : MonoBehaviour
                 }
             }
         }
-
-
         return newMap;
+    }
+
+    private void generateNewPath()
+    {
+        int chance = 4; // two out of x chance to have the path take a turn
+        int lastSection = 4; // last xth of the dungeon (so the player starting area) with rigged path generation
+        int currentY = height / 2; // ladder y
+        pathToLadder[width - 2, currentY + 1] = 0;
+        pathToLadder[width - 2, currentY - 1] = 0;
+
+        pathToLadder[width - 3, currentY + 1] = 0;
+        pathToLadder[width - 3, currentY] = 0;
+        pathToLadder[width - 3, currentY - 1] = 0;
+
+        int moveVertically = 0; // 1 == UP; -1 == DOWN; 0 == move horizontally in next loop
+
+        for (int x = width - 3; x > 0; x--)
+        {
+            pathToLadder[x, currentY] = 0;
+            do
+            {
+                // go down
+                if (currentY > 1 && Random.Range(0, chance) == 0)
+                {
+                    currentY--;
+                    pathToLadder[x, currentY] = 0;
+                    moveVertically = -1;
+                }
+                // go up
+                else if (currentY < height -2 && Random.Range(0, chance) == 0)
+                {
+                    currentY++;
+                    pathToLadder[x, currentY] = 0;
+                    moveVertically = 1;
+                }
+                // keep going straight
+                else
+                {
+                    pathToLadder[x, currentY] = 0;
+                    moveVertically = 0;
+                }
+            } while (moveVertically != 0);
+
+
+            // connect the player area start with the ending of the path
+            if (x <= width / lastSection && currentY < height / 2)
+            {
+                for (int y = currentY; y > 0; y--)
+                {
+                    pathToLadder[x, y] = 0;
+                }
+                for (int remainingX = x; x > 0; x--)
+                {
+                    pathToLadder[x, 1] = 0;
+                }
+                break;
+            }
+            else if (x <= width / lastSection && currentY >= height / 2)
+            {
+                for (int remainingX = x; x > 0; x--)
+                {
+                    pathToLadder[x, currentY] = 0;
+                }
+                for (int y = currentY; y > 0; y--)
+                {
+                    pathToLadder[1, y] = 0;
+                }
+                break;
+            }
+        }
+    }
+
+
+    private void mergeMaps()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                terrainMap[x, y] *= pathToLadder[x, y];
+            }
+        }
     }
 }
