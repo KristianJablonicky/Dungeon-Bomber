@@ -10,7 +10,7 @@ public class FlashingLight : MonoBehaviour
     void Start()
     {
         var metronome = Metronome.instance;
-        metronome.userInputStart += onWindowStart;
+        metronome.onPlayerInputStart += onWindowStart;
         metronome.userInputEnd += onWindowEnd;
     }
 

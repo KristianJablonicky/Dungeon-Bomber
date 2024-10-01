@@ -7,6 +7,7 @@ public class QuarterNote : MonoBehaviour
 {
     [SerializeField] private Image image;
     private Metronome metronome;
+    
     private void Start()
     {
         metronome = Metronome.instance;

@@ -5,9 +5,14 @@ public class Player : Character
 {
 
     [SerializeField] private Bomb bomb;
-    private int horizontalLength = 2, verticalLength = 2, diagonalLength = 0, areaSize = 1;
+    private int horizontalLength = 2, verticalLength = 2, diagonalLength = 2, areaSize = 1;
     private int ticksUntilExplosion = 2, damage = 1;
-    int bombCoolDown = 3, currentCoolDown = 0;
+    private int bombCoolDown = 3, currentCoolDown = 0;
+
+    public bool movementEnabled = false, placedBombAlready = false;
+
+    private bombTypes currentBombType = bombTypes.square;
+
     public override int getMaxHp()
     {
         return 3;
@@ -15,14 +20,23 @@ public class Player : Character
     protected override void Start()
     {
         base.Start();
-        enabled = false;
         /*
         metronome.userInputStart += enableInput;
         metronome.userInputEnd += disableInput;
         */
         StartCoroutine(fallDown());
-        metronome.userInputStart += enableInput;
-        metronome.onBombUpdate += disableInput;
+        metronome.onPlayerInputStart += enableInput;
+        //metronome.onBombUpdate += disableInput;
+
+        metronome.onBeat += placeBomb;
+    }
+
+    private void placeBomb(object sender, System.EventArgs e)
+    {
+        if (currentCoolDown < 0 && !placedBombAlready)
+        {
+            spawnBomb();
+        }
     }
 
     private IEnumerator fallDown()
@@ -41,49 +55,67 @@ public class Player : Character
 
     public override void die()
     {
-        metronome.userInputStart -= enableInput;
-        metronome.onBombUpdate -= disableInput;
+        metronome.onPlayerInputStart -= enableInput;
+        //metronome.onBombUpdate -= disableInput;
         base.die();
     }
 
     private void enableInput(object sender, System.EventArgs e)
     {
-        enabled = true;
-        if (currentCoolDown > 0)
-        {
-            currentCoolDown--;
-        }
+        currentCoolDown--;
+
+        placedBombAlready = false;
+        movementEnabled = true;
     }
     private void disableInput(object sender, System.EventArgs e)
     {
-        enabled = false;
+        movementEnabled = false;
     }
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Alpha1))
         {
-            jump(Movement.Right);
+            currentBombType = bombTypes.square;
         }
-        else if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
+        else if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Alpha2))
         {
-            jump(Movement.Up);
+            currentBombType = bombTypes.plus;
         }
-        else if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Alpha3))
         {
-            jump(Movement.Down);
+            currentBombType = bombTypes.x;
         }
-        else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow))
+
+
+        if (movementEnabled)
         {
-            jump(Movement.Left);
-        }
-        else if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Keypad0))
-        {
-            if (currentCoolDown == 0)
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
-                spawnBomb();
-                currentCoolDown = bombCoolDown;
+                jump(Movement.Right);
             }
+            else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                jump(Movement.Up);
+            }
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                jump(Movement.Down);
+            }
+            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                jump(Movement.Left);
+            }
+            /*
+            else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Keypad0))
+            {
+                if (currentCoolDown == 0)
+                {
+                    spawnBomb();
+                    currentCoolDown = bombCoolDown;
+                }
+            }
+            */
         }
     }
     private Movement delayedMovementDirection;
@@ -91,10 +123,13 @@ public class Player : Character
     {
         if (metronome.isInPlayerWindowInputStart())
         {
+            metronome.prematureBeat();
+            /*
             metronome.onBeatLowerPriority += delayMove;
             delayedMovementDirection = movement;
             disableInput(this, System.EventArgs.Empty);
             return;
+            */
         }
         int sourceX = x, sourceY = y;
         var collider = move(movement);
@@ -102,6 +137,13 @@ public class Player : Character
         {
             ((Ladder)collider).onPlayerContact();
         }
+
+        if (currentCoolDown < 0)
+        {
+            spawnBomb();
+            placedBombAlready = true;
+        }
+
         disableInput(this, System.EventArgs.Empty);
     }
 
@@ -122,9 +164,14 @@ public class Player : Character
 
     private void spawnBomb()
     {
-        var newBomb = Instantiate(bomb, transform.position, Quaternion.identity);
-        newBomb.setUp(ticksUntilExplosion, damage, horizontalLength, verticalLength, diagonalLength, areaSize);
-        disableInput(this, System.EventArgs.Empty);
+        currentCoolDown = bombCoolDown;
+        var newBomb = Instantiate(bomb, new Vector3(x, y), Quaternion.identity);
+        int[] shape = { 0, 0, 0 };
+        shape[(int)currentBombType] = 1;
+        newBomb.setUp(ticksUntilExplosion, damage, shape[1] * horizontalLength, shape[1] * verticalLength,
+            shape[2] * diagonalLength, shape[0] * areaSize);
+
+        //newBomb.setUp(ticksUntilExplosion, damage, horizontalLength, verticalLength, diagonalLength, areaSize);
     }
 
     public override void collideWithCharacter(Character character)
@@ -134,4 +181,13 @@ public class Player : Character
             ((Enemy)character).collideWithCharacter(this);
         }
     }
+
+
+    private enum bombTypes
+    {
+        square,
+        plus,
+        x
+    }
+
 }

@@ -7,12 +7,12 @@ public abstract class Enemy : Character
     protected override void Start()
     {
         base.Start();
-        metronome.onBeat += onTick;
+        metronome.onBeatEnemy += onTick;
     }
 
     public override void die()
     {
-        metronome.onBeat -= onTick;
+        metronome.onBeatEnemy -= onTick;
         base.die();
     }
 

@@ -10,7 +10,6 @@ public class MusicPlayer : MonoBehaviour
     private int currentBeat = 0;
     private void Start()
     {
-        return;
         metronome = Metronome.instance;
         metronome.countInBeat += onBeat;
         metronome.onBeat += onBeat;
@@ -20,13 +19,12 @@ public class MusicPlayer : MonoBehaviour
     {
         if (currentBeat == 0)
         {
-            audioSource.clip = metronomeAccented;
+            audioSource.PlayOneShot(metronomeAccented);
         }
         else
         {
-            audioSource.clip = metronomeUnaccented;
+            audioSource.PlayOneShot(metronomeUnaccented);
         }
-        audioSource.Play();
         currentBeat++;
         currentBeat %= 4;
     }
