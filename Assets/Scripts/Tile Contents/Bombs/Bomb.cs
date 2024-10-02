@@ -13,7 +13,6 @@ public class Bomb : TileContent
         this.beatsUntilImpact = beatsUntilImpact;
         currentBeatsUntilImpact = beatsUntilImpact;
         this.damage = damage;
-
         explosionList = new List<Explosion>();
         
         // an explosion at offset <0; 0> is created in addAreaExplosions, even at area == 0
@@ -23,6 +22,8 @@ public class Bomb : TileContent
         addHorizontalExplosions(horizontalLength, areaSize);
         addVerticalExplosions(verticalLength, areaSize);
         addDiagonalExplosions(diagonalLength, areaSize);
+        
+        updateAlphas();
     }
 
     private void addExplosion(int beatsUntilImpact, int damage, int xOffset, int yOffset)

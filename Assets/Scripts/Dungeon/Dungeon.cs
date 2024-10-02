@@ -36,10 +36,15 @@ public class Dungeon : MonoBehaviour
             nextFloor();
         }
         // Skip floor
-        if (Input.GetKeyUp(KeyCode.T))
+        else if (Input.GetKeyUp(KeyCode.T))
         {
             nextFloor();
         }
+        else if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
     }
 
     private void Awake()
