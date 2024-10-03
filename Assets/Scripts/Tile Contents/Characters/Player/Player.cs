@@ -5,7 +5,7 @@ public class Player : Character
 {
 
     [SerializeField] private Bomb bomb;
-    private int horizontalLength = 2, verticalLength = 2, diagonalLength = 2, areaSize = 1;
+    private BombAttributes bombSquare, bombPlus, bombX;
     private int ticksUntilExplosion = 2, damage = 1;
     private int bombCoolDown = 3, currentCoolDown = 0;
 
@@ -20,15 +20,25 @@ public class Player : Character
     protected override void Start()
     {
         base.Start();
-        /*
-        metronome.userInputStart += enableInput;
-        metronome.userInputEnd += disableInput;
-        */
         StartCoroutine(fallDown());
         metronome.onPlayerInputStart += enableInput;
-        //metronome.onBombUpdate += disableInput;
 
         metronome.onBeat += placeBomb;
+
+        setUpAttributes();
+    }
+
+    private void setUpAttributes()
+    {
+        bombSquare = new();
+        bombSquare.areaSize = 1;
+
+        bombPlus = new();
+        bombPlus.horizontalLength = 2;
+        bombPlus.verticalLength = 2;
+
+        bombX = new();
+        bombX.diagonalLength = 2;
     }
 
     private void placeBomb(object sender, System.EventArgs e)
@@ -56,7 +66,7 @@ public class Player : Character
     public override void die()
     {
         metronome.onPlayerInputStart -= enableInput;
-        //metronome.onBombUpdate -= disableInput;
+        metronome.onBeat -= placeBomb;
         base.die();
     }
 
@@ -168,9 +178,27 @@ public class Player : Character
         var newBomb = Instantiate(bomb, new Vector3(x, y), Quaternion.identity);
         int[] shape = { 0, 0, 0 };
         shape[(int)currentBombType] = 1;
+        /*
         newBomb.setUp(ticksUntilExplosion, damage, shape[1] * horizontalLength, shape[1] * verticalLength,
             shape[2] * diagonalLength, shape[0] * areaSize);
+        */
+        BombAttributes attributes = bombSquare;
+        if (currentBombType == bombTypes.square)
+        {
+            attributes = bombSquare;
+        }
+        else if (currentBombType == bombTypes.plus)
+        {
+            attributes = bombPlus;
+        }
+        else if (currentBombType == bombTypes.x)
+        {
+            attributes = bombX;
+        }
 
+        newBomb.setUp(attributes.ticksUntilExplosion, attributes.damage,
+            attributes.horizontalLength, attributes.verticalLength, attributes.diagonalLength,
+            attributes.areaSize);
         //newBomb.setUp(ticksUntilExplosion, damage, horizontalLength, verticalLength, diagonalLength, areaSize);
     }
 
