@@ -15,6 +15,11 @@ public class NewBehaviourScript : Enemy
         return 1;
     }
 
+    protected override int getPlayerDetectionRadius()
+    {
+        return 0;
+    }
+
     protected override void onTick()
     {
         move((Movement)direction, 2);

@@ -1,3 +1,5 @@
+using System;
+
 public class Bat : Enemy
 {
     private bool moveUp = true;
@@ -15,9 +17,19 @@ public class Bat : Enemy
         return 2;
     }
 
+    protected override int getPlayerDetectionRadius()
+    {
+        return 3;
+    }
+
     protected override void onTick()
     {
-        if (moveUp)
+        Movement? playerDirection = detectPlayer();
+        if (playerDirection != null)
+        {
+            move(playerDirection.Value);
+        }
+        else if (moveUp)
         {
             move(Movement.Up);
             moveUp = false;

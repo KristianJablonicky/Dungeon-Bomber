@@ -14,24 +14,37 @@ public class Spider : Enemy
         return 1;
     }
 
+    protected override int getPlayerDetectionRadius()
+    {
+        return 6;
+    }
+
     protected override void onTick()
     {
-        int roll = Random.Range(0, 4);
-        if (roll == 0)
+        Movement? playerDirection = detectPlayer();
+        if (playerDirection != null)
         {
-            move(Movement.Left);
-        }
-        else if (roll == 1)
-        {
-            move(Movement.Up);
-        }
-        else if (roll == 2)
-        {
-            move(Movement.Down);
+            move(playerDirection.Value);
         }
         else
         {
-            move(Movement.Right);
+            int roll = Random.Range(0, 4);
+            if (roll == 0)
+            {
+                move(Movement.Left);
+            }
+            else if (roll == 1)
+            {
+                move(Movement.Up);
+            }
+            else if (roll == 2)
+            {
+                move(Movement.Down);
+            }
+            else
+            {
+                move(Movement.Right);
+            }
         }
     }
 }
