@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UpgradeCardsGenerator : MonoBehaviour
 {
-    [SerializeField] private Image fade;
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private TMP_Text hintText;
     [SerializeField] private UpgradeCard upgradeCard;
     [SerializeField] private List<Upgrade> upgrades;
     [SerializeField] private Upgrade sacrifice;
@@ -19,20 +20,18 @@ public class UpgradeCardsGenerator : MonoBehaviour
         Dungeon.instance.ladderReached += generateUpgrades;
         StartCoroutine(fadeOut());
         maxScale = upgradeCard.transform.localScale.x;
+        canvasGroup.alpha = 1f;
     }
 
     private IEnumerator fadeOut()
     {
         float timeElapsed = 0;
-        Color color;
 
         while (timeElapsed < duration)
         {
             timeElapsed += Time.deltaTime;
 
-            color = fade.color;
-            color.a = maxAlpha - maxAlpha * timeElapsed / duration;
-            fade.color = color;
+            canvasGroup.alpha = maxAlpha - maxAlpha * timeElapsed / duration;
 
             yield return null;
         }
@@ -47,16 +46,13 @@ public class UpgradeCardsGenerator : MonoBehaviour
     private IEnumerator fadeIn()
     {
         float timeElapsed = 0f;
-        Color color;
         Vector3 newScale;
         float currentScale;
         while (timeElapsed < duration)
         {
             timeElapsed += Time.deltaTime;
 
-            color = fade.color;
-            color.a = maxAlpha * timeElapsed / duration;
-            fade.color = color;
+            canvasGroup.alpha = maxAlpha * timeElapsed / duration;
 
             currentScale = maxScale * timeElapsed / duration;
             newScale = new Vector3(currentScale, currentScale);
@@ -65,8 +61,26 @@ public class UpgradeCardsGenerator : MonoBehaviour
             {
                 card.transform.localScale = newScale;
             }
-
             yield return null;
+        }
+        // hintText.text = "Choose one card by clicking and holding on it.";
+        StartCoroutine(showText());
+    }
+
+    private IEnumerator showText()
+    {
+        yield return new WaitForSeconds(1f);
+
+        string targetText = "Choose one card by clicking and holding on it.";
+        foreach (var character in targetText)
+        {
+            hintText.text += character;
+
+            if (character != ' ')
+            {
+                yield return new WaitForSeconds(0.02f);
+            }
+
         }
     }
 

@@ -18,8 +18,7 @@ public class Dungeon : MonoBehaviour
     [SerializeField] private HitSplat hitSplat;
 
     private TileContent[,] layout;
-    // bolo 27
-    private int dungeonWidth = 6, dungeonHeight = 12;
+    private int dungeonWidth = 27, dungeonHeight = 12;
     private int floor = 1;
     private Color currentFloorColor;
 

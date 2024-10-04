@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7220638241815104408}
   - component: {fileID: 6856266028533852279}
   - component: {fileID: 4096696488787954385}
+  - component: {fileID: 2090036879748197746}
   m_Layer: 0
   m_Name: ExplosionHighlight
   m_TagString: Untagged
@@ -97,6 +98,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68124d59b29b554c97970705974a006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
   spriteRenderer: {fileID: 6856266028533852279}
+  animator: {fileID: 2090036879748197746}
+--- !u!95 &2090036879748197746
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496503301189892506}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1ddccd4d1631f9d478f2f3434b017f15, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

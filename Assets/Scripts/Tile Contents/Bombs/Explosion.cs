@@ -5,6 +5,8 @@ using UnityEngine;
 public class Explosion : TileContent
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
+
     private int damage;
     CharacterType target;
     public void setUp(CharacterType target, int damage)
@@ -38,6 +40,7 @@ public class Explosion : TileContent
 
     private IEnumerator flash()
     {
+        /*
         spriteRenderer.color = Color.white;
 
         float animationTime = 0.2f, timeElapsed = 0f;
@@ -48,6 +51,11 @@ public class Explosion : TileContent
                 1f - (timeElapsed / animationTime));
             yield return null;
         }
+        */
+
+        spriteRenderer.color = Color.white;
+        animator.SetTrigger("explode");
+        yield return new WaitForSeconds(0.2f);
         Destroy(gameObject);
     }
 }
