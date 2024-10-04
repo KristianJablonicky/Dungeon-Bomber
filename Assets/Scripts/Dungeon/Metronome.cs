@@ -44,6 +44,17 @@ public class Metronome : MonoBehaviour
         StartCoroutine(countIn());
     }
 
+    private void Start()
+    {
+        Dungeon.instance.ladderReached += pause;
+    }
+
+    private void pause(object sender, EventArgs e)
+    {
+        StopAllCoroutines();
+        enabled = false;
+    }
+
     private IEnumerator countIn()
     {
         yield return null;

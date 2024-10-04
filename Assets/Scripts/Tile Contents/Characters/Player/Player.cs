@@ -5,8 +5,7 @@ public class Player : Character
 {
 
     [SerializeField] private Bomb bomb;
-    private BombAttributes bombSquare, bombPlus, bombX;
-    private int ticksUntilExplosion = 2, damage = 1;
+    public BombAttributes bombSquare, bombPlus, bombX;
     private int bombCoolDown = 3, currentCoolDown = 0;
 
     public bool movementEnabled = false, placedBombAlready = false;
@@ -25,20 +24,33 @@ public class Player : Character
 
         metronome.onBeat += placeBomb;
 
+        if (DataStorage.instance.floor != 1)
+        {
+            hp = DataStorage.instance.playerHp;
+            heal(0);
+        }
         setUpAttributes();
+        DataStorage.instance.equipUpgrades(this);
+        
     }
 
     private void setUpAttributes()
     {
-        bombSquare = new();
-        bombSquare.areaSize = 1;
+        bombSquare = new()
+        {
+            areaSize = 1
+        };
 
-        bombPlus = new();
-        bombPlus.horizontalLength = 2;
-        bombPlus.verticalLength = 2;
+        bombPlus = new()
+        {
+            horizontalLength = 2,
+            verticalLength = 2
+        };
 
-        bombX = new();
-        bombX.diagonalLength = 2;
+        bombX = new()
+        {
+            diagonalLength = 2
+        };
     }
 
     private void placeBomb(object sender, System.EventArgs e)
@@ -95,6 +107,12 @@ public class Player : Character
         else if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Alpha3))
         {
             currentBombType = bombTypes.x;
+        }
+
+        else if (Input.GetKeyDown(KeyCode.H))
+        {
+            var sacrifice = new Sacrifice();
+            sacrifice.equipEffect(this);
         }
 
 

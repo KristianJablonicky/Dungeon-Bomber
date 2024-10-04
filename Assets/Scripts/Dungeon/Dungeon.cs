@@ -18,14 +18,15 @@ public class Dungeon : MonoBehaviour
     [SerializeField] private HitSplat hitSplat;
 
     private TileContent[,] layout;
-    private int dungeonWidth = 27, dungeonHeight = 12;
+    // bolo 27
+    private int dungeonWidth = 6, dungeonHeight = 12;
     private int floor = 1;
     private Color currentFloorColor;
 
     public static Dungeon instance;
     private Player playerInstance;
 
-    public event EventHandler playerSpawned;
+    public event EventHandler playerSpawned, ladderReached;
 
     private void Update()
     {
@@ -187,9 +188,15 @@ public class Dungeon : MonoBehaviour
         layout[x,y] = content;
     }
 
+    public void callLadderReached()
+    {
+        ladderReached?.Invoke(this, EventArgs.Empty);
+    }
+
     public void nextFloor()
     {
         DataStorage.instance.floor++;
+        DataStorage.instance.playerHp = playerInstance.getHp();
         SceneManager.LoadScene("Gameplay");
         /*
         floor++;
@@ -203,8 +210,17 @@ public class Dungeon : MonoBehaviour
         return currentFloorColor;
     }
 
+    public Player getPlayer()
+    {
+        return playerInstance;
+    }
+
     private void instantiateHitsplat(object sender, DamageArgs e)
     {
+        if (e.damage == 0)
+        {
+            return;
+        }
         var hitSplatInstance = Instantiate(hitSplat, ((Character)sender).transform.position, Quaternion.identity);
         hitSplatInstance.transform.SetParent(hitSplatsParent.transform, false);
         hitSplatInstance.transform.position = ((Character)sender).transform.position;

@@ -6,6 +6,6 @@ public class Ladder : TileContent
     }
     public void onPlayerContact()
     {
-        Dungeon.instance.nextFloor();
+        Dungeon.instance.callLadderReached();
     }
 }

@@ -35,6 +35,12 @@ public abstract class Character : TileContent
             die();
         }
     }
+
+    public void heal(int healAmount)
+    {
+        hp += healAmount;
+        onHpChange?.Invoke(this, new DamageArgs(healAmount));
+    }
     private IEnumerator hurtAnimation()
     {
         float speed = 4f;
