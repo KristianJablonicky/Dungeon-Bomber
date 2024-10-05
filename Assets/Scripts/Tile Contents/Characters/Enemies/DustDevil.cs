@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class NewBehaviourScript : Enemy
 {
-    private int direction = 0;
+    private int direction;
+    private int speed = 2;
+    private int beatCounter = 0;
+
+    private void Awake()
+    {
+        direction = Random.Range(0, 4);
+    }
+
     public override void collideWithCharacter(Character character)
     {
         character.takeDamage(1);
@@ -22,8 +30,13 @@ public class NewBehaviourScript : Enemy
 
     protected override void onTick()
     {
-        move((Movement)direction, 2);
-        direction++;
-        direction %= 4;
+        beatCounter++;
+        if (beatCounter % speed == 0)
+        {
+            move((Movement)direction, 2);
+            direction++;
+            direction %= 4;
+        }
+        if (beatCounter == 32) beatCounter = 0;
     }
 }
