@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public abstract class Enemy : Character
 {
@@ -31,27 +32,85 @@ public abstract class Enemy : Character
 
     protected Movement? detectPlayer()
     {
-        var p = Dungeon.instance.getPlayer();
-        int distance = getDistance(p.getX(), p.getY(), getX(), getY());
-        if (distance <= getPlayerDetectionRadius())
+        var player = dungeon.getPlayer();
+        int distance = getDistance(player.getX(), player.getY(), getX(), getY());
+
+        if (distance > getPlayerDetectionRadius())
         {
-            if (p.getY() > getY())
+            return null;
+        }
+
+        // Player and enemy coordinates
+        int px = player.getX();
+        int py = player.getY();
+        int ex = getX();
+        int ey = getY();
+
+        // Direction vector from enemy to player
+        int dx = px - ex;
+        int dy = py - ey;
+
+        // Possible movement directions towards the player
+        List<Movement> preferredMovements = new List<Movement>();
+
+        if (Math.Abs(dx) >= Math.Abs(dy))
+        {
+            // Prioritize horizontal movement
+            if (dx > 0)
+                preferredMovements.Add(Movement.Right);
+            else if (dx < 0)
+                preferredMovements.Add(Movement.Left);
+
+            if (dy > 0)
+                preferredMovements.Add(Movement.Up);
+            else if (dy < 0)
+                preferredMovements.Add(Movement.Down);
+        }
+        else
+        {
+            // Prioritize vertical movement
+            if (dy > 0)
+                preferredMovements.Add(Movement.Up);
+            else if (dy < 0)
+                preferredMovements.Add(Movement.Down);
+
+            if (dx > 0)
+                preferredMovements.Add(Movement.Right);
+            else if (dx < 0)
+                preferredMovements.Add(Movement.Left);
+        }
+
+        // Check for obstacles and handle player tile
+        foreach (var move in preferredMovements)
+        {
+            int newX = ex;
+            int newY = ey;
+
+            switch (move)
             {
-                return Movement.Up;
+                case Movement.Up:
+                    newY += 1;
+                    break;
+                case Movement.Down:
+                    newY -= 1;
+                    break;
+                case Movement.Left:
+                    newX -= 1;
+                    break;
+                case Movement.Right:
+                    newX += 1;
+                    break;
             }
-            else if (p.getY() < getY()) {
-                return Movement.Down;
-            }
-            else if (p.getX() > getX())
+
+            Vector3 targetPosition = new Vector3(newX, newY);
+
+            if (!Dungeon.instance.isTileOccupied(targetPosition) || (player.getX() == newX && player.getY() == newY))
             {
-                return Movement.Right;
-            }
-            else
-            {
-                return Movement.Left;
+                // The tile is free or enemy; move the enemy
+                return move;
             }
         }
-        else return null;
+        return null;
     }
 
     private int getDistance(int a_x, int a_y, int b_x, int b_y)
