@@ -32,7 +32,7 @@ public class Dungeon : MonoBehaviour
         // Reset the run
         if (Input.GetKeyUp(KeyCode.R))
         {
-            DataStorage.instance.floor = 0;
+            DataStorage.instance.reset();
             nextFloor();
         }
         // Skip floor

@@ -33,4 +33,11 @@ public class DataStorage : MonoBehaviour
         }
     }
 
+    public void reset()
+    {
+        floor = 0;
+        upgrades = new List<Upgrade>();
+        playerHp = 3;
+    }
+
 }
