@@ -18,7 +18,7 @@ public class Dungeon : MonoBehaviour
     [SerializeField] private HitSplat hitSplat;
 
     private TileContent[,] layout;
-    private int dungeonWidth = 27, dungeonHeight = 12;
+    private int dungeonWidth = 22, dungeonHeight = 12;
     private int floor = 1;
     private Color currentFloorColor;
 
@@ -32,19 +32,24 @@ public class Dungeon : MonoBehaviour
         // Reset the run
         if (Input.GetKeyUp(KeyCode.R))
         {
-            DataStorage.instance.reset();
-            nextFloor();
+            reset();
         }
         // Skip floor
         else if (Input.GetKeyUp(KeyCode.T))
         {
-            nextFloor();
+            callLadderReached();
         }
         else if (Input.GetKeyUp(KeyCode.Escape))
         {
             Application.Quit();
         }
 
+    }
+
+    public void reset()
+    {
+            DataStorage.instance.reset();
+            nextFloor();
     }
 
     private void Awake()

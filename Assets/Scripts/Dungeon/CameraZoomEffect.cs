@@ -15,13 +15,15 @@ public class CameraZoomEffect : MonoBehaviour
 
     private void zooooom(object sender, System.EventArgs e)
     {
-        TriggerZoom(3.9f, 0.05f);
+        //TriggerZoom(3.9f, 0.05f);
+        TriggerZoom(0.025f, 0.1f);
     }
 
     public void TriggerZoom(float targetFOV, float duration)
     {
         if (!isZooming)
-            StartCoroutine(ZoomCoroutine(targetFOV, duration));
+            //StartCoroutine(ZoomCoroutine(targetFOV, duration));
+            StartCoroutine(zoomSinus(targetFOV, duration));
     }
 
     private IEnumerator ZoomCoroutine(float targetFOV, float duration)
@@ -50,8 +52,17 @@ public class CameraZoomEffect : MonoBehaviour
         isZooming = false;
     }
 
-    void Update()
+    private IEnumerator zoomSinus(float zoomAmount, float duration)
     {
-        
+        isZooming = true;
+        float timeElapsed = 0, startingZoom = cam.orthographicSize;
+        while (timeElapsed < duration)
+        {
+            timeElapsed += Time.deltaTime;
+            cam.orthographicSize = startingZoom + zoomAmount * Mathf.Sin(timeElapsed / duration * Mathf.PI);
+            yield return null;
+        }
+        cam.orthographicSize = startingZoom;
+        isZooming = false;
     }
 }

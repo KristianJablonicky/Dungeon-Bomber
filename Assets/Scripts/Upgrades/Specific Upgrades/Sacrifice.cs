@@ -1,9 +1,12 @@
 public class Sacrifice : Upgrade
 {
-    public override void equipEffect(Player player)
+    protected override void oneTimeEffect(Player player)
     {
         // heal to full
         player.heal(player.getMaxHp() - player.getHp());
+    }
+    public override void equipEffect(Player player)
+    {
     }
 
     public override string getDescription()

@@ -13,14 +13,19 @@ public abstract class Character : TileContent
     protected override void Start()
     {
         base.Start();
-        hp = getMaxHp();
+        hp = getBaseMaxHp();
         maxHp = hp;
 
         var healthBar = Instantiate(Prefabs.i.healthBar);
         healthBar.setCharacter(this);
     }
 
-    public abstract int getMaxHp();
+    public int getMaxHp()
+    {
+        return maxHp;
+    }
+
+    public abstract int getBaseMaxHp();
     public int getHp()
     {
         return hp;

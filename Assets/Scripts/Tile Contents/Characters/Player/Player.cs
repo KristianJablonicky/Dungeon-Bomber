@@ -1,20 +1,26 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Player : Character
 {
-
     [SerializeField] private Bomb bomb;
     public BombAttributes bombSquare, bombPlus, bombX;
     private int bombCoolDown = 3, currentCoolDown = 0;
-
     public bool movementEnabled = false, placedBombAlready = false;
 
-    private bombTypes currentBombType = bombTypes.square;
+    public bombTypes currentBombType = bombTypes.square;
 
-    public override int getMaxHp()
+    public EventHandler bombChanged;
+
+    public override int getBaseMaxHp()
     {
         return 3;
+    }
+
+    public void increaseMaxHp(int increase)
+    {
+        maxHp += increase;
     }
     protected override void Start()
     {
@@ -24,13 +30,13 @@ public class Player : Character
 
         metronome.onBeat += placeBomb;
 
+        setUpAttributes();
         if (DataStorage.instance.floor != 1)
         {
             hp = DataStorage.instance.playerHp;
-            heal(0);
         }
-        setUpAttributes();
         DataStorage.instance.equipUpgrades(this);
+        heal(0);
         
     }
 
@@ -38,7 +44,9 @@ public class Player : Character
     {
         bombSquare = new()
         {
-            areaSize = 1
+            horizontalLength = 1,
+            verticalLength = 1,
+            diagonalLength = 1
         };
 
         bombPlus = new()
@@ -98,15 +106,15 @@ public class Player : Character
     {
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Alpha1))
         {
-            currentBombType = bombTypes.square;
+            changeBomb(bombTypes.square);
         }
         else if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Alpha2))
         {
-            currentBombType = bombTypes.plus;
+            changeBomb(bombTypes.plus);
         }
         else if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Alpha3))
         {
-            currentBombType = bombTypes.x;
+            changeBomb(bombTypes.x);
         }
 
         else if (Input.GetKeyDown(KeyCode.H))
@@ -146,9 +154,21 @@ public class Player : Character
             */
         }
     }
-    private Movement delayedMovementDirection;
-    private void jump(Movement movement)
+
+    public void changeBomb(bombTypes type)
     {
+        currentBombType = type;
+        bombChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private Movement delayedMovementDirection;
+    public void jump(Movement movement)
+    {
+        if (!movementEnabled)
+        {
+            return;
+        }
+
         if (metronome.isInPlayerWindowInputStart())
         {
             metronome.prematureBeat();
@@ -180,15 +200,6 @@ public class Player : Character
         jump(delayedMovementDirection);
         metronome.onBeatLowerPriority -= delayMove;
     }
-    private class sourceAndDestinationTiles
-    {
-        public int sourceX, soureY, destinationX, destinationY;
-    }
-
-    private void delayMovement()
-    {
-
-    }
 
     private void spawnBomb()
     {
@@ -215,8 +226,7 @@ public class Player : Character
         }
 
         newBomb.setUp(attributes.ticksUntilExplosion, attributes.damage,
-            attributes.horizontalLength, attributes.verticalLength, attributes.diagonalLength,
-            attributes.areaSize);
+            attributes.horizontalLength, attributes.verticalLength, attributes.diagonalLength);
         //newBomb.setUp(ticksUntilExplosion, damage, horizontalLength, verticalLength, diagonalLength, areaSize);
     }
 
@@ -227,13 +237,10 @@ public class Player : Character
             ((Enemy)character).collideWithCharacter(this);
         }
     }
-
-
-    private enum bombTypes
-    {
-        square,
-        plus,
-        x
-    }
-
+}
+public enum bombTypes
+{
+    square,
+    plus,
+    x
 }

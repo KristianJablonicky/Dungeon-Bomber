@@ -1,27 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class Bomb : TileContent
 {
     [SerializeField] private Explosion explosion;
     private List<Explosion> explosionList;
     private int currentBeatsUntilImpact, beatsUntilImpact, damage;
-    public void setUp (int beatsUntilImpact, int damage, int horizontalLength, int verticalLength, int diagonalLength, int areaSize)
+    public void setUp (int beatsUntilImpact, int damage, int horizontalLength, int verticalLength, int diagonalLength)
     {
+        Start();
         Metronome.instance.onBombUpdate += reduceBeatsUntilImpact;
         this.beatsUntilImpact = beatsUntilImpact;
         currentBeatsUntilImpact = beatsUntilImpact;
         this.damage = damage;
         explosionList = new List<Explosion>();
         
-        // an explosion at offset <0; 0> is created in addAreaExplosions, even at area == 0
-        //addExplosion(beatsUntilImpact, damage, 0, 0);
         
-        addAreaExplosions(areaSize);
-        addHorizontalExplosions(horizontalLength, areaSize);
-        addVerticalExplosions(verticalLength, areaSize);
-        addDiagonalExplosions(diagonalLength, areaSize);
+        addExplosion(beatsUntilImpact, damage, 0, 0);
+        addHorizontalExplosions(horizontalLength);
+        addVerticalExplosions(verticalLength);
+        addDiagonalExplosions(diagonalLength);
         
         updateAlphas();
     }
@@ -35,30 +37,46 @@ public class Bomb : TileContent
         exp.transform.SetParent(transform);
     }
 
-    private void addAreaExplosions(int areaSize)
+    private void addHorizontalExplosions(int length)
     {
-        for (int xOffset = -1 * areaSize; xOffset <= areaSize; xOffset++)
+        Vector3 target;
+        for (int direction = -1; direction <= 1; direction += 2)
         {
-            for (int yOffset = -1 * areaSize; yOffset <= areaSize; yOffset++)
+            for (int distance = 1; distance <= length; distance++)
             {
-                addExplosion(beatsUntilImpact, damage, xOffset, yOffset);
+                target = new Vector3(transform.position.x + direction * distance, transform.position.y);
+                if (addExplosionToTile(target))
+                {
+                    break;
+                }
             }
         }
-    }
-
-    private void addHorizontalExplosions(int horizontalLength, int areaSize)
-    {
-        for(int xOffset = -1 * horizontalLength; xOffset <= horizontalLength; xOffset++)
+        /*
+        for(int xOffset = -1 * length; xOffset <= length; xOffset++)
         {
             if (Mathf.Abs(xOffset) > areaSize)
             {
                 addExplosion(beatsUntilImpact, damage, xOffset, 0);
             }
         }
+        */
     }
 
-    private void addVerticalExplosions(int verticalLength, int areaSize)
+    private void addVerticalExplosions(int length)
     {
+        Vector3 target;
+        for (int direction = -1; direction <= 1; direction += 2)
+        {
+            for (int distance = 1; distance <= length; distance++)
+            {
+                target = new Vector3(transform.position.x, transform.position.y + direction * distance);
+                if (addExplosionToTile(target))
+                {
+                    break;
+                }
+            }
+        }
+        /*
         for (int yOffset = -1 * verticalLength; yOffset <= verticalLength; yOffset++)
         {
             if (Mathf.Abs(yOffset) > areaSize)
@@ -66,9 +84,26 @@ public class Bomb : TileContent
                 addExplosion(beatsUntilImpact, damage, 0, yOffset);
             }
         }
+        */
     }
-    private void addDiagonalExplosions(int diagonalLength, int areaSize)
+    private void addDiagonalExplosions(int length)
     {
+        Vector3 target;
+        for (int directionX = -1; directionX <= 1; directionX += 2)
+        {
+            for(int directionY = -1; directionY <= 1; directionY += 2)
+            {
+                for (int distance = 1; distance <= length; distance++)
+                {
+                    target = new Vector3(transform.position.x + directionX * distance, transform.position.y + directionY * distance);
+                    if (addExplosionToTile(target))
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        /*
         for (int xyOffset = -1 * diagonalLength; xyOffset <= diagonalLength; xyOffset++)
         {
             if (Mathf.Abs(xyOffset) > areaSize)
@@ -77,7 +112,29 @@ public class Bomb : TileContent
                 addExplosion(beatsUntilImpact, damage, xyOffset, xyOffset);
             }
         }
+        */
     }
+
+    private bool addExplosionToTile(Vector3 targetTile)
+    {
+        var content = dungeon.isTileOccupied(targetTile);
+        int x = (int)(targetTile.x - transform.position.x), y = (int)(targetTile.y - transform.position.y);
+        if (content == null || content is Character)
+        {
+            addExplosion(beatsUntilImpact, damage, x, y);
+            return false;
+        }
+        else if (content is Destructable)
+        {
+            addExplosion(beatsUntilImpact, damage, x, y);
+            return true;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
 
     private void reduceBeatsUntilImpact(object sender, System.EventArgs e)
     {

@@ -18,7 +18,7 @@ public class NewBehaviourScript : Enemy
         character.takeDamage(1);
     }
 
-    public override int getMaxHp()
+    public override int getBaseMaxHp()
     {
         return 1;
     }

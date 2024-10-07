@@ -12,7 +12,7 @@ public class Bat : Enemy
         }
     }
 
-    public override int getMaxHp()
+    public override int getBaseMaxHp()
     {
         return 2;
     }

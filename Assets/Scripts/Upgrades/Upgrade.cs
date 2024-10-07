@@ -13,17 +13,15 @@ public abstract class Upgrade : MonoBehaviour
 
     public void equip()
     {
-        if (this is not Sacrifice)
-        {
-            DataStorage.instance.addUpgrade(this);
-        }
-        else
-        {
-            equipEffect(Dungeon.instance.getPlayer());
-        }
+        var player = Dungeon.instance.getPlayer();
+        DataStorage.instance.addUpgrade(this);
+        oneTimeEffect(player);
     }
 
     public abstract void equipEffect(Player player);
+
+    // add code to this method if you wish to obain a certain buff immediately (such as heals)
+    protected virtual void oneTimeEffect(Player player) { }
 
     public abstract upgradeTypes getType();
 
@@ -43,11 +41,11 @@ public abstract class Upgrade : MonoBehaviour
         }
         else if (type == upgradeTypes.blue)
         {
-            return player.bombPlus;
+            return player.bombX;
         }
         else
         {
-            return player.bombX;
+            return player.bombPlus;
         }
     }
 
