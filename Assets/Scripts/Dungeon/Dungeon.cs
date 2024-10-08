@@ -118,7 +118,7 @@ public class Dungeon : MonoBehaviour
                 {
                     instantiate(tile, x, y);
 
-                    if (UnityEngine.Random.Range(0, 15) == 0)
+                    if ((x > 6 || y > 6 ) && UnityEngine.Random.Range(0, 15) == 0)
                     {
                         layout[x, y] = instantiate(enemies[UnityEngine.Random.Range(0, enemies.Count)], x, y);
                     }

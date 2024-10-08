@@ -11,7 +11,7 @@ public class Player : Character
 
     public bombTypes currentBombType = bombTypes.square;
 
-    public EventHandler bombChanged;
+    public EventHandler bombChanged, positionUpdated;
 
     public override int getBaseMaxHp()
     {
@@ -195,10 +195,15 @@ public class Player : Character
         disableInput(this, System.EventArgs.Empty);
     }
 
-    private void delayMove(object sender, System.EventArgs e)
+    private void delayMove(object sender, EventArgs e)
     {
         jump(delayedMovementDirection);
         metronome.onBeatLowerPriority -= delayMove;
+    }
+
+    protected override void movementMethod()
+    {
+        positionUpdated?.Invoke(this, EventArgs.Empty);
     }
 
     private void spawnBomb()

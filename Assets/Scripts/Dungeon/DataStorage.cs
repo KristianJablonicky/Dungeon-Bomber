@@ -17,6 +17,19 @@ public class DataStorage : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this);
             upgrades = new List<Upgrade>();
+
+            Application.targetFrameRate = 144;
+
+            /*
+            if (Application.isMobilePlatform)
+            {
+                Application.targetFrameRate = 60;
+            }
+            else
+            {
+                Application.targetFrameRate = 144;
+            }
+            */
         }
     }
 

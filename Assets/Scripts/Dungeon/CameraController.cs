@@ -8,7 +8,6 @@ public class CameraController : MonoBehaviour
     private Vector3 offset;
     private void Start()
     {
-        enabled = false;
         Dungeon.instance.playerSpawned += onPlayerSpawn;
         offset = new Vector3(0, 0, -0.5f);
     }
@@ -17,19 +16,16 @@ public class CameraController : MonoBehaviour
     {
         player = (Player)sender;
         enabled = true;
+        player.positionUpdated += updatePosition;
         player.onDeath += unfollowPlayer;
     }
 
-    private void unfollowPlayer(object sender, System.EventArgs e)
-    {
-        if (sender is Player)
-        {
-            enabled = false;
-        }
-    }
-
-    private void Update()
+    private void updatePosition(object sender, System.EventArgs e)
     {
         transform.position = player.transform.position + offset;
+    }
+    private void unfollowPlayer(object sender, System.EventArgs e)
+    {
+        player.positionUpdated -= updatePosition;
     }
 }

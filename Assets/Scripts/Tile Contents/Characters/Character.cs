@@ -39,6 +39,10 @@ public abstract class Character : TileContent
         {
             die();
         }
+        else
+        {
+            StartCoroutine(hurtAnimation());
+        }
     }
 
     public void heal(int healAmount)
@@ -186,10 +190,13 @@ public abstract class Character : TileContent
         {
             elapsedTime += Time.deltaTime;
             transform.position = new Vector3(start.x + Mathf.Sqrt(elapsedTime / duration) * xDir, start.y + Mathf.Sqrt(elapsedTime / duration) * yDir);
+            movementMethod();
             yield return null;
         }
         transform.position = new Vector3(x, y);
     }
+
+    protected virtual void movementMethod() { }
 
     protected IEnumerator bounce(int x, int y)
     {
