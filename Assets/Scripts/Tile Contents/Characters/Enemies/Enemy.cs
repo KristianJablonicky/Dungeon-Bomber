@@ -13,6 +13,7 @@ public abstract class Enemy : Character
 
     public override void die()
     {
+        onDeath();
         metronome.onBeatEnemy -= onTick;
         base.die();
     }
@@ -29,6 +30,11 @@ public abstract class Enemy : Character
     }
 
     protected abstract void onTick();
+
+    protected void onDeath()
+    {
+        dungeon.onEnemyKilled();
+    }
 
     protected Movement? detectPlayer()
     {
