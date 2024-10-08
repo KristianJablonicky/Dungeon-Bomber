@@ -25,7 +25,7 @@ public class Dungeon : MonoBehaviour
     public static Dungeon instance;
     private Player playerInstance;
 
-    public event EventHandler playerSpawned, ladderReached;
+    public event EventHandler playerSpawned, ladderReached, enemyKilled;
 
     private void Update()
     {
@@ -201,6 +201,9 @@ public class Dungeon : MonoBehaviour
     {
         DataStorage.instance.floor++;
         DataStorage.instance.playerHp = playerInstance.getHp();
+        DataStorage.instance.playerMaxHp = playerInstance.getMaxHp();
+        DataStorage.instance.playerExp = playerInstance.getExp();
+        DataStorage.instance.playerLevel = playerInstance.getPlayerLevel();
         SceneManager.LoadScene("Gameplay");
         /*
         floor++;
@@ -229,6 +232,11 @@ public class Dungeon : MonoBehaviour
         hitSplatInstance.transform.SetParent(hitSplatsParent.transform, false);
         hitSplatInstance.transform.position = ((Character)sender).transform.position;
         hitSplatInstance.setUp(e.damage);
+    }
+
+    public void onEnemyKilled()
+    {
+        enemyKilled?.Invoke(playerInstance, EventArgs.Empty);
     }
 
 }

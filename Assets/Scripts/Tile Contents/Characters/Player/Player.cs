@@ -6,6 +6,8 @@ public class Player : Character
 {
     [SerializeField] private Bomb bomb;
     public BombAttributes bombSquare, bombPlus, bombX;
+    [SerializeField] private int playerLevel = 1;
+    [SerializeField] private int expCount = 0;
     private int bombCoolDown = 3, currentCoolDown = 0;
     public bool movementEnabled = false, placedBombAlready = false;
 
@@ -22,11 +24,13 @@ public class Player : Character
     {
         maxHp += increase;
     }
+
     protected override void Start()
     {
         base.Start();
         StartCoroutine(fallDown());
         metronome.onPlayerInputStart += enableInput;
+        dungeon.enemyKilled += onEnemyKill;
 
         metronome.onBeat += placeBomb;
 
@@ -34,10 +38,12 @@ public class Player : Character
         if (DataStorage.instance.floor != 1)
         {
             hp = DataStorage.instance.playerHp;
+            maxHp = DataStorage.instance.playerMaxHp;
+            playerLevel = DataStorage.instance.playerLevel;
+            expCount = DataStorage.instance.playerExp;
         }
         DataStorage.instance.equipUpgrades(this);
         heal(0);
-        
     }
 
     private void setUpAttributes()
@@ -87,6 +93,7 @@ public class Player : Character
     {
         metronome.onPlayerInputStart -= enableInput;
         metronome.onBeat -= placeBomb;
+        dungeon.enemyKilled -= onEnemyKill;
         base.die();
     }
 
@@ -241,6 +248,41 @@ public class Player : Character
         {
             ((Enemy)character).collideWithCharacter(this);
         }
+    }
+
+    private void onEnemyKill(object sender, System.EventArgs e)
+    {
+        expCount++;
+        if (reachedNewPlayerLevel())
+        {
+            playerLevel++;
+            expCount = 0;
+            increaseMaxHp(1);
+            heal(1);
+            Debug.Log("New level:"+ playerLevel + " exp:" + expCount);
+        }
+    }
+
+    private bool reachedNewPlayerLevel()
+    {
+        /**
+         * TODO: adjust leveling logic as needed
+         */
+        if (expCount >= 2)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public int getExp()
+    {
+        return expCount;
+    }
+
+    public int getPlayerLevel()
+    {
+        return playerLevel;
     }
 }
 public enum bombTypes

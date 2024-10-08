@@ -4,7 +4,7 @@ using UnityEngine;
 public class DataStorage : MonoBehaviour
 {
     public static DataStorage instance = null;
-    public int floor = 0, playerHp;
+    public int floor = 0, playerHp, playerMaxHp, playerLevel, playerExp;
 
     private List<Upgrade> upgrades;
 
