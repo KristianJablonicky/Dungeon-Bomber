@@ -9,6 +9,7 @@ public abstract class Enemy : Character
     {
         base.Start();
         metronome.onBeatEnemy += onTick;
+        increaseMaxHp((int)(getBaseMaxHp() * (DataStorage.instance.floor - 1) * 0.5f), true);
     }
 
     public override void die()

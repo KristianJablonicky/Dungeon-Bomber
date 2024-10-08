@@ -6,8 +6,11 @@ public class Player : Character
 {
     [SerializeField] private Bomb bomb;
     public BombAttributes bombSquare, bombPlus, bombX;
+
     [SerializeField] private int playerLevel = 1;
     [SerializeField] private int expCount = 0;
+    private int currentFloorUpgrades = 0;
+
     private int bombCoolDown = 3, currentCoolDown = 0;
     public bool movementEnabled = false, placedBombAlready = false;
 
@@ -18,11 +21,6 @@ public class Player : Character
     public override int getBaseMaxHp()
     {
         return 3;
-    }
-
-    public void increaseMaxHp(int increase)
-    {
-        maxHp += increase;
     }
 
     protected override void Start()
@@ -256,9 +254,11 @@ public class Player : Character
         if (reachedNewPlayerLevel())
         {
             playerLevel++;
+            currentFloorUpgrades++;
             expCount = 0;
             increaseMaxHp(1);
             heal(1);
+            StartCoroutine(levelUp());
             Debug.Log("New level:"+ playerLevel + " exp:" + expCount);
         }
     }
@@ -284,6 +284,25 @@ public class Player : Character
     {
         return playerLevel;
     }
+
+    public int getCurrentFloorUpgrades()
+    {
+        return currentFloorUpgrades;
+    }
+
+    private IEnumerator levelUp()
+    {
+        float duration = 0.5f, timeElapsed = 0;
+        Vector3 formerScale = transform.localScale;
+        while (timeElapsed < duration)
+        {
+            timeElapsed += Time.deltaTime;
+            transform.localScale = formerScale * (1 + Mathf.Sin(timeElapsed / duration * Mathf.PI) * 0.25f);
+            yield return null;
+        }
+        transform.localScale = formerScale;
+    }
+
 }
 public enum bombTypes
 {

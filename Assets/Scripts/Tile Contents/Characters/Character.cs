@@ -10,19 +10,33 @@ public abstract class Character : TileContent
     public event EventHandler<DamageArgs> onHpChange;
     public event EventHandler onDeath;
 
+    private Coroutine runningHurtAnimation;
+
     protected override void Start()
     {
         base.Start();
         hp = getBaseMaxHp();
         maxHp = hp;
 
-        var healthBar = Instantiate(Prefabs.i.healthBar);
-        healthBar.setCharacter(this);
+        if (this is not Player)
+        {
+            var healthBar = Instantiate(Prefabs.i.healthBar);
+            healthBar.setCharacter(this);
+        }
     }
 
     public int getMaxHp()
     {
         return maxHp;
+    }
+
+    public void increaseMaxHp(int increase, bool restoreHealth = false)
+    {
+        maxHp += increase;
+        if (restoreHealth)
+        {
+            heal(increase);
+        }
     }
 
     public abstract int getBaseMaxHp();
@@ -39,9 +53,9 @@ public abstract class Character : TileContent
         {
             die();
         }
-        else
+        else if (runningHurtAnimation == null)
         {
-            StartCoroutine(hurtAnimation());
+            runningHurtAnimation = StartCoroutine(hurtAnimation());
         }
     }
 
@@ -66,6 +80,8 @@ public abstract class Character : TileContent
             yield return null;
         }
         spriteRenderer.color = Color.white;
+
+        runningHurtAnimation = null;
     }
 
     public virtual void die()

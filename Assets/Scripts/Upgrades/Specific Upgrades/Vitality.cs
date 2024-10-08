@@ -5,11 +5,10 @@ public class Vitality : Upgrade
     private int increase = 3;
     public override void equipEffect(Player player)
     {
-        player.increaseMaxHp(increase);
     }
     protected override void oneTimeEffect(Player player)
     {
-        player.heal(increase);    
+        player.increaseMaxHp(increase, true);
     }
 
     public override string getDescription()

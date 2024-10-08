@@ -211,7 +211,6 @@ public class Dungeon : MonoBehaviour
         generateDungeon();
         */
     }
-
     public Color getFloorColor()
     {
         return currentFloorColor;

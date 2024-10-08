@@ -13,6 +13,7 @@ public class UpgradeCardsGenerator : MonoBehaviour
 
     private List<UpgradeCard> upgradeCards;
     private float duration = 0.5f, maxScale, maxAlpha = 0.6f;
+    private int pairsToBeGenerated = 1;
     
     private void Start()
     {
@@ -39,8 +40,8 @@ public class UpgradeCardsGenerator : MonoBehaviour
 
     private void generateUpgrades(object sender, System.EventArgs e)
     {
-        generatePair();
-        StartCoroutine(fadeIn());
+        pairsToBeGenerated += Dungeon.instance.getPlayer().getCurrentFloorUpgrades();
+        generatePair(true);
     }
 
     private IEnumerator fadeIn()
@@ -63,7 +64,6 @@ public class UpgradeCardsGenerator : MonoBehaviour
             }
             yield return null;
         }
-        // hintText.text = "Choose one card by clicking and holding on it.";
         StartCoroutine(showText());
     }
 
@@ -84,9 +84,17 @@ public class UpgradeCardsGenerator : MonoBehaviour
         }
     }
 
-    private void generatePair()
+    private void generatePair(bool fadeInAnimation)
     {
+
+        pairsToBeGenerated--;
         int totalNumberOfCards = 3;
+        
+        if (fadeInAnimation)
+        {
+            StartCoroutine(fadeIn());
+        }
+        
         for (int cardNumber = 0; cardNumber < totalNumberOfCards; cardNumber++)
         {
             var newCard = Instantiate(upgradeCard, transform);
@@ -105,13 +113,24 @@ public class UpgradeCardsGenerator : MonoBehaviour
             
             
             upgradeCards.Add(newCard);
-            newCard.transform.localScale = Vector3.zero;
+            if (fadeInAnimation)
+            {
+                newCard.transform.localScale = Vector3.zero;
+            }
         }
     }
 
     public void cardChosen()
     {
-        StartCoroutine(shrinkCards());
+        if (pairsToBeGenerated == 0)
+        {
+            StartCoroutine(shrinkCards());
+        }
+        else
+        {
+            deleteCards();
+            generatePair(false);
+        }
     }
 
     private IEnumerator shrinkCards()
