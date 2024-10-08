@@ -38,6 +38,9 @@ public class Player : Character
         if (DataStorage.instance.floor != 1)
         {
             hp = DataStorage.instance.playerHp;
+            maxHp = DataStorage.instance.playerMaxHp;
+            playerLevel = DataStorage.instance.playerLevel;
+            expCount = DataStorage.instance.playerExp;
         }
         DataStorage.instance.equipUpgrades(this);
         heal(0);
@@ -265,6 +268,16 @@ public class Player : Character
             return true;
         }
         return false;
+    }
+
+    public int getExp()
+    {
+        return expCount;
+    }
+
+    public int getPlayerLevel()
+    {
+        return playerLevel;
     }
 }
 public enum bombTypes

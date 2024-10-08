@@ -201,6 +201,9 @@ public class Dungeon : MonoBehaviour
     {
         DataStorage.instance.floor++;
         DataStorage.instance.playerHp = playerInstance.getHp();
+        DataStorage.instance.playerMaxHp = playerInstance.getMaxHp();
+        DataStorage.instance.playerExp = playerInstance.getExp();
+        DataStorage.instance.playerLevel = playerInstance.getPlayerLevel();
         SceneManager.LoadScene("Gameplay");
         /*
         floor++;
