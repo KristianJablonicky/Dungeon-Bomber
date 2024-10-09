@@ -7,7 +7,7 @@ public class Player : Character
     [SerializeField] private Bomb bomb;
     public BombAttributes bombSquare, bombPlus, bombX;
 
-    [SerializeField] private int playerLevel = 1;
+    [SerializeField] private int level = 1;
     [SerializeField] private int expCount = 0;
     private int currentFloorUpgrades = 0;
 
@@ -37,11 +37,11 @@ public class Player : Character
         {
             hp = DataStorage.instance.playerHp;
             maxHp = DataStorage.instance.playerMaxHp;
-            playerLevel = DataStorage.instance.playerLevel;
+            level = DataStorage.instance.playerLevel;
             expCount = DataStorage.instance.playerExp;
         }
         DataStorage.instance.equipUpgrades(this);
-        heal(0);
+        heal(0, damageTags.None);
     }
 
     private void setUpAttributes()
@@ -93,6 +93,8 @@ public class Player : Character
         metronome.onBeat -= placeBomb;
         dungeon.enemyKilled -= onEnemyKill;
         base.die();
+
+        DataStorage.instance.updateHighScore();
     }
 
     private void enableInput(object sender, System.EventArgs e)
@@ -253,13 +255,12 @@ public class Player : Character
         expCount++;
         if (reachedNewPlayerLevel())
         {
-            playerLevel++;
+            level++;
             currentFloorUpgrades++;
             expCount = 0;
             increaseMaxHp(1);
             heal(1);
             StartCoroutine(levelUp());
-            Debug.Log("New level:"+ playerLevel + " exp:" + expCount);
         }
     }
 
@@ -268,11 +269,14 @@ public class Player : Character
         /**
          * TODO: adjust leveling logic as needed
          */
+        /*
         if (expCount >= 2)
         {
             return true;
         }
         return false;
+        */
+        return expCount >= (int)(2 + Mathf.Pow(level * 0.5f, 2));
     }
 
     public int getExp()
@@ -282,7 +286,7 @@ public class Player : Character
 
     public int getPlayerLevel()
     {
-        return playerLevel;
+        return level;
     }
 
     public int getCurrentFloorUpgrades()
@@ -302,7 +306,6 @@ public class Player : Character
         }
         transform.localScale = formerScale;
     }
-
 }
 public enum bombTypes
 {

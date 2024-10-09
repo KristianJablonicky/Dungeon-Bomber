@@ -5,13 +5,31 @@ using UnityEngine;
 
 public class HitSplat : MonoBehaviour
 {
-    [SerializeField] private TMP_Text text;
+    [SerializeField] private TMP_Text hitSplatText;
     float timeAlive = 0f, duration = 0.5f;
     Vector3 maxY;
 
-    public void setUp(int damageTaken) 
+    public void setUp(DamageArgs damageArgs) 
     {
-        text.text = damageTaken.ToString();
+        if (damageArgs.amount == 0)
+        {
+            Destroy(gameObject);
+        }
+
+
+        hitSplatText.text = damageArgs.amount.ToString();
+        if (damageArgs.tag.ToString().Contains("critical"))
+        {
+            hitSplatText.text += "!";
+        }
+        if (damageArgs.tag.ToString().Contains("Heal"))
+        {
+            hitSplatText.color = Color.green;
+        }
+        if (damageArgs.tag == damageTags.MaxHpIncreaseHeal)
+        {
+            hitSplatText.text = "+" + hitSplatText.text;
+        }
         StartCoroutine(Rescale());
         maxY = new Vector3(0, 0.5f);
     }
@@ -51,9 +69,20 @@ public class HitSplat : MonoBehaviour
 
 public class DamageArgs : EventArgs
 {
-    public int damage;
-    public DamageArgs(int damage)
+    public int amount;
+    public damageTags tag;
+    public DamageArgs(int damage, damageTags tag)
     {
-        this.damage = damage;
+        this.amount = damage;
+        this.tag = tag;
     }
+}
+
+public enum damageTags
+{
+    None,
+    Damage,
+    CriticalDamage,
+    Heal,
+    MaxHpIncreaseHeal
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Vitality : Upgrade
 {
-    private int increase = 3;
+    private int increase = 2;
     public override void equipEffect(Player player)
     {
     }

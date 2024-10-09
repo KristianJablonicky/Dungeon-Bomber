@@ -6,7 +6,7 @@ public class Spider : Enemy
 {
     public override void collideWithCharacter(Character character)
     {
-        character.takeDamage(1);
+        character.takeDamage(getScaledDamage(1));
     }
 
     public override int getBaseMaxHp()

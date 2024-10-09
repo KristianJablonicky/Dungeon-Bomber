@@ -40,13 +40,13 @@ public class Metronome : MonoBehaviour
     {
         instance = this;
         updateCurrentBeatState = updateBeatBeforeUserInput;
-        enabled = false;
-        StartCoroutine(countIn());
     }
 
     private void Start()
     {
         Dungeon.instance.ladderReached += pause;
+        StartCoroutine(countIn());
+        enabled = false;
     }
 
     private void pause(object sender, EventArgs e)
@@ -59,6 +59,7 @@ public class Metronome : MonoBehaviour
     {
         yield return null;
         BPM = 115 + 5 * (DataStorage.instance.floor - 1);
+
         float timeElapsed = 0f, measureLength = beatLength * 4f;
         countInBeat?.Invoke(this, EventArgs.Empty);
         for (int beat = 0; beat < 3; beat++)

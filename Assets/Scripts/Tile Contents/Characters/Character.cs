@@ -35,7 +35,7 @@ public abstract class Character : TileContent
         maxHp += increase;
         if (restoreHealth)
         {
-            heal(increase);
+            heal(increase, damageTags.MaxHpIncreaseHeal);
         }
     }
 
@@ -45,10 +45,11 @@ public abstract class Character : TileContent
         return hp;
     }
 
-    public void takeDamage(int damage)
+    public void takeDamage(int damage, damageTags tag = damageTags.Damage)
     {
+        damage = Math.Min(damage, hp);
         hp -= damage;
-        onHpChange?.Invoke(this, new DamageArgs(damage));
+        onHpChange?.Invoke(this, new DamageArgs(damage, tag));
         if (hp <= 0)
         {
             die();
@@ -59,10 +60,11 @@ public abstract class Character : TileContent
         }
     }
 
-    public void heal(int healAmount)
+    public void heal(int healAmount, damageTags tag = damageTags.Heal)
     {
+        healAmount = Math.Min(healAmount, maxHp - hp);
         hp += healAmount;
-        onHpChange?.Invoke(this, new DamageArgs(healAmount));
+        onHpChange?.Invoke(this, new DamageArgs(healAmount, tag));
     }
     private IEnumerator hurtAnimation()
     {

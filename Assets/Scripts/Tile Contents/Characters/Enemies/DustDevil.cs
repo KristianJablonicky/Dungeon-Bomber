@@ -15,7 +15,7 @@ public class NewBehaviourScript : Enemy
 
     public override void collideWithCharacter(Character character)
     {
-        character.takeDamage(1);
+        character.takeDamage(getScaledDamage(2));
     }
 
     public override int getBaseMaxHp()

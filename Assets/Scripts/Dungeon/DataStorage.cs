@@ -4,7 +4,8 @@ using UnityEngine;
 public class DataStorage : MonoBehaviour
 {
     public static DataStorage instance = null;
-    public int floor = 0, playerHp, playerMaxHp, playerLevel, playerExp;
+    public int floor = 0, playerHp, playerMaxHp, playerLevel, playerExp,
+        highScore;
 
     private List<Upgrade> upgrades;
 
@@ -13,6 +14,7 @@ public class DataStorage : MonoBehaviour
         // first awakening
         if (instance == null)
         {
+            highScore = PlayerPrefs.GetInt("HighScore");
             floor = 1;
             instance = this;
             DontDestroyOnLoad(this);
@@ -51,6 +53,17 @@ public class DataStorage : MonoBehaviour
         floor = 0;
         upgrades = new List<Upgrade>();
         playerHp = 3;
+        playerLevel = 0;
+        playerExp = 0;
+    }
+
+    public void updateHighScore()
+    {
+        if (floor > highScore)
+        {
+            highScore = floor;
+            PlayerPrefs.SetInt("HighScore", highScore);
+        }
     }
 
 }

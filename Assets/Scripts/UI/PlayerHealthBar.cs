@@ -20,7 +20,7 @@ public class PlayerHealthBar : MonoBehaviour
     {
         this.player = (Player)sender;
         player.onHpChange += onHpChange;
-        onHpChange(player, new DamageArgs(0));
+        onHpChange(player, new DamageArgs(0, damageTags.None));
     }
 
     private void updateHealthBarText()

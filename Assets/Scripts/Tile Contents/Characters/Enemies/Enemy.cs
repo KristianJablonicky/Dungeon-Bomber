@@ -5,11 +5,19 @@ using System;
 
 public abstract class Enemy : Character
 {
+    protected float damageScaling;
     protected override void Start()
     {
         base.Start();
         metronome.onBeatEnemy += onTick;
-        increaseMaxHp((int)(getBaseMaxHp() * (DataStorage.instance.floor - 1) * 0.5f), true);
+        int floor = DataStorage.instance.floor;
+        increaseMaxHp((int)(getBaseMaxHp() * (floor - 1) * 0.5f), true);
+        damageScaling = 1f + ((floor - 1) * 0.5f);
+    }
+
+    protected int getScaledDamage(int unscaledDamage)
+    {
+        return (int)(unscaledDamage * damageScaling);
     }
 
     public override void die()

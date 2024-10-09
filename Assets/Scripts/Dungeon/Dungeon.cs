@@ -223,14 +223,14 @@ public class Dungeon : MonoBehaviour
 
     private void instantiateHitsplat(object sender, DamageArgs e)
     {
-        if (e.damage == 0)
+        if (e.amount == 0)
         {
             return;
         }
         var hitSplatInstance = Instantiate(hitSplat, ((Character)sender).transform.position, Quaternion.identity);
         hitSplatInstance.transform.SetParent(hitSplatsParent.transform, false);
         hitSplatInstance.transform.position = ((Character)sender).transform.position;
-        hitSplatInstance.setUp(e.damage);
+        hitSplatInstance.setUp(e);
     }
 
     public void onEnemyKilled()
