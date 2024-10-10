@@ -11,7 +11,6 @@ public class PlayerHealthBar : MonoBehaviour
     [SerializeField] private TMP_Text healthBarText;
     private Player player;
 
-    private int maxWidth;
     void Start()
     {
         Dungeon.instance.playerSpawned += setUpPlayer;
@@ -25,7 +24,7 @@ public class PlayerHealthBar : MonoBehaviour
 
     private void updateHealthBarText()
     {
-        healthBarText.text = $"Health: {player.getHp()}/{player.getMaxHp()}";
+        healthBarText.text = $"{player.getHp()}/{player.getMaxHp()}";
     }
 
     private void onHpChange(object sender, DamageArgs e)
