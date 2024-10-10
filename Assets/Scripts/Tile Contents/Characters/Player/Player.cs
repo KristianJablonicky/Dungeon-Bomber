@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Character
@@ -9,7 +10,21 @@ public class Player : Character
 
     [SerializeField] private int level = 1;
     [SerializeField] private int expCount = 0;
+    [SerializeField] private int currentExpThreshhold = 2;
     private int currentFloorUpgrades = 0;
+    Dictionary<int, int> expThreshholds = new Dictionary<int, int>
+    {
+        { 1, 2 },
+        { 2, 4 },
+        { 3, 6 },
+        { 4, 10 },
+        { 5, 12 },
+        { 6, 16 },
+        { 7, 20 },
+        { 8, 24 },
+        { 9, 30 },
+        { 10, 36 }
+    };
 
     private int bombCoolDown = 3, currentCoolDown = 0;
     public bool movementEnabled = false, placedBombAlready = false;
@@ -39,6 +54,7 @@ public class Player : Character
             maxHp = DataStorage.instance.playerMaxHp;
             level = DataStorage.instance.playerLevel;
             expCount = DataStorage.instance.playerExp;
+            currentExpThreshhold = expThreshholds[level];
         }
         DataStorage.instance.equipUpgrades(this);
         heal(0, damageTags.None);
@@ -252,12 +268,14 @@ public class Player : Character
 
     private void onEnemyKill(object sender, System.EventArgs e)
     {
+        if (level == 10) return;
         expCount++;
         if (reachedNewPlayerLevel())
         {
             level++;
             currentFloorUpgrades++;
             expCount = 0;
+            currentExpThreshhold = expThreshholds[level];
             increaseMaxHp(1);
             heal(1);
             StartCoroutine(levelUp());
@@ -276,7 +294,7 @@ public class Player : Character
         }
         return false;
         */
-        return expCount >= (int)(2 + Mathf.Pow(level * 0.5f, 2));
+        return expCount >= currentExpThreshhold;
     }
 
     public int getExp()
