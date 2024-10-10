@@ -12,6 +12,7 @@ public class Player : Character
     [SerializeField] private int expCount = 0;
     [SerializeField] private int currentExpThreshhold = 2;
     private int currentFloorUpgrades = 0;
+    public event EventHandler onExpChange;
     Dictionary<int, int> expThreshholds = new Dictionary<int, int>
     {
         { 1, 2 },
@@ -276,10 +277,10 @@ public class Player : Character
             currentFloorUpgrades++;
             expCount = 0;
             currentExpThreshhold = expThreshholds[level];
-            increaseMaxHp(1);
-            heal(1);
+            increaseMaxHp(1, true);
             StartCoroutine(levelUp());
         }
+        onExpChange?.Invoke(this, EventArgs.Empty);
     }
 
     private bool reachedNewPlayerLevel()
@@ -310,6 +311,16 @@ public class Player : Character
     public int getCurrentFloorUpgrades()
     {
         return currentFloorUpgrades;
+    }
+
+    public int getExpCount()
+    {
+        return expCount;
+    }
+
+    public int getExpThreshhold()
+    {
+        return currentExpThreshhold;
     }
 
     private IEnumerator levelUp()
