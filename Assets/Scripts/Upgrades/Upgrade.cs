@@ -31,15 +31,15 @@ public abstract class Upgrade : MonoBehaviour
     }
     protected BombAttributes getBomb(Player player, upgradeTypes type)
     {
-        if (type == upgradeTypes.sacrifice || type == upgradeTypes.neutral)
+        if (type == upgradeTypes.Sacrifice || type == upgradeTypes.Neutral)
         {
             return null;
         }
-        else if (type == upgradeTypes.red)
+        else if (type == upgradeTypes.Red)
         {
             return player.bombSquare;
         }
-        else if (type == upgradeTypes.blue)
+        else if (type == upgradeTypes.Blue)
         {
             return player.bombX;
         }
@@ -64,10 +64,10 @@ class bombSpecificUtilities
 
 public enum upgradeTypes
 {
-    red,
-    green,
-    blue,
-    random,
-    neutral,
-    sacrifice
+    Red,
+    Green,
+    Blue,
+    Random,
+    Neutral,
+    Sacrifice
 }

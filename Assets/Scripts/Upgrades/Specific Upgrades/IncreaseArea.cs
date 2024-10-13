@@ -23,6 +23,6 @@ public class IncreaseArea : Upgrade
 
     public override upgradeTypes getType()
     {
-        return upgradeTypes.random;
+        return upgradeTypes.Random;
     }
 }

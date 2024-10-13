@@ -131,7 +131,7 @@ public abstract class Character : TileContent
     }
 
     // move the character if successful, if not, return object that stood in the way
-    protected TileContent move(Movement movement, int moveTiles = 1)
+    public TileContent move(Movement movement, int moveTiles = 1)
     {
         Vector3 direction = Directions.vectors[(int)movement];
         TileContent targetTile = dungeon.isTileOccupied(new Vector3(x, y) + direction);

@@ -12,7 +12,8 @@ public class Player : Character
     [SerializeField] private int expCount = 0;
     [SerializeField] private int currentExpThreshhold = 2;
     private int currentFloorUpgrades = 0;
-    public event EventHandler onExpChange;
+    public event EventHandler onExpChange, bombPlaced;
+
     Dictionary<int, int> expThreshholds = new Dictionary<int, int>
     {
         { 1, 2 },
@@ -203,7 +204,6 @@ public class Player : Character
             return;
             */
         }
-        int sourceX = x, sourceY = y;
         var collider = move(movement);
         if (collider is Ladder)
         {
@@ -216,7 +216,7 @@ public class Player : Character
             placedBombAlready = true;
         }
 
-        disableInput(this, System.EventArgs.Empty);
+        disableInput(this, EventArgs.Empty);
     }
 
     private void delayMove(object sender, EventArgs e)
@@ -230,7 +230,7 @@ public class Player : Character
         positionUpdated?.Invoke(this, EventArgs.Empty);
     }
 
-    private void spawnBomb()
+    public void spawnBomb()
     {
         currentCoolDown = bombCoolDown;
         var newBomb = Instantiate(bomb, new Vector3(x, y), Quaternion.identity);
@@ -257,6 +257,7 @@ public class Player : Character
         newBomb.setUp(attributes.ticksUntilExplosion, attributes.damage,
             attributes.horizontalLength, attributes.verticalLength, attributes.diagonalLength);
         //newBomb.setUp(ticksUntilExplosion, damage, horizontalLength, verticalLength, diagonalLength, areaSize);
+        bombPlaced?.Invoke(attributes, EventArgs.Empty);
     }
 
     public override void collideWithCharacter(Character character)

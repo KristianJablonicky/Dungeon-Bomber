@@ -18,6 +18,6 @@ public class Vitality : Upgrade
 
     public override upgradeTypes getType()
     {
-        return upgradeTypes.neutral;
+        return upgradeTypes.Neutral;
     }
 }

@@ -21,7 +21,7 @@ public class UpgradeCard : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
 
 
-        if (upgrade.getType() == upgradeTypes.random)
+        if (upgrade.getType() == upgradeTypes.Random)
         {
             type = upgrade.setUpSpecificBombTypeUtilities();
         }
@@ -41,15 +41,15 @@ public class UpgradeCard : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void setColor()
     {
-        if (type == upgradeTypes.red)
+        if (type == upgradeTypes.Red)
         {
             colorfulHighlights.color = Color.red;
         }
-        else if (type == upgradeTypes.green)
+        else if (type == upgradeTypes.Green)
         {
             colorfulHighlights.color = Color.green;
         }
-        else if (type == upgradeTypes.blue)
+        else if (type == upgradeTypes.Blue)
         {
             colorfulHighlights.color = Color.blue;
         }

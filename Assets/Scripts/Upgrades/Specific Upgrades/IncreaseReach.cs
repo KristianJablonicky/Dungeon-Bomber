@@ -19,6 +19,6 @@ public class IncreaseReach : Upgrade
 
     public override upgradeTypes getType()
     {
-        return upgradeTypes.neutral;
+        return upgradeTypes.Neutral;
     }
 }

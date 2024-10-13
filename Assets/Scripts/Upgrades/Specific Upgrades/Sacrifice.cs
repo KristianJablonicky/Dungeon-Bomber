@@ -18,6 +18,6 @@ public class Sacrifice : Upgrade
 
     public override upgradeTypes getType()
     {
-        return upgradeTypes.sacrifice;
+        return upgradeTypes.Sacrifice;
     }
 }

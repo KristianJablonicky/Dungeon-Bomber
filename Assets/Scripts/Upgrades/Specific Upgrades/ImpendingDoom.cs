@@ -21,6 +21,6 @@ public class ImpendingDoom : Upgrade
 
     public override upgradeTypes getType()
     {
-        return upgradeTypes.random;
+        return upgradeTypes.Random;
     }
 }
