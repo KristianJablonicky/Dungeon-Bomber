@@ -10,17 +10,19 @@ public class Bomb : TileContent
     [SerializeField] private Explosion explosion;
     private List<Explosion> explosionList;
     private int currentBeatsUntilImpact, beatsUntilImpact, damage;
-    public void setUp (int beatsUntilImpact, int damage, int horizontalLength, int verticalLength, int diagonalLength)
+    private bombTypes type;
+    public void setUp (int beatsUntilImpact, int damage, int horizontalLength, int verticalLength, int diagonalLength, bombTypes type)
     {
         Start();
         Metronome.instance.onBombUpdate += reduceBeatsUntilImpact;
+        this.type = type;
         this.beatsUntilImpact = beatsUntilImpact;
         currentBeatsUntilImpact = beatsUntilImpact;
         this.damage = damage;
         explosionList = new List<Explosion>();
         
         
-        addExplosion(beatsUntilImpact, damage, 0, 0);
+        addExplosion(1, 0, 0);
         addHorizontalExplosions(horizontalLength);
         addVerticalExplosions(verticalLength);
         addDiagonalExplosions(diagonalLength);
@@ -28,11 +30,11 @@ public class Bomb : TileContent
         updateAlphas();
     }
 
-    private void addExplosion(int beatsUntilImpact, int damage, int xOffset, int yOffset)
+    private void addExplosion(int distance, int xOffset, int yOffset)
     {
         var offset = new Vector3(xOffset, yOffset);
         var exp = Instantiate(explosion, transform.position + offset, Quaternion.identity);
-        exp.setUp(CharacterType.NPC, damage);
+        exp.setUp(CharacterType.NPC, damage, distance, type);
         explosionList.Add(exp);
         exp.transform.SetParent(transform);
     }
@@ -45,7 +47,7 @@ public class Bomb : TileContent
             for (int distance = 1; distance <= length; distance++)
             {
                 target = new Vector3(transform.position.x + direction * distance, transform.position.y);
-                if (addExplosionToTile(target))
+                if (addExplosionToTile(target, distance))
                 {
                     break;
                 }
@@ -70,7 +72,7 @@ public class Bomb : TileContent
             for (int distance = 1; distance <= length; distance++)
             {
                 target = new Vector3(transform.position.x, transform.position.y + direction * distance);
-                if (addExplosionToTile(target))
+                if (addExplosionToTile(target, distance))
                 {
                     break;
                 }
@@ -96,7 +98,7 @@ public class Bomb : TileContent
                 for (int distance = 1; distance <= length; distance++)
                 {
                     target = new Vector3(transform.position.x + directionX * distance, transform.position.y + directionY * distance);
-                    if (addExplosionToTile(target))
+                    if (addExplosionToTile(target, distance))
                     {
                         break;
                     }
@@ -115,18 +117,18 @@ public class Bomb : TileContent
         */
     }
 
-    private bool addExplosionToTile(Vector3 targetTile)
+    private bool addExplosionToTile(Vector3 targetTile, int distance)
     {
         var content = dungeon.isTileOccupied(targetTile);
         int x = (int)(targetTile.x - transform.position.x), y = (int)(targetTile.y - transform.position.y);
         if (content == null || content is Character)
         {
-            addExplosion(beatsUntilImpact, damage, x, y);
+            addExplosion(distance, x, y);
             return false;
         }
         else if (content is Destructable)
         {
-            addExplosion(beatsUntilImpact, damage, x, y);
+            addExplosion(distance, x, y);
             return true;
         }
         else

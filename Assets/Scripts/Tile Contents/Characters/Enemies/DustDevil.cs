@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NewBehaviourScript : Enemy
@@ -20,7 +18,7 @@ public class NewBehaviourScript : Enemy
 
     public override int getBaseMaxHp()
     {
-        return 1;
+        return 2;
     }
 
     protected override int getPlayerDetectionRadius()

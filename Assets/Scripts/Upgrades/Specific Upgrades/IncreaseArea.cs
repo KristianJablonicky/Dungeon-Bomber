@@ -2,23 +2,16 @@ using UnityEngine;
 
 public class IncreaseArea : Upgrade
 {
-    float lengthIncrese = 1.5f;
+    private readonly int lengthIncrese = 1;
     public override void equipEffect(Player player)
     {
         var bomb = getBomb(player, specificUpgradeType);
-        bomb.horizontalLength = increaseRange(bomb.horizontalLength);
-        bomb.verticalLength = increaseRange(bomb.verticalLength);
-        bomb.diagonalLength = increaseRange(bomb.diagonalLength);
-    }
-
-    private int increaseRange(int length)
-    {
-        return (int)Mathf.Ceil(lengthIncrese * length);
+        bomb.increaseRange(lengthIncrese);
     }
 
     public override string getDescription()
     {
-        return $"Increase the length of your {specificUpgradeType} bomb by {lengthIncrese * 100f}%.";
+        return $"Increase the length of your {specificUpgradeType} bomb by {lengthIncrese}.";
     }
 
     public override upgradeTypes getType()

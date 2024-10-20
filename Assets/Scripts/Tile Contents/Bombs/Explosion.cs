@@ -6,14 +6,31 @@ public class Explosion : TileContent
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
 
-    private int damage;
+    private int baseDamage, distance;
     CharacterType target;
-    public void setUp(CharacterType target, int damage)
+    public void setUp(CharacterType target, int baseDamage, int distance, bombTypes type)
     {
         this.target = target;
-        this.damage = damage;
+        this.baseDamage = baseDamage;
+        this.distance = distance;
 
-        spriteRenderer.color = Color.red;
+        setColor(type);
+    }
+
+    private void setColor(bombTypes type)
+    {
+        if (type == bombTypes.square)
+        {
+            spriteRenderer.color = Color.red;
+        }
+        else if (type == bombTypes.plus)
+        {
+            spriteRenderer.color = Color.green;
+        }
+        else
+        {
+            spriteRenderer.color = Color.blue;
+        }
     }
 
     public void updateAlpha(float newAlpha)
@@ -28,7 +45,7 @@ public class Explosion : TileContent
         if ((target == CharacterType.Player && hitObject is Player)
             || (target == CharacterType.NPC && (hitObject is Enemy)))
         {
-            ((Character)hitObject).takeDamage(damage, damageTags.Damage);
+            ((Character)hitObject).takeDamage(baseDamage * distance, damageTags.Damage);
         }
         else if (hitObject is Destructable)
         {

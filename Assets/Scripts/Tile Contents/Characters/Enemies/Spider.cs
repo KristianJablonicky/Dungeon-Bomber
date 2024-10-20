@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spider : Enemy
@@ -11,7 +9,7 @@ public class Spider : Enemy
 
     public override int getBaseMaxHp()
     {
-        return 1;
+        return 2;
     }
 
     protected override int getPlayerDetectionRadius()

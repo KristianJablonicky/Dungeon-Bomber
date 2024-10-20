@@ -255,7 +255,7 @@ public class Player : Character
         }
 
         newBomb.setUp(attributes.ticksUntilExplosion, attributes.damage,
-            attributes.horizontalLength, attributes.verticalLength, attributes.diagonalLength);
+            attributes.horizontalLength, attributes.verticalLength, attributes.diagonalLength, currentBombType);
         //newBomb.setUp(ticksUntilExplosion, damage, horizontalLength, verticalLength, diagonalLength, areaSize);
         bombPlaced?.Invoke(attributes, EventArgs.Empty);
     }

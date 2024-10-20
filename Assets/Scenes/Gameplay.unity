@@ -1092,7 +1092,7 @@ GameObject:
   - component: {fileID: 510493053}
   - component: {fileID: 510493052}
   m_Layer: 5
-  m_Name: WhiteFlash
+  m_Name: healthTransition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1130,7 +1130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6, g: 1, b: 0.6, a: 1}
+  m_Color: {r: 0, g: 0.5647059, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1357,6 +1357,7 @@ MonoBehaviour:
   - {fileID: 8027277574722321168, guid: b87bec1c65b4b1e439926be2b871a99f, type: 3}
   - {fileID: 2722051029532816566, guid: a1381d51da13db64482bed9cdde85a48, type: 3}
   - {fileID: 1534819307622568898, guid: 2a00cb341be50c149a8750fbac3c6ffe, type: 3}
+  - {fileID: 4383653545132787581, guid: 7ae93299cef58e149969e275170b051e, type: 3}
   sacrifice: {fileID: 2372230477830773752, guid: c2ebe540385005d4c93f911a0a24636d, type: 3}
 --- !u!1 &606310516
 GameObject:
@@ -1541,7 +1542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.78431374, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1759,7 +1760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.78431374, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

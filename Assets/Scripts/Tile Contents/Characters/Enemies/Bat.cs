@@ -14,7 +14,7 @@ public class Bat : Enemy
 
     public override int getBaseMaxHp()
     {
-        return 2;
+        return 4;
     }
 
     protected override int getPlayerDetectionRadius()
@@ -24,12 +24,14 @@ public class Bat : Enemy
 
     protected override void onTick()
     {
+        /*
         Movement? playerDirection = detectPlayer();
         if (playerDirection != null)
         {
             move(playerDirection.Value);
         }
-        else if (moveUp)
+        else */
+        if (moveUp)
         {
             move(Movement.Up);
             moveUp = false;

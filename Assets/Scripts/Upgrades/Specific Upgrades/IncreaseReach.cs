@@ -1,24 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class IncreaseReach : Upgrade
 {
-    private int increase = 2;
+    private readonly int increase = 2, decrease = 1;
     public override void equipEffect(Player player)
     {
-        player.bombSquare.horizontalLength += increase;
-        player.bombPlus.horizontalLength += increase;
-        player.bombX.horizontalLength += increase;
+        var bomb = getBomb(player, specificUpgradeType);
+        bomb.increaseRange(increase);
+        bomb.damage -= decrease;
     }
 
     public override string getDescription()
     {
-        return $"Increase your horizontal range of all bombs by {increase}.";
+        return $"Increase your {specificUpgradeType} bomb's range by {increase}, but lower its damage by {decrease}.";
     }
 
     public override upgradeTypes getType()
     {
-        return upgradeTypes.Neutral;
+        return upgradeTypes.Random;
     }
 }
