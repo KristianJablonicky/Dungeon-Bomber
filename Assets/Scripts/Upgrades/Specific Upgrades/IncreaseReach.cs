@@ -3,14 +3,14 @@ public class IncreaseReach : Upgrade
     private readonly int increase = 2, decrease = 1;
     public override void equipEffect(Player player)
     {
-        var bomb = getBomb(player, specificUpgradeType);
-        bomb.increaseRange(increase);
-        bomb.damage -= decrease;
+        var spirit = getSpirit(player, specificUpgradeType);
+        spirit.increaseRange(increase);
+        spirit.damage -= decrease;
     }
 
     public override string getDescription()
     {
-        return $"Increase your {specificUpgradeType} bomb's range by {increase}, but lower its damage by {decrease}.";
+        return $"+ {increase} {getTypeString()} {Icons.range},\n-{decrease} {Icons.damage}";
     }
 
     public override upgradeTypes getType()

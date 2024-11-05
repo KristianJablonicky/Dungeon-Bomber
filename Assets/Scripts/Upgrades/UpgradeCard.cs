@@ -19,11 +19,9 @@ public class UpgradeCard : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void setUpgrade(Upgrade upgrade, UpgradeCardsGenerator generator)
     {
-
-
         if (upgrade.getType() == upgradeTypes.Random)
         {
-            type = upgrade.setUpSpecificBombTypeUtilities();
+            type = upgrade.setUpSpecificSpiritTypeUtilities();
         }
         else
         {
@@ -41,15 +39,15 @@ public class UpgradeCard : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void setColor()
     {
-        if (type == upgradeTypes.Red)
+        if (type == upgradeTypes.Bear)
         {
             colorfulHighlights.color = Color.red;
         }
-        else if (type == upgradeTypes.Green)
+        else if (type == upgradeTypes.Wolf)
         {
             colorfulHighlights.color = Color.green;
         }
-        else if (type == upgradeTypes.Blue)
+        else if (type == upgradeTypes.Owl)
         {
             colorfulHighlights.color = Color.blue;
         }

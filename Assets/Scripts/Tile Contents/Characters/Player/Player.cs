@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class Player : Character
 {
-    [SerializeField] private Bomb bomb;
-    public BombAttributes bombSquare, bombPlus, bombX;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Spirit spirit;
+    public SpiritAttributes bear, wolf, owl;
 
     [SerializeField] private int level = 1;
     [SerializeField] private int expCount = 0;
     [SerializeField] private int currentExpThreshhold = 2;
     private int currentFloorUpgrades = 0;
-    public event EventHandler onExpChange, bombPlaced;
+    public event EventHandler onExpChange, spiritSummoned;
 
     Dictionary<int, int> expThreshholds = new Dictionary<int, int>
     {
@@ -28,16 +29,16 @@ public class Player : Character
         { 10, 36 }
     };
 
-    private int bombCoolDown = 3, currentCoolDown = 0;
-    public bool movementEnabled = false, placedBombAlready = false;
+    private int spiritCoolDown = 3, currentCoolDown = 0;
+    public bool movementEnabled = false, summonedSpiritAlready = false;
 
-    public bombTypes currentBombType = bombTypes.square;
+    public spiritType currentSpiritType = spiritType.bear;
 
-    public EventHandler bombChanged, positionUpdated;
+    public EventHandler spiritChanged, positionUpdated;
 
     public override int getBaseMaxHp()
     {
-        return 3;
+        return 5;
     }
 
     protected override void Start()
@@ -47,7 +48,7 @@ public class Player : Character
         metronome.onPlayerInputStart += enableInput;
         dungeon.enemyKilled += onEnemyKill;
 
-        metronome.onBeat += placeBomb;
+        metronome.onBeat += summonSpirit;
 
         setUpAttributes();
         if (DataStorage.instance.floor != 1)
@@ -60,34 +61,42 @@ public class Player : Character
         }
         DataStorage.instance.equipUpgrades(this);
         heal(0, damageTags.None);
+
+        Metronome.instance.onBeat += startGrooving;
+    }
+
+    private void startGrooving(object sender, EventArgs e)
+    {
+        Metronome.instance.onBeat -= startGrooving;
+        animator.speed = 1f / Metronome.instance.getBeatLength();
     }
 
     private void setUpAttributes()
     {
-        bombSquare = new()
+        bear = new()
         {
             horizontalLength = 1,
             verticalLength = 1,
             diagonalLength = 1
         };
 
-        bombPlus = new()
+        wolf = new()
         {
             horizontalLength = 2,
             verticalLength = 2
         };
 
-        bombX = new()
+        owl = new()
         {
             diagonalLength = 2
         };
     }
 
-    private void placeBomb(object sender, System.EventArgs e)
+    private void summonSpirit(object sender, System.EventArgs e)
     {
-        if (currentCoolDown < 0 && !placedBombAlready)
+        if (currentCoolDown < 0 && !summonedSpiritAlready)
         {
-            spawnBomb();
+            summonSpirit();
         }
     }
 
@@ -108,7 +117,7 @@ public class Player : Character
     public override void die()
     {
         metronome.onPlayerInputStart -= enableInput;
-        metronome.onBeat -= placeBomb;
+        metronome.onBeat -= summonSpirit;
         dungeon.enemyKilled -= onEnemyKill;
         base.die();
 
@@ -119,7 +128,7 @@ public class Player : Character
     {
         currentCoolDown--;
 
-        placedBombAlready = false;
+        summonedSpiritAlready = false;
         movementEnabled = true;
     }
     private void disableInput(object sender, System.EventArgs e)
@@ -131,15 +140,15 @@ public class Player : Character
     {
         if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Alpha1))
         {
-            changeBomb(bombTypes.square);
+            changeSummon(spiritType.bear);
         }
         else if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Alpha2))
         {
-            changeBomb(bombTypes.plus);
+            changeSummon(spiritType.wolf);
         }
         else if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Alpha3))
         {
-            changeBomb(bombTypes.x);
+            changeSummon(spiritType.owl);
         }
 
         else if (Input.GetKeyDown(KeyCode.H))
@@ -167,23 +176,13 @@ public class Player : Character
             {
                 jump(Movement.Left);
             }
-            /*
-            else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Keypad0))
-            {
-                if (currentCoolDown == 0)
-                {
-                    spawnBomb();
-                    currentCoolDown = bombCoolDown;
-                }
-            }
-            */
         }
     }
 
-    public void changeBomb(bombTypes type)
+    public void changeSummon(spiritType type)
     {
-        currentBombType = type;
-        bombChanged?.Invoke(this, EventArgs.Empty);
+        currentSpiritType = type;
+        spiritChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private Movement delayedMovementDirection;
@@ -212,8 +211,8 @@ public class Player : Character
 
         if (currentCoolDown < 0)
         {
-            spawnBomb();
-            placedBombAlready = true;
+            summonSpirit();
+            summonedSpiritAlready = true;
         }
 
         disableInput(this, EventArgs.Empty);
@@ -230,34 +229,30 @@ public class Player : Character
         positionUpdated?.Invoke(this, EventArgs.Empty);
     }
 
-    public void spawnBomb()
+    public void summonSpirit()
     {
-        currentCoolDown = bombCoolDown;
-        var newBomb = Instantiate(bomb, new Vector3(x, y), Quaternion.identity);
+        currentCoolDown = spiritCoolDown;
+        var newSpirit = Instantiate(spirit, new Vector3(x, y), Quaternion.identity);
         int[] shape = { 0, 0, 0 };
-        shape[(int)currentBombType] = 1;
-        /*
-        newBomb.setUp(ticksUntilExplosion, damage, shape[1] * horizontalLength, shape[1] * verticalLength,
-            shape[2] * diagonalLength, shape[0] * areaSize);
-        */
-        BombAttributes attributes = bombSquare;
-        if (currentBombType == bombTypes.square)
+        shape[(int)currentSpiritType] = 1;
+
+        SpiritAttributes attributes = bear;
+        if (currentSpiritType == spiritType.bear)
         {
-            attributes = bombSquare;
+            attributes = bear;
         }
-        else if (currentBombType == bombTypes.plus)
+        else if (currentSpiritType == spiritType.wolf)
         {
-            attributes = bombPlus;
+            attributes = wolf;
         }
-        else if (currentBombType == bombTypes.x)
+        else if (currentSpiritType == spiritType.owl)
         {
-            attributes = bombX;
+            attributes = owl;
         }
 
-        newBomb.setUp(attributes.ticksUntilExplosion, attributes.damage,
-            attributes.horizontalLength, attributes.verticalLength, attributes.diagonalLength, currentBombType);
-        //newBomb.setUp(ticksUntilExplosion, damage, horizontalLength, verticalLength, diagonalLength, areaSize);
-        bombPlaced?.Invoke(attributes, EventArgs.Empty);
+        newSpirit.setUp(attributes.ticksUntilExplosion, attributes.damage,
+            attributes.horizontalLength, attributes.verticalLength, attributes.diagonalLength, currentSpiritType);
+        spiritSummoned?.Invoke(attributes, EventArgs.Empty);
     }
 
     public override void collideWithCharacter(Character character)
@@ -337,9 +332,9 @@ public class Player : Character
         transform.localScale = formerScale;
     }
 }
-public enum bombTypes
+public enum spiritType
 {
-    square,
-    plus,
-    x
+    bear,
+    wolf,
+    owl
 }

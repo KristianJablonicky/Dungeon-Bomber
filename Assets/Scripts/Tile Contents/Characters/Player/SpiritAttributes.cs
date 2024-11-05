@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BombAttributes
+public class SpiritAttributes
 {
     public int ticksUntilExplosion = 2, damage = 1, horizontalLength = 0, verticalLength = 0, diagonalLength = 0;
     public void increaseRange(int increaseAmount)

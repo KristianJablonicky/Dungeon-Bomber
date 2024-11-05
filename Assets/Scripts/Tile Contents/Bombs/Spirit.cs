@@ -1,33 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
-public class Bomb : TileContent
+public class Spirit : TileContent
 {
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite spiritBear, spiritWolf, spiritOwl;
+
     [SerializeField] private Explosion explosion;
     private List<Explosion> explosionList;
     private int currentBeatsUntilImpact, beatsUntilImpact, damage;
-    private bombTypes type;
-    public void setUp (int beatsUntilImpact, int damage, int horizontalLength, int verticalLength, int diagonalLength, bombTypes type)
+    private spiritType type;
+    public void setUp (int beatsUntilImpact, int damage, int horizontalLength, int verticalLength, int diagonalLength, spiritType type)
     {
         Start();
-        Metronome.instance.onBombUpdate += reduceBeatsUntilImpact;
+        Metronome.instance.onSpiritUpdate += reduceBeatsUntilImpact;
         this.type = type;
         this.beatsUntilImpact = beatsUntilImpact;
         currentBeatsUntilImpact = beatsUntilImpact;
         this.damage = damage;
         explosionList = new List<Explosion>();
-        
-        
+
+        setSpiritType();
+
         addExplosion(1, 0, 0);
         addHorizontalExplosions(horizontalLength);
         addVerticalExplosions(verticalLength);
         addDiagonalExplosions(diagonalLength);
-        
+
+        StartCoroutine(fadeIn());
+
         updateAlphas();
+    }
+
+    private void setSpiritType()
+    {
+        if (type == spiritType.wolf)
+        {
+            spriteRenderer.sprite = spiritWolf;
+        }
+        else if (type == spiritType.owl)
+        {
+            spriteRenderer.sprite = spiritOwl;
+        }
     }
 
     private void addExplosion(int distance, int xOffset, int yOffset)
@@ -150,6 +165,21 @@ public class Bomb : TileContent
             updateAlphas();
         }
     }
+
+    private IEnumerator fadeIn()
+    {
+        spriteRenderer.color = new Color(1, 1, 1, 0);
+        float targetAlpha = 0.6f;
+        while (spriteRenderer.color.a < targetAlpha)
+        {
+            spriteRenderer.color = new Color(1, 1, 1, spriteRenderer.color.a + Time.deltaTime * 6f);
+            transform.localScale = Vector3.one * spriteRenderer.color.a / targetAlpha;
+            yield return null;
+        }
+        spriteRenderer.color = new Color(1, 1, 1, targetAlpha);
+        transform.localScale = Vector3.one;
+    }
+
     private void updateAlphas()
     {
         foreach(var exp in explosionList)
@@ -159,7 +189,7 @@ public class Bomb : TileContent
     }
     private void explode()
     {
-        Metronome.instance.onBombUpdate -= reduceBeatsUntilImpact;
+        Metronome.instance.onSpiritUpdate -= reduceBeatsUntilImpact;
         foreach (var exp in explosionList)
         {
             exp.explode();
@@ -168,7 +198,16 @@ public class Bomb : TileContent
     }
     private IEnumerator waitForExplosionFlash()
     {
-        yield return new WaitForSeconds(0.2f);
+        float timeElapsed = 0f, duration = 0.2f, startingAlpha = spriteRenderer.color.a;
+        while (timeElapsed < duration)
+        {
+            timeElapsed += Time.deltaTime;
+
+            //transform.localScale = Vector3.one * (1f + timeElapsed);
+            spriteRenderer.color = new Color(1f, 1f, 1f, (1f - timeElapsed / duration) * startingAlpha);
+            yield return null;
+        }
+
         Destroy(gameObject);
     }
 }

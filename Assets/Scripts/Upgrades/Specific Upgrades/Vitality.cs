@@ -13,7 +13,7 @@ public class Vitality : Upgrade
 
     public override string getDescription()
     {
-        return $"Increase your max health by {increase}.";
+        return $"+ {increase} {Icons.vitality}";
     }
 
     public override upgradeTypes getType()

@@ -8,7 +8,7 @@ public class Explosion : TileContent
 
     private int baseDamage, distance;
     CharacterType target;
-    public void setUp(CharacterType target, int baseDamage, int distance, bombTypes type)
+    public void setUp(CharacterType target, int baseDamage, int distance, spiritType type)
     {
         this.target = target;
         this.baseDamage = baseDamage;
@@ -17,13 +17,13 @@ public class Explosion : TileContent
         setColor(type);
     }
 
-    private void setColor(bombTypes type)
+    private void setColor(spiritType type)
     {
-        if (type == bombTypes.square)
+        if (type == spiritType.bear)
         {
             spriteRenderer.color = Color.red;
         }
-        else if (type == bombTypes.plus)
+        else if (type == spiritType.wolf)
         {
             spriteRenderer.color = Color.green;
         }

@@ -5,35 +5,36 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BombButton : MonoBehaviour
+public class SpiritButton : MonoBehaviour
 {
     [SerializeField] private TMP_Text hotKey;
-    [SerializeField] private Image bombImage, highlight;
+    [SerializeField] private Image spiritImage, highlight;
+    [SerializeField] private Sprite spiritBear, spiritWolf, spiritOwl;
 
     private Player player;
-    private bombTypes type;
-    public void setUp(bombTypes type)
+    private spiritType type;
+    public void setUp(spiritType type)
     {
         this.type = type;
         highlight.enabled = false;
-        if (type == bombTypes.square)
+        if (type == spiritType.bear)
         {
-            setSpecificBomb(Color.red, "Z");
+            setSpecificSpirit(spiritBear, "Z");
             highlight.enabled = true;
         }
-        else if (type == bombTypes.plus)
+        else if (type == spiritType.wolf)
         {
-            setSpecificBomb(Color.green, "X");
+            setSpecificSpirit(spiritWolf, "X");
         }
         else
         {
-            setSpecificBomb(Color.blue, "C");
+            setSpecificSpirit(spiritOwl, "C");
         }
     }
 
-    private void setSpecificBomb(Color color, string hotKey)
+    private void setSpecificSpirit(Sprite sprite, string hotKey)
     {
-        bombImage.color = color;
+        spiritImage.sprite = sprite;
         if (Application.isMobilePlatform)
         {
             this.hotKey.text = "";
@@ -52,12 +53,12 @@ public class BombButton : MonoBehaviour
     private void setPlayer(object sender, System.EventArgs e)
     {
         player = (Player)sender;
-        player.bombChanged += highlightBomb;
+        player.spiritChanged += highlightSpirit;
     }
 
-    private void highlightBomb(object sender, EventArgs e)
+    private void highlightSpirit(object sender, EventArgs e)
     {
-        if (type == player.currentBombType)
+        if (type == player.currentSpiritType)
         {
             highlight.enabled = true;
         }
@@ -69,6 +70,6 @@ public class BombButton : MonoBehaviour
 
     public void clickedOn()
     {
-        player.changeBomb(type);
+        player.changeSummon(type);
     }
 }

@@ -5,12 +5,12 @@ public class Dash : Upgrade
     public override void equipEffect(Player player)
     {
         this.player = player;
-        player.bombPlaced += dash;
+        player.spiritSummoned += dash;
     }
 
     private void dash(object sender, System.EventArgs e)
     {
-        if (sender == getBomb(player))
+        if (sender == getSpirit(player))
         {
             player.move(Movement.Right, dashRange);
         }
@@ -18,7 +18,7 @@ public class Dash : Upgrade
 
     public override string getDescription()
     {
-        return $"Dash {dashRange} tile to the right upon placing down the {specificUpgradeType} bomb.";
+        return $"+ {dashRange} {getTypeString()} {Icons.dash}";
     }
 
     public override upgradeTypes getType()

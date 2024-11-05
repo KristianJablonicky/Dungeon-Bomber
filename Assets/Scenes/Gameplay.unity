@@ -978,7 +978,7 @@ GameObject:
   - component: {fileID: 463185096}
   - component: {fileID: 463185099}
   m_Layer: 5
-  m_Name: Bombs
+  m_Name: Spirits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1079,7 +1079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16dc5de44954d5044b43c5829093d3fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 6713037793128775565, guid: 6d661bd55b6e94c4facc1e2866217e2b, type: 3}
+  button: {fileID: 1324064084419371429, guid: 6d661bd55b6e94c4facc1e2866217e2b, type: 3}
 --- !u!1 &510493050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1352,12 +1352,13 @@ MonoBehaviour:
   hintText: {fileID: 1290283134}
   upgradeCard: {fileID: 7602177669825119552, guid: 4e767649776a2a84a952cc03a1186a45, type: 3}
   upgrades:
-  - {fileID: 6556569500893397984, guid: e91d5c79ce663fc49bd00f6fe454e982, type: 3}
-  - {fileID: 1405539318668011352, guid: 8703f8d9e9ac8fc468967b9388a9b134, type: 3}
-  - {fileID: 8027277574722321168, guid: b87bec1c65b4b1e439926be2b871a99f, type: 3}
-  - {fileID: 2722051029532816566, guid: a1381d51da13db64482bed9cdde85a48, type: 3}
-  - {fileID: 1534819307622568898, guid: 2a00cb341be50c149a8750fbac3c6ffe, type: 3}
   - {fileID: 4383653545132787581, guid: 7ae93299cef58e149969e275170b051e, type: 3}
+  - {fileID: 1405539318668011352, guid: 8703f8d9e9ac8fc468967b9388a9b134, type: 3}
+  - {fileID: 2722051029532816566, guid: a1381d51da13db64482bed9cdde85a48, type: 3}
+  upgradesRare:
+  - {fileID: 1534819307622568898, guid: 2a00cb341be50c149a8750fbac3c6ffe, type: 3}
+  - {fileID: 8027277574722321168, guid: b87bec1c65b4b1e439926be2b871a99f, type: 3}
+  - {fileID: 6556569500893397984, guid: e91d5c79ce663fc49bd00f6fe454e982, type: 3}
   sacrifice: {fileID: 2372230477830773752, guid: c2ebe540385005d4c93f911a0a24636d, type: 3}
 --- !u!1 &606310516
 GameObject:
@@ -2605,7 +2606,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -21}
-  m_SizeDelta: {x: 172, y: 8}
+  m_SizeDelta: {x: 130, y: 8}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1290283134
 MonoBehaviour:

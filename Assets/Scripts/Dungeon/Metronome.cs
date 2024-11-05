@@ -22,7 +22,7 @@ public class Metronome : MonoBehaviour
     private float playerInputWindowStart = 0.9f, midBeat = 0.5f;
 
 
-    public event EventHandler countInBeat, onPlayerInputStart, onBeat, onBeatEnemy, onBeatLowerPriority, userInputEnd, onUpdate, onBombUpdate;
+    public event EventHandler countInBeat, onPlayerInputStart, onBeat, onBeatEnemy, onBeatLowerPriority, userInputEnd, onUpdate, onSpiritUpdate;
 
 
     private float currentBeatProgress = 0f;
@@ -85,18 +85,18 @@ public class Metronome : MonoBehaviour
     {
         if (getBeatProgress() >= inputWindowLength)
         {
-            updateCurrentBeatState = updateBeatBeforeBombExplosion;
+            updateCurrentBeatState = updateBeatBeforeSpiritExplosion;
             userInputEnd?.Invoke(this, EventArgs.Empty);
             onUpdate?.Invoke(this, EventArgs.Empty);
         }
     }
 
-    private void updateBeatBeforeBombExplosion()
+    private void updateBeatBeforeSpiritExplosion()
     {
         if (currentBeatProgress >= midBeat)
         {
             updateCurrentBeatState = updateBeatBeforeUserInput;
-            onBombUpdate?.Invoke(this, EventArgs.Empty);
+            onSpiritUpdate?.Invoke(this, EventArgs.Empty);
         }
     }
 

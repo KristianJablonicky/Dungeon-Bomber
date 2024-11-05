@@ -13,7 +13,7 @@ public class Sacrifice : Upgrade
 
     public override string getDescription()
     {
-        return $"Restore {healAmount} health.";
+        return $"{healAmount} {Icons.heal}";
     }
 
     public override upgradeTypes getType()

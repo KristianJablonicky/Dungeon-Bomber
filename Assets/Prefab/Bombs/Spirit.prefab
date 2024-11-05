@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2440179165631692672}
   - component: {fileID: -8797554086275174841}
-  - component: {fileID: 2030964135531417985}
+  - component: {fileID: 4243957566686228950}
   m_Layer: 0
-  m_Name: Bomb
+  m_Name: Spirit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: -427968759
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c0ae63453b6b27344ae71e3fdc237cf1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 13845428c9d220646929bbc51bae1d24, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2030964135531417985
+--- !u!114 &4243957566686228950
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,7 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6174788127753271109}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d832ad39282d08f499a5225b1ac1a027, type: 3}
+  m_Script: {fileID: 11500000, guid: c8226daddee3c1d43a47ee49503cdef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: -8797554086275174841}
+  spiritBear: {fileID: 21300000, guid: 13845428c9d220646929bbc51bae1d24, type: 3}
+  spiritWolf: {fileID: 21300000, guid: d758f15b99ac3d845baf7b6bb57abfdf, type: 3}
+  spiritOwl: {fileID: 21300000, guid: 9376b2a389289b34dbc439442a76998c, type: 3}
   explosion: {fileID: 4096696488787954385, guid: e7d9855af98ecf746b62a8b9827f88ce, type: 3}

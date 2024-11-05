@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class Spider : Enemy
 {
+    private bool readyToMove = true;
     public override void collideWithCharacter(Character character)
     {
         character.takeDamage(getScaledDamage(1));
+        readyToMove = true;
     }
 
     public override int getBaseMaxHp()
@@ -19,10 +21,16 @@ public class Spider : Enemy
 
     protected override void onTick()
     {
+        if (!readyToMove)
+        {
+            readyToMove = true;
+            return;
+        }
         Movement? playerDirection = detectPlayer();
         if (playerDirection != null)
         {
             move(playerDirection.Value);
+            readyToMove = false;
         }
         else
         {

@@ -2,7 +2,8 @@ using UnityEngine;
 
 public abstract class Upgrade : MonoBehaviour
 {
-    [SerializeField] private Sprite icon; 
+    [SerializeField] private Sprite icon;
+    protected upgradeTypes specificUpgradeType;
 
     //public abstract string getName();
     public abstract string getDescription();
@@ -25,49 +26,65 @@ public abstract class Upgrade : MonoBehaviour
 
     public abstract upgradeTypes getType();
 
-    protected BombAttributes getBomb(Player player)
+    protected SpiritAttributes getSpirit(Player player)
     {
-        return getBomb(player, getType());
+        return getSpirit(player, getType());
     }
-    protected BombAttributes getBomb(Player player, upgradeTypes type)
+    protected SpiritAttributes getSpirit(Player player, upgradeTypes type)
     {
+
+        if (type == upgradeTypes.Random)
+        {
+            type = specificUpgradeType;
+        }
+
         if (type == upgradeTypes.Sacrifice || type == upgradeTypes.Neutral)
         {
             return null;
         }
-        else if (type == upgradeTypes.Red)
+        else if (type == upgradeTypes.Bear)
         {
-            return player.bombSquare;
+            return player.bear;
         }
-        else if (type == upgradeTypes.Blue)
+        else if (type == upgradeTypes.Owl)
         {
-            return player.bombX;
+            return player.owl;
         }
-        else
+        else if (type == upgradeTypes.Wolf)
         {
-            return player.bombPlus;
+            return player.wolf;
         }
+        Debug.Log("Unchecked upgradeType");
+        return null;
     }
-
-    protected upgradeTypes specificUpgradeType;
-    public upgradeTypes setUpSpecificBombTypeUtilities()
+    public upgradeTypes setUpSpecificSpiritTypeUtilities()
     {
         specificUpgradeType = (upgradeTypes)Random.Range(0, 3);
         return specificUpgradeType;
     }
-}
+    protected string getTypeString()
+    {
+        return $"<sprite name=\"{specificUpgradeType}\">";
+    }
 
-class bombSpecificUtilities
-{
-    public upgradeTypes type;
 }
 
 public enum upgradeTypes
 {
-    Red,
-    Green,
-    Blue,
+    Bear,
+    Wolf,
+    Owl,
     Random,
     Neutral,
     Sacrifice
+}
+
+public static class Icons
+{
+    public static string damage = "<sprite name=\"Damage\">",
+        range = "<sprite name=\"Range\">",
+        heal = "<sprite name=\"Heal\">",
+        vitality = "<sprite name=\"Vitality\">",
+        dash = "<sprite name=\"Dash\">",
+        delay = "<sprite name=\"Delay\">";
 }

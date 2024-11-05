@@ -8,7 +8,7 @@ public class UpgradeCardsGenerator : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TMP_Text hintText;
     [SerializeField] private UpgradeCard upgradeCard;
-    [SerializeField] private List<Upgrade> upgrades;
+    [SerializeField] private List<Upgrade> upgrades, upgradesRare;
     [SerializeField] private Upgrade sacrifice;
 
     private List<UpgradeCard> upgradeCards;
@@ -71,7 +71,7 @@ public class UpgradeCardsGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        string targetText = "Choose one card by clicking and holding on it.";
+        string targetText = "Click and hold to choose one card.";
         foreach (var character in targetText)
         {
             hintText.text += character;
@@ -88,7 +88,7 @@ public class UpgradeCardsGenerator : MonoBehaviour
     {
 
         pairsToBeGenerated--;
-        int totalNumberOfCards = 3;
+        int totalNumberOfCards = 4;
         
         if (fadeInAnimation)
         {
@@ -103,6 +103,11 @@ public class UpgradeCardsGenerator : MonoBehaviour
             if (cardNumber == totalNumberOfCards - 1)
             {
                 newCard.setUpgrade(sacrifice, this);
+            }
+            else if (cardNumber == totalNumberOfCards - 2)
+            {
+                var upgrade = Instantiate(upgradesRare[Random.Range(0, upgradesRare.Count)]);
+                newCard.setUpgrade(upgrade, this);
             }
             else
             {

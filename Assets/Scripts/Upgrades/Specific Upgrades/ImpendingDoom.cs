@@ -5,14 +5,14 @@ public class ImpendingDoom : Upgrade
 
     public override void equipEffect(Player player)
     {
-        var bomb = getBomb(player, specificUpgradeType);
-        bomb.damage *= damageMult;
-        bomb.ticksUntilExplosion += ticks;
+        var spirit = getSpirit(player, specificUpgradeType);
+        spirit.damage *= damageMult;
+        spirit.ticksUntilExplosion += ticks;
     }
 
     public override string getDescription()
     {
-        return $"{specificUpgradeType} bomb's damage is multiplied by {damageMult}, but it takes {ticks} beat longer to explode.";
+        return $"{getTypeString()} {Icons.damage} x {damageMult},\n+ {ticks} {Icons.delay}";
     }
 
     public override upgradeTypes getType()

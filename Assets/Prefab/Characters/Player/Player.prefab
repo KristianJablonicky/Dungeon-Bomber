@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4091452766567588759}
   - component: {fileID: 7073675014059089970}
   - component: {fileID: 4911686401216230282}
+  - component: {fileID: 3350258261099108045}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -147154971
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 668c37b3d74a2d1479327e456b4cf856, type: 3}
+  m_Sprite: {fileID: -2135317628, guid: 668c37b3d74a2d1479327e456b4cf856, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,8 +99,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 7073675014059089970}
-  bomb: {fileID: 2030964135531417985, guid: 9966dd4d15870254e9b1c17fb3b5d974, type: 3}
-  horizontalLength: 0
-  verticalLength: 0
-  diagonalLength: 0
-  areaSize: 0
+  animator: {fileID: 3350258261099108045}
+  spirit: {fileID: 4243957566686228950, guid: 9966dd4d15870254e9b1c17fb3b5d974, type: 3}
+  level: 1
+  expCount: 0
+  currentExpThreshhold: 2
+  movementEnabled: 0
+  summonedSpiritAlready: 0
+  currentSpiritType: 0
+--- !u!95 &3350258261099108045
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4658867932003379333}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 558b9519db56c47448cd69c02d198069, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
