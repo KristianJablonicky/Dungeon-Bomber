@@ -136,7 +136,7 @@ public class Spirit : TileContent
     {
         var content = dungeon.isTileOccupied(targetTile);
         int x = (int)(targetTile.x - transform.position.x), y = (int)(targetTile.y - transform.position.y);
-        if (content == null || content is Character)
+        if (content == null || content is Character || content is BossHitbox)
         {
             addExplosion(distance, x, y);
             return false;

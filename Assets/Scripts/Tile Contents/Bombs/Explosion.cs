@@ -8,11 +8,14 @@ public class Explosion : TileContent
 
     private int baseDamage, distance;
     CharacterType target;
+    spiritType type;
+
     public void setUp(CharacterType target, int baseDamage, int distance, spiritType type)
     {
         this.target = target;
         this.baseDamage = baseDamage;
         this.distance = distance;
+        this.type = type;
 
         setColor(type);
     }
@@ -45,30 +48,21 @@ public class Explosion : TileContent
         if ((target == CharacterType.Player && hitObject is Player)
             || (target == CharacterType.NPC && (hitObject is Enemy)))
         {
-            ((Character)hitObject).takeDamage(baseDamage * distance, damageTags.Damage);
+            ((Character)hitObject).takeDamage(baseDamage * distance, damageTags.Damage, type);
         }
         else if (hitObject is Destructable)
         {
             ((Destructable)hitObject).destroy();
+        }
+        else if (hitObject is BossHitbox)
+        {
+            ((BossHitbox)hitObject).takeDamage(baseDamage * distance, damageTags.Damage, type);
         }
         StartCoroutine(flash());
     }
 
     private IEnumerator flash()
     {
-        /*
-        spriteRenderer.color = Color.white;
-
-        float animationTime = 0.2f, timeElapsed = 0f;
-        while (timeElapsed < animationTime)
-        {
-            timeElapsed += Time.deltaTime;
-            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b,
-                1f - (timeElapsed / animationTime));
-            yield return null;
-        }
-        */
-
         spriteRenderer.color = Color.white;
         animator.SetTrigger("explode");
         yield return new WaitForSeconds(0.2f);

@@ -133,5 +133,8 @@ public abstract class Enemy : Character
         return Mathf.FloorToInt(Mathf.Sqrt(Mathf.Pow(a_x - b_x, 2) + Mathf.Pow(a_y - b_y, 2)));
     }
 
-    protected abstract int getPlayerDetectionRadius();
+    protected virtual int getPlayerDetectionRadius()
+    {
+        return 0;
+    }
 }

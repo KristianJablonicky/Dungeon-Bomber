@@ -1,40 +1,52 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
-public class PlayerHealthBar : MonoBehaviour
+public class BossHealthBar : MonoBehaviour
 {
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private Image healthBar, flash;
     [SerializeField] private TMP_Text healthBarText;
-    private Player player;
 
-    void Start()
+    private Boss boss;
+    float timeElapsed = 0f, duration = 2f;
+
+    private void Awake()
     {
-        Dungeon.instance.playerSpawned += setUpPlayer;
-    }
-    private void setUpPlayer(object sender, System.EventArgs e)
-    {
-        this.player = (Player)sender;
-        player.hpChanged += onHpChange;
-        onHpChange(player, new DamageArgs(0, damageTags.None));
+        canvasGroup.alpha = 0f;
+        enabled = false;
     }
 
-    private void updateHealthBarText()
+    public void setUp(Boss boss)
     {
-        healthBarText.text = $"{player.getHp()}/{player.getMaxHp()}";
+        this.boss = boss;
+        boss.hpChanged += onHpChange;
+        enabled = true;
+    }
+
+    private void Update()
+    {
+        if (timeElapsed < duration)
+        {
+            timeElapsed += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Pow(timeElapsed / duration, 2f);
+        }
+        else
+        {
+            canvasGroup.alpha = 1f;
+            enabled = false;
+        }
+
     }
 
     private void onHpChange(object sender, DamageArgs e)
     {
-        int maxHp = Mathf.Max(player.getMaxHp(), player.getHp());
+        int maxHp = Mathf.Max(boss.getMaxHp(), boss.getHp());
         StopAllCoroutines();
-        StartCoroutine(hpTransition(flash.fillAmount, (float)player.getHp() / maxHp));
+        StartCoroutine(hpTransition(flash.fillAmount, (float)boss.getHp() / maxHp));
         updateHealthBarText();
     }
-
     private IEnumerator hpTransition(float startingHp, float EndingHp)
     {
         setFill(healthBar, EndingHp);
@@ -52,5 +64,9 @@ public class PlayerHealthBar : MonoBehaviour
     private void setFill(Image bar, float fillAmount)
     {
         bar.fillAmount = fillAmount;
+    }
+    private void updateHealthBarText()
+    {
+        healthBarText.text = $"{boss.getHp()}/{boss.getMaxHp()}";
     }
 }

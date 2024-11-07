@@ -6,8 +6,21 @@ using UnityEngine;
 public class Floor : MonoBehaviour
 {
     [SerializeField] private TMP_Text floorText;
+    private DataStorage storage;
     private void Start()
     {
-        floorText.text = $"Floor: {DataStorage.instance.floor}\nBest: {DataStorage.instance.highScore}";
+        storage = DataStorage.instance;
+        setText();
+        Metronome.instance.onBeat += onBeat;
+    }
+
+    private void onBeat(object sender, System.EventArgs e)
+    {
+        setText();
+    }
+
+    private void setText()
+    {
+        floorText.text = $"Beat: {storage.currentBeats}\nBest: {storage.highScore}";
     }
 }

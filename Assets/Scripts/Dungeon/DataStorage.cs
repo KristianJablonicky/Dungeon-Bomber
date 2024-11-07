@@ -5,7 +5,7 @@ public class DataStorage : MonoBehaviour
 {
     public static DataStorage instance = null;
     public int floor = 0, playerHp, playerMaxHp, playerLevel, playerExp,
-        highScore;
+        highScore, currentBeats;
 
     private List<Upgrade> upgrades;
 
@@ -21,7 +21,6 @@ public class DataStorage : MonoBehaviour
             upgrades = new List<Upgrade>();
 
             Application.targetFrameRate = 144;
-
             /*
             if (Application.isMobilePlatform)
             {
@@ -33,6 +32,12 @@ public class DataStorage : MonoBehaviour
             }
             */
         }
+        Metronome.instance.onBeat += onBeat;
+    }
+
+    private void onBeat(object sender, System.EventArgs e)
+    {
+        instance.currentBeats++;
     }
 
     public void addUpgrade(Upgrade upgrade)
@@ -52,16 +57,17 @@ public class DataStorage : MonoBehaviour
     {
         floor = 0;
         upgrades = new List<Upgrade>();
-        playerHp = 3;
+        playerHp = 1;
         playerLevel = 0;
         playerExp = 0;
+        currentBeats = 0;
     }
 
     public void updateHighScore()
     {
-        if (floor > highScore)
+        if (currentBeats < highScore || highScore == 0)
         {
-            highScore = floor;
+            highScore = currentBeats;
             PlayerPrefs.SetInt("HighScore", highScore);
         }
     }

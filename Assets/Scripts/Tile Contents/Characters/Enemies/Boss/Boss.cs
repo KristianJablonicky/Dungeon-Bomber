@@ -1,0 +1,141 @@
+using System.Collections;
+using UnityEngine;
+
+public class Boss : Enemy
+{
+    [SerializeField] private Animator animator;
+    [SerializeField] private ProjectileStar projectileStar;
+    [SerializeField] private ProjectileWave projectileWave;
+    [SerializeField] private SpriteRenderer shieldSpriteRenderer;
+
+    private spiritType currentWeakness = spiritType.owl;
+
+    private static readonly int maxCoolDown = 8;
+    private int castCoolDown = maxCoolDown + 2;
+
+    public bool takenDamageThisBeat = false;
+
+    public override void collideWithCharacter(Character character)
+    {
+    }
+
+    public override int getBaseMaxHp()
+    {
+        return 40;
+    }
+
+    protected override void onTick()
+    {
+        takenDamageThisBeat = false;
+        castCoolDown--;
+
+        if (castCoolDown == 1)
+        {
+            castCoolDown = maxCoolDown;
+            animator.SetTrigger("Cast");
+            castSpell();
+        }
+    }
+
+    private void castSpell()
+    {
+        int roll = Random.Range(0, 5);
+        if (roll <= 1)
+        {
+            shootProjectile();
+        }
+        else if (roll <= 3)
+        {
+            sendWave();
+        }
+        else
+        {
+            summonAid();
+        }
+        switchWeakness();
+    }
+
+    private void switchWeakness()
+    {
+        currentWeakness = (spiritType)(((int)currentWeakness + 1) % 3);
+        updateWeakness();
+    }
+
+    private void updateWeakness()
+    {
+        if (currentWeakness == spiritType.bear)
+        {
+            shieldSpriteRenderer.color = Color.red;
+        }
+        else if (currentWeakness == spiritType.wolf)
+        {
+            shieldSpriteRenderer.color = Color.green;
+        }
+        if (currentWeakness == spiritType.owl)
+        {
+            shieldSpriteRenderer.color = Color.blue;
+        }
+    }
+
+    private void shootProjectile()
+    {
+        ProjectileStar projectileGO = Instantiate(projectileStar);
+        projectileGO.setUp((Movement)Random.Range(0, 4), 4);
+    }
+
+    private void sendWave()
+    {
+        int startingX = 1;
+        Movement direction = Movement.Right;
+        if (Random.Range(0, 2) == 0)
+        {
+            startingX = Dungeon.instance.getWidth() - 2;
+            direction = Movement.Left;
+        }
+        for (int y = 1; y < Dungeon.instance.getHeight() - 1; y++)
+        {
+            ProjectileWave projectileGO = Instantiate(projectileWave);
+            projectileGO.setUp(direction, 3);
+            projectileGO.setPosition(startingX, y);
+        }
+    }
+
+    private void summonAid()
+    {
+        Dungeon.instance.summonEnemy();
+    }
+
+    public override void takeDamage(int damage, damageTags tag = damageTags.Damage, spiritType? type = null)
+    {
+        if (!takenDamageThisBeat)
+        {
+            if (type == currentWeakness)
+            {
+                damage *= 2;
+            }
+
+            base.takeDamage(damage, tag);
+            takenDamageThisBeat = true;
+        }
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        Metronome.instance.onBeat += startGrooving;
+        updateWeakness();
+    }
+
+    private void startGrooving(object sender, System.EventArgs e)
+    {
+        animator.SetTrigger("Groove");
+        animator.speed = 1f / Metronome.instance.getBeatLength();
+        Metronome.instance.onBeat -= startGrooving;
+    }
+
+    private void OnDestroy()
+    {
+        DataStorage.instance.updateHighScore();
+        dungeon.resetAfterDelay();
+    }
+}

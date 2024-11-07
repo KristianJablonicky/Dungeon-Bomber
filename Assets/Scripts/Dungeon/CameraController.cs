@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
         player = (Player)sender;
         enabled = true;
         player.positionUpdated += updatePosition;
-        player.onDeath += unfollowPlayer;
+        player.defeated += unfollowPlayer;
     }
 
     private void updatePosition(object sender, System.EventArgs e)

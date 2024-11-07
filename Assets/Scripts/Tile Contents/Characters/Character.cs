@@ -7,8 +7,8 @@ public abstract class Character : TileContent
     protected int hp, maxHp;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    public event EventHandler<DamageArgs> onHpChange;
-    public event EventHandler onDeath;
+    public event EventHandler<DamageArgs> hpChanged;
+    public event EventHandler defeated;
 
     private Coroutine runningHurtAnimation;
 
@@ -18,7 +18,7 @@ public abstract class Character : TileContent
         hp = getBaseMaxHp();
         maxHp = hp;
 
-        if (this is not Player)
+        if (this is not Player && this is not Boss)
         {
             var healthBar = Instantiate(Prefabs.i.healthBar);
             healthBar.setCharacter(this);
@@ -45,11 +45,11 @@ public abstract class Character : TileContent
         return hp;
     }
 
-    public void takeDamage(int damage, damageTags tag = damageTags.Damage)
+    public virtual void takeDamage(int damage, damageTags tag = damageTags.Damage, spiritType? type = null)
     {
         damage = Math.Min(damage, hp);
         hp -= damage;
-        onHpChange?.Invoke(this, new DamageArgs(damage, tag));
+        hpChanged?.Invoke(this, new DamageArgs(damage, tag));
         if (hp <= 0)
         {
             die();
@@ -64,7 +64,7 @@ public abstract class Character : TileContent
     {
         healAmount = Math.Min(healAmount, maxHp - hp);
         hp += healAmount;
-        onHpChange?.Invoke(this, new DamageArgs(healAmount, tag));
+        hpChanged?.Invoke(this, new DamageArgs(healAmount, tag));
     }
     private IEnumerator hurtAnimation()
     {
@@ -91,7 +91,7 @@ public abstract class Character : TileContent
         if (this != null)
         {
             dungeon.removeFromTile(this);
-            onDeath?.Invoke(this, EventArgs.Empty);
+            defeated?.Invoke(this, EventArgs.Empty);
             StartCoroutine(deathAnimation());
         }
         else

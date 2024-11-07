@@ -12,14 +12,14 @@ public class HealthBar : MonoBehaviour
         this.character = character;
         //transform.SetParent(character.transform);
         //transform.localPosition = new Vector3(0f, 0f);
-        character.onHpChange += onHpChange;
-        character.onDeath += onDeath;
+        character.hpChanged += onHpChange;
+        character.defeated += onDeath;
         formerCharacter = character.ToString();
     }
 
     private void onDeath(object sender, System.EventArgs e)
     {
-        character.onDeath -= onDeath;
+        character.defeated -= onDeath;
         Destroy(gameObject);
     }
 

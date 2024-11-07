@@ -8,6 +8,11 @@ public class Dungeon : MonoBehaviour
 {
     [SerializeField] private TileContent tile, wall, ladder;
     [SerializeField] private Player player;
+    [SerializeField] private Boss boss;
+    [SerializeField] private BossHitbox bossHitbox;
+
+    [SerializeField] private BossHealthBar bossHealthBar;
+
     [SerializeField] private List<Enemy> enemies;
     [SerializeField] private List<Destructable> destructables;
 
@@ -18,7 +23,7 @@ public class Dungeon : MonoBehaviour
     [SerializeField] private HitSplat hitSplat;
 
     private TileContent[,] layout;
-    private int dungeonWidth = 22, dungeonHeight = 12;
+    private int dungeonWidth = 27, dungeonHeight = 12;
     private int floor = 1;
     private Color currentFloorColor;
 
@@ -45,11 +50,19 @@ public class Dungeon : MonoBehaviour
         }
 
     }
-
+    public void resetAfterDelay()
+    {
+        StartCoroutine(resetAfterDelay(3f));
+    }
+    private IEnumerator resetAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        reset();
+    }
     public void reset()
     {
-            DataStorage.instance.reset();
-            nextFloor();
+        DataStorage.instance.reset();
+        nextFloor();
     }
 
     private void Awake()
@@ -80,8 +93,69 @@ public class Dungeon : MonoBehaviour
         {
             currentFloorColor = new Color(0.3f, 0.1f, 0.01f);
         }
-        generateDungeon();
 
+        if (floor == 4)
+        {
+            generateBossRoom();
+        }
+        else
+        {
+            generateDungeon();
+        }
+    }
+
+    private void generateBossRoom()
+    {
+        dungeonWidth = 12;
+        dungeonHeight = 8;
+        layout = new TileContent[dungeonWidth, dungeonHeight];
+        for (int x = 0; x < dungeonWidth; x++)
+        {
+            for (int y = 0; y < dungeonHeight; y++)
+            {
+                if (x == 0 || y == 0 || x == (dungeonWidth - 1) || y == (dungeonHeight - 1))
+                {
+                    layout[x, y] = instantiate(wall, x, y);
+                }
+                else if (x == 1 && y == 1)
+                {
+                    instantiate(tile, x, y);
+                    playerInstance = (Player)instantiate(player, x, y, false);
+                    layout[x, y] = playerInstance;
+                }
+                else if (x == 5 && y == 3)
+                {
+                    instantiate(tile, x, y);
+                    var bossInstance = (Boss)instantiate(boss, x, y, false);
+                    layout[x, y] = bossInstance;
+                    for (int xOffset = 0; xOffset <= 1; xOffset++)
+                    {
+                        for (int yOffset = 0; yOffset <= 1; yOffset++)
+                        {
+                            if (xOffset == 0 && yOffset == 0)
+                            {
+                                continue;
+                            }
+                            var bossHitboxInstance = (BossHitbox)instantiate(bossHitbox, x + xOffset, y + yOffset, false);
+                            layout[x + xOffset, y + yOffset] = bossHitboxInstance;
+                            bossHitboxInstance.setUp(bossInstance);
+                        }
+                    }
+
+                    bossHealthBar.setUp(bossInstance);
+
+                }
+                else if ((x == 3 && (y == 2 || y == 5)) ||
+                    (x == 8 && (y == 2 || y == 5)))
+                {
+                    layout[x, y] = instantiate(wall, x, y);
+                }
+                else
+                {
+                    instantiate(tile, x, y);
+                }
+            }
+        }
     }
 
     private void generateDungeon()
@@ -148,7 +222,7 @@ public class Dungeon : MonoBehaviour
         {
             character.transform.SetParent(transform);
         }
-        character.onHpChange += instantiateHitsplat;
+        character.hpChanged += instantiateHitsplat;
         return character;
     }
 
@@ -236,6 +310,49 @@ public class Dungeon : MonoBehaviour
     public void onEnemyKilled()
     {
         enemyKilled?.Invoke(playerInstance, EventArgs.Empty);
+    }
+
+    public int getHeight()
+    {
+        return dungeonHeight;
+    }
+
+    public int getWidth()
+    {
+        return dungeonWidth;
+    }
+
+    public void summonEnemy()
+    {
+        var emptyTileIndex = getEmptyTile();
+        if (emptyTileIndex.HasValue)
+        {
+            int x = emptyTileIndex.Value.Item1, y = emptyTileIndex.Value.Item2;
+            layout[x, y] = instantiate(enemies[UnityEngine.Random.Range(0, enemies.Count)], x, y);
+        }
+    }
+
+    private (int, int)? getEmptyTile()
+    {
+        var emptyTiles = new List<(int x, int y)>();
+        for (int x = 0; x < layout.GetLength(0); x++)
+        {
+            for (int y = 0; y < layout.GetLength(1); y++)
+            {
+                if (layout[x, y] == null)
+                {
+                    emptyTiles.Add((x, y));
+                }
+            }
+        }
+        if (emptyTiles.Count == 0)
+        {
+            return null;
+        }
+
+        int randomIndex = UnityEngine.Random.Range(0, emptyTiles.Count);
+
+        return emptyTiles[randomIndex];
     }
 
 }

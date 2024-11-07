@@ -68,6 +68,7 @@ public class Player : Character
     private void startGrooving(object sender, EventArgs e)
     {
         Metronome.instance.onBeat -= startGrooving;
+        animator.SetTrigger("Groove");
         animator.speed = 1f / Metronome.instance.getBeatLength();
     }
 
@@ -121,7 +122,7 @@ public class Player : Character
         dungeon.enemyKilled -= onEnemyKill;
         base.die();
 
-        DataStorage.instance.updateHighScore();
+        //DataStorage.instance.updateHighScore();
     }
 
     private void enableInput(object sender, System.EventArgs e)
