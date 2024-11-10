@@ -44,12 +44,17 @@ public class Dungeon : MonoBehaviour
         {
             callLadderReached();
         }
+        else if (Input.GetKeyUp(KeyCode.L))
+        {
+            DataStorage.instance.resetHighScore();
+        }
         else if (Input.GetKeyUp(KeyCode.Escape))
         {
             Application.Quit();
         }
 
     }
+    /*
     public void resetAfterDelay()
     {
         StartCoroutine(resetAfterDelay(3f));
@@ -59,6 +64,7 @@ public class Dungeon : MonoBehaviour
         yield return new WaitForSeconds(delay);
         reset();
     }
+    */
     public void reset()
     {
         DataStorage.instance.reset();

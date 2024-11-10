@@ -152,13 +152,6 @@ public class Player : Character
             changeSummon(spiritType.owl);
         }
 
-        else if (Input.GetKeyDown(KeyCode.H))
-        {
-            var sacrifice = new Sacrifice();
-            sacrifice.equipEffect(this);
-        }
-
-
         if (movementEnabled)
         {
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))

@@ -63,6 +63,11 @@ public class DataStorage : MonoBehaviour
         currentBeats = 0;
     }
 
+    public void resetHighScore()
+    {
+        highScore = 0;
+        PlayerPrefs.SetInt("HighScore", highScore);
+    }
     public void updateHighScore()
     {
         if (currentBeats < highScore || highScore == 0)
