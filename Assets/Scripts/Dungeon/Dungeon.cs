@@ -54,7 +54,7 @@ public class Dungeon : MonoBehaviour
         }
 
     }
-    /*
+
     public void resetAfterDelay()
     {
         StartCoroutine(resetAfterDelay(3f));
@@ -64,7 +64,6 @@ public class Dungeon : MonoBehaviour
         yield return new WaitForSeconds(delay);
         reset();
     }
-    */
     public void reset()
     {
         DataStorage.instance.reset();

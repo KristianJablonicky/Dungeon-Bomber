@@ -151,7 +151,10 @@ public class Player : Character
         {
             changeSummon(spiritType.owl);
         }
-
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            onEnemyKill(this, EventArgs.Empty);
+        }
         if (movementEnabled)
         {
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
@@ -268,7 +271,8 @@ public class Player : Character
             expCount = 0;
             currentExpThreshhold = expThreshholds[level];
             increaseMaxHp(1, true);
-            StartCoroutine(levelUp());
+            //StartCoroutine(levelUp());
+            animator.SetTrigger("LevelUp");
         }
         onExpChange?.Invoke(this, EventArgs.Empty);
     }
