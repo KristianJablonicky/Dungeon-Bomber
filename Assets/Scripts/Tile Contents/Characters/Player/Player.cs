@@ -139,15 +139,15 @@ public class Player : Character
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.Alpha1))
         {
             changeSummon(spiritType.bear);
         }
-        else if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.Alpha2))
         {
             changeSummon(spiritType.wolf);
         }
-        else if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.Alpha3))
         {
             changeSummon(spiritType.owl);
         }

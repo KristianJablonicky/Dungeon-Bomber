@@ -23,16 +23,16 @@ public class SpiritButton : MonoBehaviour
     {
         if (type == spiritType.bear)
         {
-            setSpecificSpirit(spiritBear, "Z", player.bear);
+            setSpecificSpirit(spiritBear, "J", player.bear);
             highlight.enabled = true;
         }
         else if (type == spiritType.wolf)
         {
-            setSpecificSpirit(spiritWolf, "X", player.wolf);
+            setSpecificSpirit(spiritWolf, "K", player.wolf);
         }
         else
         {
-            setSpecificSpirit(spiritOwl, "C", player.owl);
+            setSpecificSpirit(spiritOwl, "L", player.owl);
         }
     }
 
