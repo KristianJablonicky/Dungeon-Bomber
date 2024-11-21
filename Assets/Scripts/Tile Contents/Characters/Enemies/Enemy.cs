@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 public abstract class Enemy : Character
-{
+{ 
     protected float damageScaling;
     protected override void Start()
     {

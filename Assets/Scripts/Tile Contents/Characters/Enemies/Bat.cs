@@ -1,8 +1,9 @@
-using System;
+using UnityEngine;
 
 public class Bat : Enemy
 {
-    private bool moveUp = true;
+    protected float randomMoveChance = 0.5f;
+    private int direction = 1;
 
     public override void collideWithCharacter(Character character)
     {
@@ -31,15 +32,12 @@ public class Bat : Enemy
             move(playerDirection.Value);
         }
         else */
-        if (moveUp)
+        if (randomMoveChance > UnityEngine.Random.value)
         {
-            move(Movement.Up);
-            moveUp = false;
+            move((Movement)Random.Range(0, 4), 1);
+            return;
         }
-        else
-        {
-            move(Movement.Down);
-            moveUp = true;
-        }
+        move((Movement)direction, 1);
+        direction = (direction + 2) % 4;
     }
 }

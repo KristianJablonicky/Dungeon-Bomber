@@ -5,6 +5,7 @@ public class NewBehaviourScript : Enemy
     private int direction;
     private int speed = 2;
     private int beatCounter = 0;
+    protected float randomMoveChance = 0.1f;
 
     private void Awake()
     {
@@ -31,6 +32,11 @@ public class NewBehaviourScript : Enemy
         beatCounter++;
         if (beatCounter % speed == 0)
         {
+            if (randomMoveChance > UnityEngine.Random.value)
+            {
+                move((Movement)Random.Range(0, 4), 2);
+                return;
+            }
             move((Movement)direction, 2);
             direction++;
             direction %= 4;
