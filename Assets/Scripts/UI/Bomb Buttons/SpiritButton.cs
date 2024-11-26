@@ -48,22 +48,10 @@ public class SpiritButton : MonoBehaviour
         {
             this.hotKey.text = hotKey;
         }
-        var range = 1000;
-        range = isMin(range, spiritAttributes.diagonalLength);
-        range = isMin(range, spiritAttributes.horizontalLength);
-        range = isMin(range, spiritAttributes.verticalLength);
+
+        int range = spiritLengthUtility.getLength(spiritAttributes);
         
         attributes.text = $"{spiritAttributes.damage}<sprite name=\"Damage\">\r\n{range}<sprite name=\"Range\">\r\n{spiritAttributes.ticksUntilExplosion}<sprite name=\"Delay\">";
-    }
-
-    private int isMin(int currentMin, int comparedValue)
-    {
-        if (comparedValue == 0)
-        {
-            return currentMin;
-        }
-
-        return Math.Min(currentMin, comparedValue);
     }
 
     private void Start()
@@ -93,5 +81,28 @@ public class SpiritButton : MonoBehaviour
     public void clickedOn()
     {
         player.changeSummon(type);
+    }
+}
+
+// TODO: idealne vyhodit do prec a riesit uplne inak ale tak co uz
+public static class spiritLengthUtility
+{
+    public static int getLength(SpiritAttributes spiritAttributes)
+    {
+        var range = 1000;
+        range = isMin(range, spiritAttributes.diagonalLength);
+        range = isMin(range, spiritAttributes.horizontalLength);
+        range = isMin(range, spiritAttributes.verticalLength);
+
+        return range;
+    }
+    private static int isMin(int currentMin, int comparedValue)
+    {
+        if (comparedValue == 0)
+        {
+            return currentMin;
+        }
+
+        return Math.Min(currentMin, comparedValue);
     }
 }

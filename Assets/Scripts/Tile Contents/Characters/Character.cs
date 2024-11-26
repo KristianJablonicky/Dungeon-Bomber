@@ -6,6 +6,7 @@ public abstract class Character : TileContent
 {
     protected int hp, maxHp;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
 
     public event EventHandler<DamageArgs> hpChanged;
     public event EventHandler defeated;
@@ -92,7 +93,14 @@ public abstract class Character : TileContent
         {
             dungeon.removeFromTile(this);
             defeated?.Invoke(this, EventArgs.Empty);
-            StartCoroutine(deathAnimation());
+            if (animator != null)
+            {
+                animator.SetTrigger("die");
+            }
+            else
+            {
+                StartCoroutine(deathAnimation());
+            }
         }
         else
         {
@@ -126,6 +134,11 @@ public abstract class Character : TileContent
             transform.localScale = startingSize * (1f - timeElapsed / duration);
             yield return null;
         }
+        destroyGameObjectForGood();
+    }
+
+    public void destroyGameObjectForGood()
+    {
         StopAllCoroutines();
         Destroy(gameObject);
     }

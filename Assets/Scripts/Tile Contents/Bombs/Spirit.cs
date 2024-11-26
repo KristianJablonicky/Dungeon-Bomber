@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Spirit : TileContent
@@ -9,9 +10,9 @@ public class Spirit : TileContent
 
     [SerializeField] private Explosion explosion;
     private List<Explosion> explosionList;
-    private int currentBeatsUntilImpact, beatsUntilImpact, damage;
+    private int currentBeatsUntilImpact, beatsUntilImpact, damage, range;
     private spiritType type;
-    public void setUp (int beatsUntilImpact, int damage, int horizontalLength, int verticalLength, int diagonalLength, spiritType type)
+    public void setUp (int beatsUntilImpact, int damage, int length, int horizontalLength, int verticalLength, int diagonalLength, spiritType type)
     {
         Start();
         Metronome.instance.onSpiritUpdate += reduceBeatsUntilImpact;
@@ -19,6 +20,7 @@ public class Spirit : TileContent
         this.beatsUntilImpact = beatsUntilImpact;
         currentBeatsUntilImpact = beatsUntilImpact;
         this.damage = damage;
+        this.range = length;
         explosionList = new List<Explosion>();
 
         setSpiritType();
@@ -190,15 +192,35 @@ public class Spirit : TileContent
     private void explode()
     {
         Metronome.instance.onSpiritUpdate -= reduceBeatsUntilImpact;
+        StartCoroutine(dealDamageRepeatedly());
+    }
+
+    private IEnumerator dealDamageRepeatedly()
+    {
+        var metrnonome = Metronome.instance;
+        float tickLength = (metrnonome.getBeatLength() * (1 - metrnonome.getBeatProgress())) / (range + 1);
+
+        for (int damageInstance = 0; damageInstance < range; damageInstance++)
+        {
+            foreach (var exp in explosionList)
+            {
+                exp.dealDamage(damageInstance+1);
+            }
+
+            yield return new WaitForSeconds(tickLength);
+        }
+
         foreach (var exp in explosionList)
         {
-            exp.explode();
+            exp.fade(tickLength);
         }
-        StartCoroutine(waitForExplosionFlash());
+
+        StartCoroutine(waitForExplosionFlash(tickLength));
     }
-    private IEnumerator waitForExplosionFlash()
+
+    private IEnumerator waitForExplosionFlash(float duration)
     {
-        float timeElapsed = 0f, duration = 0.2f, startingAlpha = spriteRenderer.color.a;
+        float timeElapsed = 0f, startingAlpha = spriteRenderer.color.a;
         while (timeElapsed < duration)
         {
             timeElapsed += Time.deltaTime;
@@ -207,7 +229,6 @@ public class Spirit : TileContent
             spriteRenderer.color = new Color(1f, 1f, 1f, (1f - timeElapsed / duration) * startingAlpha);
             yield return null;
         }
-
         Destroy(gameObject);
     }
 }

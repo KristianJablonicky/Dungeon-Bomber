@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bat : Enemy
+public class SkeletonWarrior : Enemy
 {
     protected float randomMoveChance = 0.5f;
     private int direction = 1;

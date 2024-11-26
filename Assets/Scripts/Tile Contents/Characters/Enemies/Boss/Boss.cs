@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Boss : Enemy
 {
-    [SerializeField] private Animator animator;
+    [SerializeField] private Animator bossAnimator;
     [SerializeField] private ProjectileStar projectileStar;
     [SerializeField] private ProjectileWave projectileWave;
     [SerializeField] private SpriteRenderer shieldSpriteRenderer;
@@ -13,26 +13,23 @@ public class Boss : Enemy
     private static readonly int maxCoolDown = 8;
     private int castCoolDown = maxCoolDown + 2;
 
-    public bool takenDamageThisBeat = false;
-
     public override void collideWithCharacter(Character character)
     {
     }
 
     public override int getBaseMaxHp()
     {
-        return 40;
+        return 60;
     }
 
     protected override void onTick()
     {
-        takenDamageThisBeat = false;
         castCoolDown--;
 
         if (castCoolDown == 1)
         {
             castCoolDown = maxCoolDown;
-            animator.SetTrigger("Cast");
+            bossAnimator.SetTrigger("Cast");
             castSpell();
         }
     }
@@ -107,16 +104,12 @@ public class Boss : Enemy
 
     public override void takeDamage(int damage, damageTags tag = damageTags.Damage, spiritType? type = null)
     {
-        if (!takenDamageThisBeat)
+        if (type == currentWeakness)
         {
-            if (type == currentWeakness)
-            {
-                damage *= 2;
-            }
-
-            base.takeDamage(damage, tag);
-            takenDamageThisBeat = true;
+            damage *= 2;
         }
+
+        base.takeDamage(damage, tag);
     }
 
     protected override void Start()
@@ -128,8 +121,8 @@ public class Boss : Enemy
 
     private void startGrooving(object sender, System.EventArgs e)
     {
-        animator.SetTrigger("Groove");
-        animator.speed = 1f / Metronome.instance.getBeatLength();
+        bossAnimator.SetTrigger("Groove");
+        bossAnimator.speed = 1f / Metronome.instance.getBeatLength();
         Metronome.instance.onBeat -= startGrooving;
     }
 

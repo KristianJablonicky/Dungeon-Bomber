@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7220638241815104408}
   - component: {fileID: 6856266028533852279}
   - component: {fileID: 4096696488787954385}
-  - component: {fileID: 2090036879748197746}
   m_Layer: 0
   m_Name: ExplosionHighlight
   m_TagString: Untagged
@@ -99,25 +98,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 6856266028533852279}
-  animator: {fileID: 2090036879748197746}
---- !u!95 &2090036879748197746
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1496503301189892506}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1ddccd4d1631f9d478f2f3434b017f15, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  tendrilFrames:
+  - {fileID: -1397942801, guid: b2f26ebf397585342b69b256a5b65f84, type: 3}
+  - {fileID: -1411151510, guid: b2f26ebf397585342b69b256a5b65f84, type: 3}
+  - {fileID: -780117778, guid: b2f26ebf397585342b69b256a5b65f84, type: 3}
+  - {fileID: 1602254282, guid: b2f26ebf397585342b69b256a5b65f84, type: 3}
+  - {fileID: 1023360982, guid: b2f26ebf397585342b69b256a5b65f84, type: 3}
+  - {fileID: -1445064441, guid: b2f26ebf397585342b69b256a5b65f84, type: 3}
+  - {fileID: 497923820, guid: b2f26ebf397585342b69b256a5b65f84, type: 3}

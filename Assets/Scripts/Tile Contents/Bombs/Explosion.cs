@@ -1,14 +1,16 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Explosion : TileContent
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private Animator animator;
-
+    [SerializeField] private List<Sprite> tendrilFrames;
+    //[SerializeField] private Animator animator;
     private int baseDamage, distance;
     CharacterType target;
     spiritType type;
+    private int currentTendrilFrame = 0;
 
     public void setUp(CharacterType target, int baseDamage, int distance, spiritType type)
     {
@@ -42,13 +44,18 @@ public class Explosion : TileContent
                 newAlpha);
     }
 
-    public void explode()
+    public void dealDamage(int distance)
     {
+        if (this.distance > distance)
+        {
+            return;
+        }
+
         var hitObject = Dungeon.instance.isTileOccupied(transform.position);
         if ((target == CharacterType.Player && hitObject is Player)
             || (target == CharacterType.NPC && (hitObject is Enemy)))
         {
-            ((Character)hitObject).takeDamage(baseDamage * distance, damageTags.Damage, type);
+            ((Character)hitObject).takeDamage(baseDamage, damageTags.Damage, type);
         }
         else if (hitObject is Destructable)
         {
@@ -56,16 +63,34 @@ public class Explosion : TileContent
         }
         else if (hitObject is BossHitbox)
         {
-            ((BossHitbox)hitObject).takeDamage(baseDamage * distance, damageTags.Damage, type);
+            ((BossHitbox)hitObject).takeDamage(baseDamage, damageTags.Damage, type);
         }
-        StartCoroutine(flash());
+
+        spriteRenderer.sprite = tendrilFrames[currentTendrilFrame];
+
+
+        currentTendrilFrame++;
+
     }
 
-    private IEnumerator flash()
+    public void fade(float duration)
     {
-        spriteRenderer.color = Color.white;
-        animator.SetTrigger("explode");
-        yield return new WaitForSeconds(0.2f);
+        StartCoroutine(flash(duration));
+    }
+
+    private IEnumerator flash(float duration)
+    {
+        float timeElapsed = 0f;
+        while(timeElapsed < duration)
+        {
+            timeElapsed += Time.deltaTime;
+
+            var color = spriteRenderer.color;
+            color.a = Mathf.Pow(1f - timeElapsed / duration, 4f);
+            spriteRenderer.color = color;
+
+            yield return null;
+        }
         Destroy(gameObject);
     }
 }

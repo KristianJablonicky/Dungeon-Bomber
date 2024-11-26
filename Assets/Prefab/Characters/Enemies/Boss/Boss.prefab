@@ -121,11 +121,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1672169118383506518}
-  animator: {fileID: -2198806939922201661}
+  animator: {fileID: 0}
+  bossAnimator: {fileID: -2198806939922201661}
   projectileStar: {fileID: 2431707170976071951, guid: 5ea6f8ac076589a4c818269a0bab5359, type: 3}
   projectileWave: {fileID: 7779638185808868701, guid: 8dafe22d559166549ac25beff0be3f17, type: 3}
   shieldSpriteRenderer: {fileID: 6159530889684077782}
-  takenDamageThisBeat: 0
 --- !u!1001 &3320223278263700093
 PrefabInstance:
   m_ObjectHideFlags: 0

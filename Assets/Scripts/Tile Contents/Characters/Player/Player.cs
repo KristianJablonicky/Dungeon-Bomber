@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    [SerializeField] private Animator animator;
+    [SerializeField] private Animator playerAnimator;
     [SerializeField] private Spirit spirit;
     public SpiritAttributes bear, wolf, owl;
 
@@ -68,8 +68,8 @@ public class Player : Character
     private void startGrooving(object sender, EventArgs e)
     {
         Metronome.instance.onBeat -= startGrooving;
-        animator.SetTrigger("Groove");
-        animator.speed = 1f / Metronome.instance.getBeatLength();
+        playerAnimator.SetTrigger("Groove");
+        playerAnimator.speed = 1f / Metronome.instance.getBeatLength();
     }
 
     private void setUpAttributes()
@@ -247,7 +247,7 @@ public class Player : Character
             attributes = owl;
         }
 
-        newSpirit.setUp(attributes.ticksUntilExplosion, attributes.damage,
+        newSpirit.setUp(attributes.ticksUntilExplosion, attributes.damage, spiritLengthUtility.getLength(attributes),
             attributes.horizontalLength, attributes.verticalLength, attributes.diagonalLength, currentSpiritType);
         spiritSummoned?.Invoke(attributes, EventArgs.Empty);
     }
@@ -272,7 +272,7 @@ public class Player : Character
             currentExpThreshhold = expThreshholds[level];
             increaseMaxHp(1, true);
             //StartCoroutine(levelUp());
-            animator.SetTrigger("LevelUp");
+            playerAnimator.SetTrigger("LevelUp");
         }
         onExpChange?.Invoke(this, EventArgs.Empty);
     }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Spider : Enemy
+public class ZombieWarrior : Enemy
 {
     private bool readyToMove = true;
     public override void collideWithCharacter(Character character)
