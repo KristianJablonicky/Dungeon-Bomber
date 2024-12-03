@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 3353630035954585240}
   - component: {fileID: 688900735441790996}
   - component: {fileID: 6382048857108337051}
+  - component: {fileID: 1113654897719585421}
   m_Layer: 0
-  m_Name: DustDevil
+  m_Name: Bonenado
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -147154971
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3455375203332de49930e2ae8f61824e, type: 3}
+  m_Sprite: {fileID: -332995957, guid: 3455375203332de49930e2ae8f61824e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,3 +99,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 688900735441790996}
+  animator: {fileID: 0}
+  bonenadoAnimator: {fileID: 1113654897719585421}
+--- !u!95 &1113654897719585421
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111230734541057546}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ace358235f995b44d955785ce4e2f589, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

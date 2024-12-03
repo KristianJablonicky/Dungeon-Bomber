@@ -48,6 +48,7 @@ public class Explosion : TileContent
     {
         if (this.distance > distance)
         {
+            spriteRenderer.sprite = null;
             return;
         }
 
