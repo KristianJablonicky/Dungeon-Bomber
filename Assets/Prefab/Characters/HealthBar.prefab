@@ -158,7 +158,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 713da28f5814af745b71998edb82a1ae, type: 3}
-  m_Color: {r: 0, g: 0.5647059, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.37588555, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -244,7 +244,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 713da28f5814af745b71998edb82a1ae, type: 3}
-  m_Color: {r: 0.78431374, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -301,3 +301,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthFlash: {fileID: 2155546117867932797}
   healthBar: {fileID: 989636595634894616}
+  healthBarSprite: {fileID: 6808365386017256287}

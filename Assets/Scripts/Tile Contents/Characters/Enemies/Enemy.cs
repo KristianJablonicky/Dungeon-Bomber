@@ -6,6 +6,7 @@ using System;
 public abstract class Enemy : Character
 { 
     protected float damageScaling;
+
     protected override void Start()
     {
         base.Start();
@@ -18,6 +19,25 @@ public abstract class Enemy : Character
     protected int getScaledDamage(int unscaledDamage)
     {
         return (int)(unscaledDamage * damageScaling);
+    }
+
+    protected override spiritType setWeakness()
+    {
+        spiritType enemyWeakness;
+        var roll = UnityEngine.Random.Range(0, 3);
+        if (roll == 0)
+        {
+            enemyWeakness = spiritType.bear;
+        }
+        else if (roll == 1)
+        {
+            enemyWeakness = spiritType.wolf;
+        }
+        else
+        {
+            enemyWeakness = spiritType.owl;
+        }
+        return enemyWeakness;
     }
 
     public override void die()

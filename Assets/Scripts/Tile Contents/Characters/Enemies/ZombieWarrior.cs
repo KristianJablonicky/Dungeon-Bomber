@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ZombieWarrior : Enemy
@@ -34,7 +35,7 @@ public class ZombieWarrior : Enemy
         }
         else
         {
-            int roll = Random.Range(0, 4);
+            int roll = UnityEngine.Random.Range(0, 4);
             if (roll == 0)
             {
                 move(Movement.Left);

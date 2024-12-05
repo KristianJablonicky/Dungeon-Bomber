@@ -8,6 +8,8 @@ public abstract class Character : TileContent
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
 
+    private spiritType weakness;
+
     public event EventHandler<DamageArgs> hpChanged;
     public event EventHandler defeated;
 
@@ -18,7 +20,7 @@ public abstract class Character : TileContent
         base.Start();
         hp = getBaseMaxHp();
         maxHp = hp;
-
+        weakness = setWeakness();
         if (this is not Player && this is not Boss)
         {
             var healthBar = Instantiate(Prefabs.i.healthBar);
@@ -48,6 +50,12 @@ public abstract class Character : TileContent
 
     public virtual void takeDamage(int damage, damageTags tag = damageTags.Damage, spiritType? type = null)
     {
+        if (type == weakness)
+        {
+            tag = damageTags.CriticalDamage;
+            damage *= 2;
+        }
+
         damage = Math.Min(damage, hp);
         hp -= damage;
         hpChanged?.Invoke(this, new DamageArgs(damage, tag));
@@ -61,6 +69,11 @@ public abstract class Character : TileContent
         }
     }
 
+    protected abstract spiritType setWeakness();
+    public spiritType getWeakness()
+    {
+        return weakness;
+    }
     public void heal(int healAmount, damageTags tag = damageTags.Heal)
     {
         healAmount = Math.Min(healAmount, maxHp - hp);
@@ -245,4 +258,11 @@ public abstract class Character : TileContent
         }
         transform.position = new Vector3(this.x, this.y);
     }
+}
+public enum spiritType
+{
+    bear,
+    wolf,
+    owl,
+    none
 }

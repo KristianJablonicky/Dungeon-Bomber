@@ -65,6 +65,11 @@ public class Player : Character
         Metronome.instance.onBeat += startGrooving;
     }
 
+    protected override spiritType setWeakness()
+    {
+        return spiritType.none;
+    }
+
     private void startGrooving(object sender, EventArgs e)
     {
         Metronome.instance.onBeat -= startGrooving;
@@ -329,10 +334,4 @@ public class Player : Character
         }
         transform.localScale = formerScale;
     }
-}
-public enum spiritType
-{
-    bear,
-    wolf,
-    owl
 }

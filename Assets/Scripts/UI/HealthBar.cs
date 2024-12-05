@@ -7,6 +7,8 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private GameObject healthFlash, healthBar;
     private Character character;
     string formerCharacter;
+    [SerializeField] private SpriteRenderer healthBarSprite; 
+
     public void setCharacter(Character character)
     {
         this.character = character;
@@ -15,6 +17,23 @@ public class HealthBar : MonoBehaviour
         character.hpChanged += onHpChange;
         character.defeated += onDeath;
         formerCharacter = character.ToString();
+        setColor(character.getWeakness());
+    }
+
+    private void setColor(spiritType type)
+    {
+        if (type == spiritType.bear)
+        {
+            healthBarSprite.color = Color.red;
+        }
+        else if (type == spiritType.wolf)
+        {
+            healthBarSprite.color = Color.green;
+        }
+        else if (type == spiritType.owl)
+        {
+            healthBarSprite.color = Color.blue;
+        }
     }
 
     private void onDeath(object sender, System.EventArgs e)
