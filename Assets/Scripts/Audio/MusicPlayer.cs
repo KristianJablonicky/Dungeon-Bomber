@@ -25,6 +25,13 @@ public class MusicPlayer : MonoBehaviour
         {
             setUpSong(songs[floor-1]);
         }
+
+        if (!PlayerPrefs.HasKey("musicVolume"))
+        {
+            PlayerPrefs.SetFloat("musicVolume", 1.0f);
+        }
+
+        setVolume();
     }
 
     private void setUpMetronome()
@@ -97,4 +104,8 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
+    public void setVolume()
+    {
+        AudioListener.volume = PlayerPrefs.GetFloat("musicVolume");
+    }
 }

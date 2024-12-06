@@ -14,5 +14,11 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Lore.unity
+    guid: da17d05b64a5082409c1bad049f38269
+  - enabled: 1
+    path: Assets/Scenes/Bestiary.unity
+    guid: 5727507ee0c3bde4f9071c45ac01a2cb
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: bb096529aa5011c478d23b64c86be132, type: 2}

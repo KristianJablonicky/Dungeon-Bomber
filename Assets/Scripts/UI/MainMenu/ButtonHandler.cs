@@ -17,7 +17,16 @@ public class ButtonHandler : MonoBehaviour
 
     public void loreButton()
     {
-        // TODO: Add lore scene
-        // SceneManager.LoadScene("Lore");
+        SceneManager.LoadScene("Lore");
+    }
+
+    public void bestiaryButton()
+    {
+        SceneManager.LoadScene("Bestiary");
+    }
+
+    public void mainMenuButton()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }

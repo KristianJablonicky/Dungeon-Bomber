@@ -16,16 +16,20 @@ public class CameraController : MonoBehaviour
     {
         player = (Player)sender;
         enabled = true;
-        player.positionUpdated += updatePosition;
-        player.defeated += unfollowPlayer;
+        player.defeated += onPlayerDeath;
     }
 
-    private void updatePosition(object sender, System.EventArgs e)
+    private void onPlayerDeath(object sender, System.EventArgs e)
     {
-        transform.position = player.transform.position + offset;
+        enabled = false;
     }
-    private void unfollowPlayer(object sender, System.EventArgs e)
+
+    private void LateUpdate()
     {
-        player.positionUpdated -= updatePosition;
+        if (!player)
+        {
+            return;
+        }
+        transform.position = player.transform.position + offset;
     }
 }
