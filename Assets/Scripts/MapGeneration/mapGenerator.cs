@@ -214,9 +214,58 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    private void ensureConnectivity()
+    {
+        bool[,] visited = new bool[width, height];
+        Queue<Vector2Int> queue = new Queue<Vector2Int>();
+
+        // Start flood-fill from path tiles
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (pathToLadder[x, y] == 0 && terrainMap[x, y] == 1)
+                {
+                    queue.Enqueue(new Vector2Int(x, y));
+                    visited[x, y] = true;
+                }
+            }
+        }
+
+        // Flood-fill algorithm
+        while (queue.Count > 0)
+        {
+            Vector2Int current = queue.Dequeue();
+            int x = current.x, y = current.y;
+
+            foreach (Vector2Int dir in new Vector2Int[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right })
+            {
+                int nx = x + dir.x, ny = y + dir.y;
+                if (nx >= 0 && nx < width && ny >= 0 && ny < height && !visited[nx, ny] && terrainMap[nx, ny] == 1)
+                {
+                    visited[nx, ny] = true;
+                    queue.Enqueue(new Vector2Int(nx, ny));
+                }
+            }
+        }
+
+        // Remove unconnected tiles
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (!visited[x, y])
+                {
+                    terrainMap[x, y] = 0;
+                }
+            }
+        }
+    }
+
 
     private void mergeMaps()
     {
+        ensureConnectivity();
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
