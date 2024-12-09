@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class SkeletonDemon : Enemy
 {
-    protected float randomMoveChance = 0.5f;
     private int moveTick;
     private int direction;
 
