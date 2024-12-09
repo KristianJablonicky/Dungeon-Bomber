@@ -3408,6 +3408,7 @@ MonoBehaviour:
   - {fileID: 8255889257437749859, guid: d1d9059070571e64eaccd84fcd871987, type: 3}
   - {fileID: 6382048857108337051, guid: 91a73ab63a9b9a6448469261738d5048, type: 3}
   - {fileID: 5243043151725588716, guid: e39991771fac0a5468bd598a6c69e74c, type: 3}
+  - {fileID: -934432543342161636, guid: 9f69284be2f5d9a42934186b4833178d, type: 3}
   destructables:
   - {fileID: 4166426643672765145, guid: aed49b4747af6a043b7963530594a2db, type: 3}
   mapGenerator: {fileID: 1511086841}
