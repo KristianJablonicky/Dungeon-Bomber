@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -6,6 +5,7 @@ using System;
 public abstract class Enemy : Character
 { 
     protected float damageScaling;
+    private int tickNumber = 0, updateEveryNTicks;
 
     protected override void Start()
     {
@@ -14,12 +14,15 @@ public abstract class Enemy : Character
         int floor = DataStorage.instance.floor;
         increaseMaxHp((int)(getBaseMaxHp() * (floor - 1) * 0.5f), true);
         damageScaling = 1f + ((floor - 1) * 0.5f);
+        updateEveryNTicks = getUpdateEveryNTicks();
     }
 
     protected int getScaledDamage(int unscaledDamage)
     {
         return (int)(unscaledDamage * damageScaling);
     }
+
+    protected abstract int getUpdateEveryNTicks();
 
     protected override spiritType setWeakness()
     {
@@ -47,17 +50,15 @@ public abstract class Enemy : Character
         base.die();
     }
 
-    private void onTick(object sender, System.EventArgs e)
+    private void onTick(object sender, EventArgs e)
     {
-        onTick();
-        //StartCoroutine(waitHalfBeat());
+        tickNumber++;
+        if (tickNumber == updateEveryNTicks)
+        {
+            tickNumber = 0;
+            onTick();
+        }
     }
-    private IEnumerator waitHalfBeat()
-    {
-        yield return new WaitForSeconds(metronome.getBeatLength() * 0.5f);
-        onTick();
-    }
-
     protected abstract void onTick();
 
     protected void onDeath()

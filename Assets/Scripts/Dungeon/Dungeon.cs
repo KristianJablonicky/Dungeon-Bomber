@@ -306,10 +306,16 @@ public class Dungeon : MonoBehaviour
         {
             return;
         }
-        var hitSplatInstance = Instantiate(hitSplat, ((Character)sender).transform.position, Quaternion.identity);
+        var senderC = sender as Character;
+        if (senderC.getHitSplatInstance() != null)
+        {
+            return;
+        }
+        var hitSplatInstance = Instantiate(hitSplat, senderC.transform.position, Quaternion.identity);
         hitSplatInstance.transform.SetParent(hitSplatsParent.transform, false);
-        hitSplatInstance.transform.position = ((Character)sender).transform.position;
-        hitSplatInstance.setUp(e);
+        hitSplatInstance.transform.position = senderC.transform.position;
+        hitSplatInstance.setUp(e, senderC);
+        senderC.setHitSplatInstance(hitSplatInstance);
     }
 
     public void onEnemyKilled()

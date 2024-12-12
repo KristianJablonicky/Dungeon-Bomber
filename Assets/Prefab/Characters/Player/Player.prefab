@@ -102,9 +102,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   playerAnimator: {fileID: 3350258261099108045}
   spirit: {fileID: 4243957566686228950, guid: 9966dd4d15870254e9b1c17fb3b5d974, type: 3}
-  level: 1
-  expCount: 0
-  currentExpThreshhold: 2
+  movementParticles: {fileID: 5058153456898853935, guid: c7091a76ab4eb0f4da159e0606d4e931, type: 3}
   movementEnabled: 0
   summonedSpiritAlready: 0
   currentSpiritType: 0

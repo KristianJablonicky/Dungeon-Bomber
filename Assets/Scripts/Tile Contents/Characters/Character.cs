@@ -15,6 +15,8 @@ public abstract class Character : TileContent
 
     private Coroutine runningHurtAnimation;
 
+    private HitSplat hitSplatInstance = null;
+
     protected override void Start()
     {
         base.Start();
@@ -257,6 +259,16 @@ public abstract class Character : TileContent
             yield return null;
         }
         transform.position = new Vector3(this.x, this.y);
+    }
+
+    public void setHitSplatInstance(HitSplat hitSplat)
+    {
+        hitSplatInstance = hitSplat;
+    }
+
+    public HitSplat getHitSplatInstance()
+    {
+        return hitSplatInstance;
     }
 }
 public enum spiritType

@@ -19,23 +19,7 @@ public class UpgradeCardsGenerator : MonoBehaviour
     {
         upgradeCards = new List<UpgradeCard>();
         Dungeon.instance.ladderReached += generateUpgrades;
-        StartCoroutine(fadeOut());
         maxScale = upgradeCard.transform.localScale.x;
-        canvasGroup.alpha = 1f;
-    }
-
-    private IEnumerator fadeOut()
-    {
-        float timeElapsed = 0;
-
-        while (timeElapsed < duration)
-        {
-            timeElapsed += Time.deltaTime;
-
-            canvasGroup.alpha = maxAlpha - maxAlpha * timeElapsed / duration;
-
-            yield return null;
-        }
     }
 
     private void generateUpgrades(object sender, System.EventArgs e)

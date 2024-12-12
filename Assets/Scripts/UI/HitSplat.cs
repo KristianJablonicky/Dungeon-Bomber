@@ -8,30 +8,47 @@ public class HitSplat : MonoBehaviour
     [SerializeField] private TMP_Text hitSplatText;
     float timeAlive = 0f, duration = 0.5f;
     Vector3 maxY;
+    private Character owner;
+    private string prefix, suffix;
+    private int value;
 
-    public void setUp(DamageArgs damageArgs) 
+    public void setUp(DamageArgs damageArgs, Character owner) 
     {
         if (damageArgs.amount == 0)
         {
             Destroy(gameObject);
         }
-
+        this.owner = owner;
 
         hitSplatText.text = damageArgs.amount.ToString();
+        if (damageArgs.tag == damageTags.MaxHpIncreaseHeal)
+        {
+            prefix = "+";
+        }
         if (damageArgs.tag.ToString().Contains("critical"))
         {
-            hitSplatText.text += "!";
+            suffix = "!";
         }
         if (damageArgs.tag.ToString().Contains("Heal"))
         {
             hitSplatText.color = Color.green;
         }
-        if (damageArgs.tag == damageTags.MaxHpIncreaseHeal)
-        {
-            hitSplatText.text = "+" + hitSplatText.text;
-        }
+        value = damageArgs.amount;
+        setText(value);
         StartCoroutine(Rescale());
         maxY = new Vector3(0, 0.5f);
+        owner.hpChanged += onOwnerHpChange;
+    }
+
+
+    private void setText(int value)
+    {
+        hitSplatText.text = $"{prefix}{value}{suffix}";
+    }
+    private void onOwnerHpChange(object sender, DamageArgs e)
+    {
+        value += e.amount;
+        setText(value);
     }
 
     private void Update()
@@ -39,6 +56,7 @@ public class HitSplat : MonoBehaviour
         timeAlive += Time.deltaTime;
         if (timeAlive > duration)
         {
+            owner.setHitSplatInstance(null);
             Destroy(gameObject);
         }
         transform.position += maxY * Time.deltaTime / duration;

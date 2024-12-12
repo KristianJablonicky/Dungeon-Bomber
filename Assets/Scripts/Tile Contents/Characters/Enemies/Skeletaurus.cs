@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class Skeletaurus : Enemy
 {
-    private bool isPreparing;
-    private bool isCharging;
-    private bool isResting;
+    [SerializeField] private Animator skeletaurusAnimator;
+
+    private bool isPreparing = false;
+    private bool isCharging = false;
+    private bool isResting = false;
     private int moveTick;
     Movement chargeMovement = Movement.Right;
 
@@ -24,10 +26,14 @@ public class Skeletaurus : Enemy
     protected override void Start()
     {
         base.Start();
-        isPreparing = false;
-        isCharging = false;
-        isResting = false;
-        moveTick = UnityEngine.Random.Range(0, 2); 
+        moveTick = Random.Range(0, 2);
+        metronome.onBeat += startGrooving;
+    }
+
+    private void startGrooving(object sender, System.EventArgs e)
+    {
+        metronome.onBeat -= startGrooving;
+        skeletaurusAnimator.speed = 1f / Metronome.instance.getBeatLength();
     }
 
     public override int getBaseMaxHp()
@@ -36,6 +42,11 @@ public class Skeletaurus : Enemy
     }
 
     protected override int getPlayerDetectionRadius()
+    {
+        return 1;
+    }
+
+    protected override int getUpdateEveryNTicks()
     {
         return 1;
     }
@@ -70,6 +81,7 @@ public class Skeletaurus : Enemy
         else if (enemyY == playerY && !isPreparing && !isCharging)
         {
             isPreparing = true;
+            skeletaurusAnimator.SetTrigger("Prepare");
             moveTick = 1;
         }
 
@@ -79,6 +91,7 @@ public class Skeletaurus : Enemy
             {
                 isPreparing = false;
                 isCharging = true;
+                skeletaurusAnimator.SetTrigger("Charge");
                 if (enemyX > playerX)
                 {
                     chargeMovement = Movement.Left;
@@ -120,6 +133,7 @@ public class Skeletaurus : Enemy
             {
                 isCharging = false;
                 isResting = true;
+                skeletaurusAnimator.SetTrigger("Rest");
                 moveTick = 0;
             }
         }
@@ -131,6 +145,7 @@ public class Skeletaurus : Enemy
             {
                 moveTick = 0;
                 isResting = false;
+                skeletaurusAnimator.SetTrigger("GoIdle");
             }
         }
     }

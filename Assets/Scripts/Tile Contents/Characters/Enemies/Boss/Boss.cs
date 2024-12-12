@@ -22,6 +22,11 @@ public class Boss : Enemy
         return 60;
     }
 
+    protected override int getUpdateEveryNTicks()
+    {
+        return 1;
+    }
+
     protected override void onTick()
     {
         castCoolDown--;

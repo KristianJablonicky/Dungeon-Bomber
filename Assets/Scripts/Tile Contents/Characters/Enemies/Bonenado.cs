@@ -3,19 +3,14 @@ using UnityEngine;
 public class Bonenado : Enemy
 {
     private int direction;
-    private int speed = 2;
-    private int beatCounter = 0;
     protected float randomMoveChance = 0.1f;
     [SerializeField] private Animator bonenadoAnimator;
 
-    private void Awake()
-    {
-        direction = Random.Range(0, 4);
-    }
     protected override void Start()
     {
         base.Start();
         Metronome.instance.onBeat += startGrooving;
+        direction = Random.Range(0, 4);
     }
 
     private void startGrooving(object sender, System.EventArgs e)
@@ -34,6 +29,10 @@ public class Bonenado : Enemy
     {
         return 2;
     }
+    protected override int getUpdateEveryNTicks()
+    {
+        return 2;
+    }
 
     protected override int getPlayerDetectionRadius()
     {
@@ -42,18 +41,13 @@ public class Bonenado : Enemy
 
     protected override void onTick()
     {
-        beatCounter++;
-        if (beatCounter % speed == 0)
+        if (randomMoveChance > Random.value)
         {
-            if (randomMoveChance > UnityEngine.Random.value)
-            {
-                move((Movement)Random.Range(0, 4), 2);
-                return;
-            }
-            move((Movement)direction, 2);
-            direction++;
-            direction %= 4;
+            move((Movement)Random.Range(0, 4), 2);
+            return;
         }
-        if (beatCounter == 32) beatCounter = 0;
+        move((Movement)direction, 2);
+        direction++;
+        direction %= 4;
     }
 }

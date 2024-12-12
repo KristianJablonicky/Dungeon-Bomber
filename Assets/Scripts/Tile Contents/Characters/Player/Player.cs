@@ -9,9 +9,12 @@ public class Player : Character
     [SerializeField] private Spirit spirit;
     public SpiritAttributes bear, wolf, owl;
 
-    [SerializeField] private int level = 1;
-    [SerializeField] private int expCount = 0;
-    [SerializeField] private int currentExpThreshhold = 2;
+    private int level = 1;
+    private int expCount = 0;
+    private int currentExpThreshhold = 2;
+
+    [SerializeField] private MovementParticles movementParticles;
+
     private int currentFloorUpgrades = 0;
     public event EventHandler onExpChange, spiritSummoned;
 
@@ -205,6 +208,9 @@ public class Player : Character
             return;
             */
         }
+
+        createMovementParticles();
+        
         var collider = move(movement);
         if (collider is Ladder)
         {
@@ -216,6 +222,7 @@ public class Player : Character
             summonSpirit();
             summonedSpiritAlready = true;
         }
+
 
         disableInput(this, EventArgs.Empty);
     }
@@ -280,6 +287,11 @@ public class Player : Character
             playerAnimator.SetTrigger("LevelUp");
         }
         onExpChange?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void createMovementParticles()
+    {
+        Instantiate(movementParticles, transform.position, Quaternion.identity);
     }
 
     private bool reachedNewPlayerLevel()
