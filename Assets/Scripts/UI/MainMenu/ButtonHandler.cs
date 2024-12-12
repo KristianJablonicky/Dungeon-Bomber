@@ -17,12 +17,12 @@ public class ButtonHandler : MonoBehaviour
 
     public void loreButton()
     {
-        SceneManager.LoadScene("Lore");
+        
     }
 
     public void bestiaryButton()
     {
-        SceneManager.LoadScene("Bestiary");
+        // SceneManager.LoadScene("Bestiary");
     }
 
     public void mainMenuButton()
