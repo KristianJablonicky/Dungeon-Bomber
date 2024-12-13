@@ -46,5 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   intro: {fileID: 8300000, guid: cf90297161ec6d34bb5f4940be6c4272, type: 3}
   loop: {fileID: 8300000, guid: b3a959dc9933566468c31ebbb7131bcc, type: 3}
+  introWithVox: {fileID: 8300000, guid: ddd6e66fd1606f447a2f70901f928b9d, type: 3}
+  loopWithVox: {fileID: 8300000, guid: 3505faa7c5d22934b910477208215688, type: 3}
   introMeasures: 4
   loopMeasures: 16

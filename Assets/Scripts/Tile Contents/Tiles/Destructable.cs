@@ -14,5 +14,8 @@ public class Destructable : TileContent
         Destroy(this);
     }
 
-    protected virtual void onDestruction() { }
+    protected virtual void onDestruction()
+    {
+        Currencies.instance.increaseGold(Random.Range(2, 6), gameObject);
+    }
 }

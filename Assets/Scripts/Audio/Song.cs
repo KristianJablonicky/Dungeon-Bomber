@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Song : MonoBehaviour
 {
-    public AudioClip intro, loop;
+    public AudioClip intro, loop, introWithVox, loopWithVox;
     public int introMeasures, loopMeasures;
 }

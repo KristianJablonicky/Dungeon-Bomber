@@ -47,7 +47,14 @@ public abstract class Enemy : Character
     {
         onDeath();
         metronome.onBeatEnemy -= onTick;
+        Currencies.instance.increaseGold(goldRewardOnDeath(), gameObject);
         base.die();
+    }
+
+    private int goldRewardOnDeath()
+    {
+        int floor = dungeon.getFloor();
+        return UnityEngine.Random.Range(floor, 2 * floor + 1);
     }
 
     private void onTick(object sender, EventArgs e)

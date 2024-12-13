@@ -10,6 +10,8 @@ public class MusicPlayer : MonoBehaviour
 
     private Song currentSong;
 
+    private int voxEnabled = 0;
+
     private Metronome metronome;
     private int currentBeat = 0;
     private void Start()
@@ -29,6 +31,7 @@ public class MusicPlayer : MonoBehaviour
         if (!PlayerPrefs.HasKey("musicVolume"))
         {
             PlayerPrefs.SetFloat("musicVolume", 1.0f);
+            PlayerPrefs.SetInt("vox", 0);
         }
 
         setVolume();
@@ -45,23 +48,31 @@ public class MusicPlayer : MonoBehaviour
         metronome.countInBeat += playIntro;
         metronome.onBeat += seeIfIntroNeedsToEnd;
         Dungeon.instance.ladderReached += fadeOut;
+        Dungeon.instance.getPlayer().defeated += fadeOut;
     }
 
     private void fadeOut(object sender, System.EventArgs e)
     {
-        StartCoroutine(fadeOutVolume());
+        if (sender is Player)
+        {
+            StartCoroutine(fadeOutVolume(0.25f));
+        }
+        else
+        {
+            StartCoroutine(fadeOutVolume(0.5f));
+        }
     }
 
-    private IEnumerator fadeOutVolume()
+    private IEnumerator fadeOutVolume(float finalVolume)
     {
         float formerVolume = audioSource.volume, timeElapsed = 0f, duration = metronome.getBeatLength() * 4f;
         while (timeElapsed < duration)
         {
             timeElapsed += Time.deltaTime;
-            audioSource.volume = formerVolume * (1f - timeElapsed / duration * 0.5f);
+            audioSource.volume = formerVolume - (1f - finalVolume) * (timeElapsed / duration);
             yield return null;
         }
-        audioSource.volume = 0.5f * formerVolume;
+        audioSource.volume = finalVolume * formerVolume;
     }
 
     private void onBeat(object sender, System.EventArgs e)
@@ -81,7 +92,14 @@ public class MusicPlayer : MonoBehaviour
     private void playIntro(object sender, System.EventArgs e)
     {
         metronome.countInBeat -= playIntro;
-        audioSource.PlayOneShot(currentSong.intro);
+        if (voxEnabled == 1)
+        {
+            audioSource.PlayOneShot(currentSong.introWithVox);
+        }
+        else
+        {
+            audioSource.PlayOneShot(currentSong.intro);
+        }
     }
     private void seeIfIntroNeedsToEnd(object sender, System.EventArgs e)
     {
@@ -91,7 +109,14 @@ public class MusicPlayer : MonoBehaviour
             currentBeat = 0;
             metronome.onBeat -= seeIfIntroNeedsToEnd;
             metronome.onBeat += seeIfSongNeedsToBeLooped;
-            audioSource.PlayOneShot(currentSong.loop);
+            if (voxEnabled == 1)
+            {
+                audioSource.PlayOneShot(currentSong.loopWithVox);
+            }
+            else
+            {
+                audioSource.PlayOneShot(currentSong.loop);
+            }
         }
     }
     private void seeIfSongNeedsToBeLooped(object sender, System.EventArgs e)
@@ -107,5 +132,6 @@ public class MusicPlayer : MonoBehaviour
     public void setVolume()
     {
         AudioListener.volume = PlayerPrefs.GetFloat("musicVolume");
+        voxEnabled = PlayerPrefs.GetInt("vox");
     }
 }

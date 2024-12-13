@@ -163,6 +163,14 @@ public class Player : Character
         {
             onEnemyKill(this, EventArgs.Empty);
         }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Currencies.instance.increaseGold(3, gameObject);
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Time.timeScale = 0f;
+        }
         if (movementEnabled)
         {
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))

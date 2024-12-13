@@ -37,7 +37,8 @@ public class Dungeon : MonoBehaviour
         // Reset the run
         if (Input.GetKeyUp(KeyCode.R))
         {
-            reset();
+            playerInstance.die();
+            //reset();
         }
         // Skip floor
         else if (Input.GetKeyUp(KeyCode.T))
@@ -289,6 +290,11 @@ public class Dungeon : MonoBehaviour
         currentFloorColor = Color.red;
         generateDungeon();
         */
+    }
+
+    public int getFloor()
+    {
+        return floor;
     }
     public Color getFloorColor()
     {
