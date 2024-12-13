@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonHandler : MonoBehaviour
 {
+    [SerializeField] private GameObject popUpContainer, bestiary;
     public void playButton()
     {
         SceneManager.LoadScene("Gameplay");
@@ -22,11 +23,16 @@ public class ButtonHandler : MonoBehaviour
 
     public void bestiaryButton()
     {
-        // SceneManager.LoadScene("Bestiary");
+        createPopUp(bestiary);
     }
 
     public void mainMenuButton()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    private void createPopUp(GameObject go)
+    {
+        var instance = Instantiate(go, popUpContainer.transform);
     }
 }
