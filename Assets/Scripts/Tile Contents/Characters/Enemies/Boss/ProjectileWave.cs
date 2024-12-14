@@ -24,6 +24,7 @@ public class ProjectileWave : Projectile
             {
                 dormant = false;
                 enabled = true;
+                checkTile((int)Mathf.Round(transform.position.x), (int)Mathf.Round(transform.position.y));
             }
         }
     }

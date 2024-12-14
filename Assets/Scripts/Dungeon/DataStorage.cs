@@ -5,7 +5,7 @@ public class DataStorage : MonoBehaviour
 {
     public static DataStorage instance = null;
     public int floor = 0, playerHp, playerMaxHp, playerLevel, playerExp,
-        highScore, currentBeats;
+        highScore, currentBeats, startingGold;
 
     private List<Upgrade> upgrades;
 
@@ -14,11 +14,13 @@ public class DataStorage : MonoBehaviour
         // first awakening
         if (instance == null)
         {
-            highScore = PlayerPrefs.GetInt("HighScore");
+            highScore = PlayerPrefs.GetInt("HighScore", -1);
             floor = 1;
             instance = this;
             DontDestroyOnLoad(this);
             upgrades = new List<Upgrade>();
+
+            startingGold = Currencies.instance.getGold();
 
             Application.targetFrameRate = 144;
             /*
@@ -61,20 +63,13 @@ public class DataStorage : MonoBehaviour
         playerLevel = 0;
         playerExp = 0;
         currentBeats = 0;
+        startingGold = Currencies.instance.getGold();
     }
 
     public void resetHighScore()
     {
-        highScore = 0;
+        highScore = -1;
         PlayerPrefs.SetInt("HighScore", highScore);
-    }
-    public void updateHighScore()
-    {
-        if (currentBeats < highScore || highScore == 0)
-        {
-            highScore = currentBeats;
-            PlayerPrefs.SetInt("HighScore", highScore);
-        }
     }
 
 }

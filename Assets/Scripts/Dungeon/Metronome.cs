@@ -46,6 +46,12 @@ public class Metronome : MonoBehaviour
     {
         Dungeon.instance.ladderReached += pause;
         Dungeon.instance.getPlayer().defeated += pause;
+        var boss = Dungeon.instance.getBoss();
+        if (boss != null)
+        {
+            boss.defeated += pause;
+        }
+
         StartCoroutine(countIn());
         enabled = false;
     }

@@ -9,6 +9,10 @@ public class BossHitbox : TileContent
     }
     public void takeDamage(int damage, damageTags tags, spiritType type)
     {
+        if (boss.getHp() <= 0)
+        {
+            return;
+        }
         boss.takeDamage(damage, tags, type);
     }
 }

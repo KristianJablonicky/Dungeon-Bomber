@@ -16,7 +16,7 @@ public class LoreManager : MonoBehaviour
         highestFloor = PlayerPrefs.GetInt("HighestFloorReached");
         songs = new List<Lyrics> {
                 new ("Introduction", "Welcome to Necroblaster: Rhythm of the Dead!\n" +
-                "Reach the lowest floor of the catacomb to unveil more of the lore.\n" +
+                "Reach lower floors of the catacomb to unveil more lore.\n" +
                 "Move by either arrows or WASD, switch spells by either JKL or 123\n" +
                 "Defeat foes to level up - this increases your vitality " +
                 "and allows you to select more upgrades.\n\n" +

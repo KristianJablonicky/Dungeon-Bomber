@@ -112,7 +112,7 @@ public abstract class Character : TileContent
             {
                 animator.SetTrigger("die");
             }
-            else
+            else if (this is not Player && this is not Boss)
             {
                 StartCoroutine(deathAnimation());
             }

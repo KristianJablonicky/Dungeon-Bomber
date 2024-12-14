@@ -47,7 +47,14 @@ public abstract class Enemy : Character
     {
         onDeath();
         metronome.onBeatEnemy -= onTick;
-        Currencies.instance.increaseGold(goldRewardOnDeath(), gameObject);
+        if (this is not Boss)
+        {
+            Currencies.instance.increaseGold(goldRewardOnDeath(), gameObject);
+        }
+        else
+        {
+            Currencies.instance.increaseGold(20, gameObject);
+        }
         base.die();
     }
 

@@ -109,6 +109,11 @@ public class Boss : Enemy
 
     public override void takeDamage(int damage, damageTags tag = damageTags.Damage, spiritType? type = null)
     {
+        if (hp <= 0)
+        {
+            return;
+        }
+
         if (type == currentWeakness)
         {
             damage *= 2;
@@ -129,11 +134,5 @@ public class Boss : Enemy
         bossAnimator.SetTrigger("Groove");
         bossAnimator.speed = 1f / Metronome.instance.getBeatLength();
         Metronome.instance.onBeat -= startGrooving;
-    }
-
-    private void OnDestroy()
-    {
-        DataStorage.instance.updateHighScore();
-        dungeon.resetAfterDelay();
     }
 }

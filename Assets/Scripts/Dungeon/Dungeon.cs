@@ -29,6 +29,7 @@ public class Dungeon : MonoBehaviour
 
     public static Dungeon instance;
     private Player playerInstance;
+    private Boss bossInstance;
 
     public event EventHandler playerSpawned, ladderReached, enemyKilled;
 
@@ -45,7 +46,7 @@ public class Dungeon : MonoBehaviour
         {
             callLadderReached();
         }
-        else if (Input.GetKeyUp(KeyCode.L))
+        else if (Input.GetKeyUp(KeyCode.P))
         {
             DataStorage.instance.resetHighScore();
         }
@@ -56,10 +57,6 @@ public class Dungeon : MonoBehaviour
 
     }
 
-    public void resetAfterDelay()
-    {
-        StartCoroutine(resetAfterDelay(3f));
-    }
     private IEnumerator resetAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -132,7 +129,7 @@ public class Dungeon : MonoBehaviour
                 else if (x == 5 && y == 3)
                 {
                     instantiate(tile, x, y);
-                    var bossInstance = (Boss)instantiate(boss, x, y, false);
+                    bossInstance = (Boss)instantiate(boss, x, y, false);
                     layout[x, y] = bossInstance;
                     for (int xOffset = 0; xOffset <= 1; xOffset++)
                     {
@@ -304,6 +301,11 @@ public class Dungeon : MonoBehaviour
     public Player getPlayer()
     {
         return playerInstance;
+    }
+
+    public Boss? getBoss()
+    {
+        return bossInstance;
     }
 
     private void instantiateHitsplat(object sender, DamageArgs e)

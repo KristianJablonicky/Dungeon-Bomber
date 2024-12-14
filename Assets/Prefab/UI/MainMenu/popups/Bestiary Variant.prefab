@@ -693,8 +693,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4502545940770383809, guid: d0fe8122c7f3e7741b2cc69d7055142e, type: 3}
       propertyPath: m_text
-      value: Their menacing aura takes a nap with them as their horns meet a brick
-        wall.
+      value: Their favorite activities include smashing their heads against a and
+        taking naps.
       objectReference: {fileID: 0}
     - target: {fileID: 4925736693454869094, guid: d0fe8122c7f3e7741b2cc69d7055142e, type: 3}
       propertyPath: m_Pivot.x

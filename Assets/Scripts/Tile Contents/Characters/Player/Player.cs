@@ -167,10 +167,6 @@ public class Player : Character
         {
             Currencies.instance.increaseGold(3, gameObject);
         }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Time.timeScale = 0f;
-        }
         if (movementEnabled)
         {
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
