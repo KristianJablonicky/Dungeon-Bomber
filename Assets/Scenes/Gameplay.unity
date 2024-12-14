@@ -1430,6 +1430,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 6467163287183643069, guid: ce37d2fa3d3fa2a4eba5c0c3ac662f70, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1440,6 +1444,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 533335339485843196, guid: ce37d2fa3d3fa2a4eba5c0c3ac662f70, type: 3}
   m_PrefabInstance: {fileID: 309663832}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &309663834 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5582337675231467665, guid: ce37d2fa3d3fa2a4eba5c0c3ac662f70, type: 3}
+  m_PrefabInstance: {fileID: 309663832}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &333037739
 GameObject:
   m_ObjectHideFlags: 0
@@ -2872,7 +2887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3364,7 +3379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3909,7 +3924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4678,7 +4693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4827,6 +4842,9 @@ MonoBehaviour:
   fade: {fileID: 333037740}
   audioSource: {fileID: 1570237446}
   summary: {fileID: 1239241981}
+  deathScreenButtons:
+  - {fileID: 309663834}
+  - {fileID: 1977372637}
 --- !u!1 &1604961384
 GameObject:
   m_ObjectHideFlags: 0
@@ -5176,6 +5194,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Restart
       objectReference: {fileID: 0}
+    - target: {fileID: 6467163287183643069, guid: ce37d2fa3d3fa2a4eba5c0c3ac662f70, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5186,6 +5208,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 533335339485843196, guid: ce37d2fa3d3fa2a4eba5c0c3ac662f70, type: 3}
   m_PrefabInstance: {fileID: 1977372635}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1977372637 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5582337675231467665, guid: ce37d2fa3d3fa2a4eba5c0c3ac662f70, type: 3}
+  m_PrefabInstance: {fileID: 1977372635}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2104383719
 GameObject:
   m_ObjectHideFlags: 0

@@ -346,6 +346,10 @@ PrefabInstance:
       propertyPath: m_Navigation.m_Mode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 666244661243171566, guid: c421dedeead0d394d80f892b684710b9, type: 3}
+      propertyPath: m_Name
+      value: Title
+      objectReference: {fileID: 0}
     - target: {fileID: 1091669968757847746, guid: c421dedeead0d394d80f892b684710b9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -428,7 +432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2005829365825584730, guid: c421dedeead0d394d80f892b684710b9, type: 3}
       propertyPath: m_text
-      value: Bestiary
+      value: '- Bestiary -'
       objectReference: {fileID: 0}
     - target: {fileID: 7453742689440592589, guid: c421dedeead0d394d80f892b684710b9, type: 3}
       propertyPath: m_Name

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PopupController : MonoBehaviour
@@ -8,6 +6,7 @@ public class PopupController : MonoBehaviour
 
     public void closePopup()
     {
+        ButtonHandler.hideFade();
         Destroy(popup);
     }
 }

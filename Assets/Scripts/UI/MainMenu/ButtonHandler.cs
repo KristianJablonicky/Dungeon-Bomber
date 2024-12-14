@@ -5,7 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class ButtonHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject popUpContainer, bestiary;
+    [SerializeField] private GameObject popUpContainer, bestiary, lore;
+    [SerializeField] private GameObject fade;
+    private static ButtonHandler instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     public void playButton()
     {
         SceneManager.LoadScene("Gameplay");
@@ -18,7 +26,7 @@ public class ButtonHandler : MonoBehaviour
 
     public void loreButton()
     {
-        
+        createPopUp(lore);
     }
 
     public void bestiaryButton()
@@ -34,5 +42,10 @@ public class ButtonHandler : MonoBehaviour
     private void createPopUp(GameObject go)
     {
         var instance = Instantiate(go, popUpContainer.transform);
+        fade.SetActive(true);
+    }
+    public static void hideFade()
+    {
+        instance.fade.SetActive(false);
     }
 }
