@@ -5,8 +5,13 @@ using UnityEngine;
 public class LoreManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text title, lyrics;
+    [SerializeField] private List<AudioClip> songAudioClips;
+
+
     List<Lyrics> songs;
     private int index = 0, highestFloor;
+    private AudioSource source;
+
     private void Awake()
     {
         if (!PlayerPrefs.HasKey("HighestFloorReached"))
@@ -40,6 +45,9 @@ public class LoreManager : MonoBehaviour
                 "\nOm nom mnam mnam hami papi hami papi\nNa ludskom mase")
         };
         updateTexts();
+
+        source = MenuMusicPlayer.getAudioSourceSong();
+
     }
 
     private void updateTexts()
@@ -72,6 +80,12 @@ public class LoreManager : MonoBehaviour
             this.title = title;
             this.lyrics = lyrics;
         }
+    }
+
+    public void playSong()
+    {
+        source.clip = songAudioClips[index];
+        source.Play();
     }
 
 }

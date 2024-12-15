@@ -25,9 +25,9 @@ public class HitSplat : MonoBehaviour
         {
             prefix = "+";
         }
-        if (damageArgs.tag.ToString().Contains("critical"))
+        if (damageArgs.tag.ToString().Contains("Critical"))
         {
-            suffix = "!";
+            hitSplatText.color = Color.yellow;
         }
         if (damageArgs.tag.ToString().Contains("Heal"))
         {

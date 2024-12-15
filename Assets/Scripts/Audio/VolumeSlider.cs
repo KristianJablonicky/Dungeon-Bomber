@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 public class VolumeSlider : MonoBehaviour
@@ -8,6 +10,7 @@ public class VolumeSlider : MonoBehaviour
 
     [SerializeField] private Slider slider;
     [SerializeField] private GameObject mutedVoxSymbol;
+    [SerializeField] private TMP_Text vocalsDisabled;
     private int voxEnabled = 0;
 
     void Start()
@@ -27,6 +30,7 @@ public class VolumeSlider : MonoBehaviour
     public void setVolume()
     {
         AudioListener.volume = slider.value;
+        MenuMusicPlayer.getAudioSourceNote().volume = slider.value;
         saveVolume();
     }
 
@@ -47,10 +51,13 @@ public class VolumeSlider : MonoBehaviour
         if (voxEnabled == 1)
         {
             mutedVoxSymbol.SetActive(false);
+            vocalsDisabled.text = "Vocals enabled\n" +
+                "(You are making a GRAVE mistake ...muhahaHAHAHAHhaha)";
         }
         else
         {
             mutedVoxSymbol.SetActive(true);
+            vocalsDisabled.text = "Vocals disabled";
         }
     }
 

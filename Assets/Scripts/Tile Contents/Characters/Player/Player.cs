@@ -41,7 +41,7 @@ public class Player : Character
 
     public override int getBaseMaxHp()
     {
-        return 5;
+        return 5 + PlayerPrefs.GetInt("RuneVitalityBonus", 0);
     }
 
     protected override void Start()
@@ -97,11 +97,12 @@ public class Player : Character
 
         owl = new()
         {
-            diagonalLength = 2
+            diagonalLength = 2,
+            criticalHitMultiplier = 3d
         };
     }
 
-    private void summonSpirit(object sender, System.EventArgs e)
+    private void summonSpirit(object sender, EventArgs e)
     {
         if (currentCoolDown < 0 && !summonedSpiritAlready)
         {
@@ -165,7 +166,7 @@ public class Player : Character
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
-            Currencies.instance.increaseGold(3, gameObject);
+            Currencies.instance.increaseGold(10, gameObject);
         }
         if (movementEnabled)
         {
@@ -263,8 +264,7 @@ public class Player : Character
             attributes = owl;
         }
 
-        newSpirit.setUp(attributes.ticksUntilExplosion, attributes.damage, spiritLengthUtility.getLength(attributes),
-            attributes.horizontalLength, attributes.verticalLength, attributes.diagonalLength, currentSpiritType);
+        newSpirit.setUp(attributes, spiritLengthUtility.getLength(attributes), currentSpiritType);
         spiritSummoned?.Invoke(attributes, EventArgs.Empty);
     }
 

@@ -8,16 +8,18 @@ public class Explosion : TileContent
     [SerializeField] private List<Sprite> tendrilFrames;
     //[SerializeField] private Animator animator;
     private int baseDamage, distance;
-    CharacterType target;
-    spiritType type;
+    private CharacterType target;
+    private spiritType type;
+    private damageTags damageTag;
     private int currentTendrilFrame = 0;
 
-    public void setUp(CharacterType target, int baseDamage, int distance, spiritType type)
+    public void setUp(CharacterType target, int baseDamage, int distance, spiritType type, damageTags damageTag)
     {
         this.target = target;
         this.baseDamage = baseDamage;
         this.distance = distance;
         this.type = type;
+        this.damageTag = damageTag;
 
         setColor(type);
     }
@@ -56,7 +58,7 @@ public class Explosion : TileContent
         if ((target == CharacterType.Player && hitObject is Player)
             || (target == CharacterType.NPC && (hitObject is Enemy)))
         {
-            ((Character)hitObject).takeDamage(baseDamage, damageTags.Damage, type);
+            ((Character)hitObject).takeDamage(baseDamage, damageTag, type);
         }
         else if (hitObject is Destructable)
         {
@@ -64,7 +66,7 @@ public class Explosion : TileContent
         }
         else if (hitObject is BossHitbox)
         {
-            ((BossHitbox)hitObject).takeDamage(baseDamage, damageTags.Damage, type);
+            ((BossHitbox)hitObject).takeDamage(baseDamage, damageTag, type);
         }
 
         spriteRenderer.sprite = tendrilFrames[currentTendrilFrame];

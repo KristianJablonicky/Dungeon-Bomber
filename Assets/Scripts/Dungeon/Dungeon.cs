@@ -48,7 +48,7 @@ public class Dungeon : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.P))
         {
-            DataStorage.instance.resetHighScore();
+            DataStorage.instance.resetCurrecies();
         }
         else if (Input.GetKeyUp(KeyCode.Escape))
         {

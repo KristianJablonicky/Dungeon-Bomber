@@ -14,17 +14,20 @@ public class Currencies
         
     }
 
-    public void increaseGold(int gainAmount)
+    public void adjustGold(int adjustAmount)
     {
-        gold += gainAmount;
-        goldChanged?.Invoke(this, new(gainAmount));
+        gold += adjustAmount;
+        goldChanged?.Invoke(this, new(adjustAmount));
         PlayerPrefs.SetInt("Gold", gold);
     }
 
     public void increaseGold(int gainAmount, GameObject spawn)
     {
-        increaseGold(gainAmount);
-        GoldTosser.instance.tossGold(spawn, gainAmount);
+        adjustGold(gainAmount);
+        if (gainAmount > 0)
+        {
+            GoldTosser.instance.tossGold(spawn, gainAmount);
+        }
     }
 
     public int getGold()

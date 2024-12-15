@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject popUpContainer, bestiary, lore;
+    [SerializeField] private GameObject popUpContainer, bestiary, lore, runeForge;
     [SerializeField] private GameObject fade;
     private static ButtonHandler instance;
 
@@ -27,6 +27,11 @@ public class ButtonHandler : MonoBehaviour
     public void loreButton()
     {
         createPopUp(lore);
+    }
+
+    public void runeForgeButton()
+    {
+        createPopUp(runeForge);
     }
 
     public void bestiaryButton()

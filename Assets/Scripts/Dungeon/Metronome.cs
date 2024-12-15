@@ -26,7 +26,6 @@ public class Metronome : MonoBehaviour
 
 
     private float currentBeatProgress = 0f;
-    private MetronomeBeatStates beatState = MetronomeBeatStates.beforeUserInput;
     private Action updateCurrentBeatState;
 
     private bool calledBeatPrematurely = false;

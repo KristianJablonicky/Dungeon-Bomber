@@ -1,11 +1,4 @@
 using UnityEngine;
-public enum MetronomeBeatStates
-{
-    beforeUserInput,
-    userInputStart,
-    userInputEnd
-}
-
 public enum Movement
 {
     Right,

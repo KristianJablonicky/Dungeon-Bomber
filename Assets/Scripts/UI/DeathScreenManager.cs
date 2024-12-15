@@ -42,7 +42,11 @@ public class DeathScreenManager : MonoBehaviour
 
         if (records.bestTime)
         {
-            runString = $"That's your new personal best! (previous best was {records.previousBest})";
+            runString = $"That's your new personal best!";
+            if (records.previousBest != -1)
+            {
+                runString += $" (previous best was {records.previousBest})";
+            }
         }
         else if (DataStorage.instance.highScore != -1)
         {
@@ -165,6 +169,7 @@ public class DeathScreenManager : MonoBehaviour
     public void goToMainMenu()
     {
         Time.timeScale = 1f;
+        Dungeon.instance.reset();
         SceneManager.LoadScene("Menu");
     }
 

@@ -12,23 +12,36 @@ public class Spirit : TileContent
     private List<Explosion> explosionList;
     private int currentBeatsUntilImpact, beatsUntilImpact, damage, range;
     private spiritType type;
-    public void setUp (int beatsUntilImpact, int damage, int length, int horizontalLength, int verticalLength, int diagonalLength, spiritType type)
+    private damageTags damageTag;
+    public void setUp (SpiritAttributes attributes, int length, spiritType type)
     {
         Start();
         Metronome.instance.onSpiritUpdate += reduceBeatsUntilImpact;
         this.type = type;
-        this.beatsUntilImpact = beatsUntilImpact;
+        this.beatsUntilImpact = attributes.ticksUntilExplosion;
         currentBeatsUntilImpact = beatsUntilImpact;
-        this.damage = damage;
+        this.damage = attributes.damage;
+
+        if (Random.value <= attributes.criticalHitChance)
+        {
+            damage = (int)(attributes.damage * attributes.criticalHitMultiplier);
+            damageTag = damageTags.CriticalDamage;
+        }
+        else
+        {
+            damageTag = damageTags.Damage;
+        }
+
+
         this.range = length;
         explosionList = new List<Explosion>();
 
         setSpiritType();
 
         addExplosion(1, 0, 0);
-        addHorizontalExplosions(horizontalLength);
-        addVerticalExplosions(verticalLength);
-        addDiagonalExplosions(diagonalLength);
+        addHorizontalExplosions(attributes.horizontalLength);
+        addVerticalExplosions(attributes.verticalLength);
+        addDiagonalExplosions(attributes.diagonalLength);
 
         StartCoroutine(fadeIn());
 
@@ -51,7 +64,7 @@ public class Spirit : TileContent
     {
         var offset = new Vector3(xOffset, yOffset);
         var exp = Instantiate(explosion, transform.position + offset, Quaternion.identity);
-        exp.setUp(CharacterType.NPC, damage, distance, type);
+        exp.setUp(CharacterType.NPC, damage, distance, type, damageTag);
         explosionList.Add(exp);
         exp.transform.SetParent(transform);
     }

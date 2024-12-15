@@ -32,7 +32,7 @@ public class UpgradeCard : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         icon.sprite = upgrade.getIcon();
 
         setColor();
-        // TODO: colorfulHighligts
+        holdHighlight.color = Dungeon.instance.getFloorColor();
 
         text.text = upgrade.getDescription();
     }

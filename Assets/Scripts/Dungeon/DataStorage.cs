@@ -66,10 +66,14 @@ public class DataStorage : MonoBehaviour
         startingGold = Currencies.instance.getGold();
     }
 
-    public void resetHighScore()
+    public void resetCurrecies()
     {
         highScore = -1;
         PlayerPrefs.SetInt("HighScore", highScore);
+        PlayerPrefs.SetInt("RuneVitalityBonus", 0);
+        PlayerPrefs.SetInt("RuneCriticalChance", 0);
+        PlayerPrefs.SetInt("Gold", 0);
+        PlayerPrefs.SetInt("HighestFloorReached", 0);
     }
 
 }

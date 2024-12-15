@@ -7,8 +7,19 @@ public class FadeIn : MonoBehaviour
     private void Awake()
     {
         canvasGroup.alpha = 1f;
-        StartCoroutine(fadeOut());
+        //StartCoroutine(fadeOut());
     }
+
+    private void Start()
+    {
+        Metronome.instance.countInBeat += flickerFade;
+    }
+
+    private void flickerFade(object sender, System.EventArgs e)
+    {
+        canvasGroup.alpha -= 0.25f;
+    }
+
     private IEnumerator fadeOut()
     {
         float timeElapsed = 0f, duration = 1f;

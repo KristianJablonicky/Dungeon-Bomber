@@ -7,9 +7,13 @@ public class Coin : MonoBehaviour
     private float timeToLive = 1f, timeAlive = 0f, rotationDirection;
     public void setForce(float xMult)
     {
-        xMult += Random.Range(-0.2f, 0.2f);
-        float forceX = xMult * 250f * Random.Range(1f, 1.25f);
-        float forceY = (1f - Mathf.Abs(xMult)) * 250f * Random.Range(1f, 1.25f);
+        //xMult += Random.Range(-0.2f, 0.2f);
+
+
+        float forceX = xMult * 175f * Random.Range(1f, 1.25f);
+        //float bonus = 1f * (Mathf.Cos(xMult * Mathf.PI) + 1);
+        //float forceY = (1f + bonus) * (1f - Mathf.Abs(xMult)) * 250f * Random.Range(1f, 1.25f);
+        float forceY = (Mathf.Pow(1f - Mathf.Pow(Mathf.Abs(xMult), 2), 1f/2f)) * 250f * Random.Range(1f, 1.25f);
         rb.AddForce(new Vector3(forceX, forceY, 0f));
         rotationDirection = Random.Range(400f, 700f);
         if (Random.value < 0.5f)

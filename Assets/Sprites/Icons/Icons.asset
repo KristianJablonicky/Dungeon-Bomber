@@ -139,8 +139,8 @@ MonoBehaviour:
     m_Unicode: 65534
     m_GlyphIndex: 9
     m_Scale: 1
-    m_Name: Icons_9
-    m_HashCode: 320288830
+    m_Name: Gold
+    m_HashCode: 2586304
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 10
@@ -263,7 +263,7 @@ MonoBehaviour:
       m_Width: 24
       m_Height: 24
       m_HorizontalBearingX: -0
-      m_HorizontalBearingY: 24
+      m_HorizontalBearingY: 21
       m_HorizontalAdvance: 24
     m_GlyphRect:
       m_X: 0
@@ -327,7 +327,7 @@ MonoBehaviour:
       m_Width: 24
       m_Height: 24
       m_HorizontalBearingX: -0
-      m_HorizontalBearingY: 24
+      m_HorizontalBearingY: 21
       m_HorizontalAdvance: 24
     m_GlyphRect:
       m_X: 96
