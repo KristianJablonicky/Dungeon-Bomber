@@ -3,7 +3,7 @@ using UnityEngine;
 public class Bonenado : Enemy
 {
     private int direction;
-    protected float randomMoveChance = 0.1f;
+    private int changeDirectionCooldown;
     [SerializeField] private Animator bonenadoAnimator;
 
     protected override void Start()
@@ -11,6 +11,7 @@ public class Bonenado : Enemy
         base.Start();
         Metronome.instance.onBeat += startGrooving;
         direction = Random.Range(0, 4);
+        changeDirectionCooldown = Random.Range(0, 8);
     }
 
     private void startGrooving(object sender, System.EventArgs e)
@@ -41,13 +42,12 @@ public class Bonenado : Enemy
 
     protected override void onTick()
     {
-        if (randomMoveChance > Random.value)
-        {
-            move((Movement)Random.Range(0, 4), 2);
-            return;
-        }
         move((Movement)direction, 2);
-        direction++;
-        direction %= 4;
+        direction = (direction + 1) % 4;
+        changeDirectionCooldown = (changeDirectionCooldown + 1) % 8;
+        if (changeDirectionCooldown == 0)
+        {
+            direction = (direction + Random.Range(0, 3)) % 4;
+        }
     }
 }

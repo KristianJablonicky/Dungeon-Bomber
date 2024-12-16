@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class SkeletonWarrior : Enemy
 {
-    protected float randomMoveChance = 0.5f;
-    private int direction = 1;
+    private int direction;
+    private int distance;
+    private int changeDirectionCooldown;
 
     public override void collideWithCharacter(Character character)
     {
@@ -13,6 +14,9 @@ public class SkeletonWarrior : Enemy
     protected override void Start()
     {
         base.Start();
+        direction = (Random.Range(0, 2) == 0) ? 1 : 3;
+        distance = Random.Range(0, 2);
+        changeDirectionCooldown = distance;
     }
 
     public override int getBaseMaxHp()
@@ -25,26 +29,18 @@ public class SkeletonWarrior : Enemy
         return 2;
     }
 
-    protected override int getPlayerDetectionRadius()
-    {
-        return 3;
-    }
-
     protected override void onTick()
-    {
-        /*
-        Movement? playerDirection = detectPlayer();
-        if (playerDirection != null)
-        {
-            move(playerDirection.Value);
-        }
-        else */
-        if (randomMoveChance > UnityEngine.Random.value)
-        {
-            move((Movement)Random.Range(0, 4), 1);
-            return;
-        }
+    {   
         move((Movement)direction, 1);
-        direction = (direction + 2) % 4;
+        distance = (distance + 1) % 2;
+        changeDirectionCooldown = (changeDirectionCooldown + 1) % 8;
+        if (distance == 0)
+        {
+            direction = (direction + 2) % 4;
+        }
+        if (changeDirectionCooldown == 0)
+        {
+            direction = (direction + 1) % 4;
+        }
     }
 }
