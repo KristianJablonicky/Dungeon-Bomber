@@ -176,13 +176,13 @@ public class Dungeon : MonoBehaviour
                 {
                     layout[x, y] = instantiate(wall, x, y);
                 }
-                else if (x == 1 && y == 1)
+                else if (x == mapGenerator.getPlayerX() && y == mapGenerator.getPlayerY())
                 {
                     instantiate(tile, x, y);
                     playerInstance = (Player)instantiate(player, x, y, false);
                     layout[x, y] = playerInstance;
                 }
-                else if (x == (dungeonWidth - 2) && y == (dungeonHeight / 2))
+                else if (x == mapGenerator.getLadderX() && y == mapGenerator.getLadderY())
                 {
                     instantiate(tile, x, y);
                     layout[x, y] = instantiate(ladder, x, y);
