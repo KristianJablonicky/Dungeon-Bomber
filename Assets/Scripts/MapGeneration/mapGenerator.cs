@@ -54,6 +54,7 @@ public class MapGenerator : MonoBehaviour
             terrainMap = generateTilePositions(terrainMap);
         }
         generateNewPath();
+        printMap(pathToLadder);
         mergeMaps();
 
         /*
@@ -149,8 +150,8 @@ public class MapGenerator : MonoBehaviour
         }
         return newMap;
     }
-    /*
-    private void PrintMap(int[,] map)
+    
+    private void printMap(int[,] map)
     {
         string output = "";
         for (int y = height - 1; y > 0; y--)
@@ -163,7 +164,7 @@ public class MapGenerator : MonoBehaviour
         }
         Debug.Log(output);
     }
-    */
+    
 
     private void generateNewPath()
     {
@@ -191,7 +192,7 @@ public class MapGenerator : MonoBehaviour
             }
             else
             {
-                if (y + 1 < height)
+                if (y + 1 < height - 1)
                 {
                     ClearPath(x, y + 1);
                 }
