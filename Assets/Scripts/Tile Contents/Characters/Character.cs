@@ -17,6 +17,8 @@ public abstract class Character : TileContent
 
     private HitSplat hitSplatInstance = null;
 
+    protected bool turnedRight = true;
+
     protected override void Start()
     {
         base.Start();
@@ -212,10 +214,12 @@ public abstract class Character : TileContent
         if (movement == Movement.Right)
         {
             transform.localScale = Vector3.one;
+            turnedRight = true;
         }
         if (movement == Movement.Left)
         {
             transform.localScale = new Vector3(-1, 1);
+            turnedRight = false;
         }
         return targetTile;
     }
