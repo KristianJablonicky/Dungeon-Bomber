@@ -19,7 +19,7 @@ public class Rune : MonoBehaviour
     {
         var pos = rectTransform.localPosition;
         pos.y += 15f * Time.deltaTime;
-        if (pos.y > 120f)
+        if (pos.y > 200f)
         {
             Destroy(gameObject);
         }

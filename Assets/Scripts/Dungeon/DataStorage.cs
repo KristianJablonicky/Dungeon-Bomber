@@ -23,19 +23,10 @@ public class DataStorage : MonoBehaviour
             startingGold = Currencies.instance.getGold();
 
             Application.targetFrameRate = 144;
-            /*
-            if (Application.isMobilePlatform)
-            {
-                Application.targetFrameRate = 60;
-            }
-            else
-            {
-                Application.targetFrameRate = 144;
-            }
-            */
         }
         Metronome.instance.onBeat += onBeat;
     }
+
 
     private void onBeat(object sender, System.EventArgs e)
     {
@@ -66,14 +57,20 @@ public class DataStorage : MonoBehaviour
         startingGold = Currencies.instance.getGold();
     }
 
+    public void resetStartingGold()
+    {
+        startingGold = Currencies.instance.getGold();
+    }
+
     public void resetCurrecies()
     {
         highScore = -1;
         PlayerPrefs.SetInt("HighScore", highScore);
         PlayerPrefs.SetInt("RuneVitalityBonus", 0);
         PlayerPrefs.SetInt("RuneCriticalChance", 0);
-        PlayerPrefs.SetInt("Gold", 0);
         PlayerPrefs.SetInt("HighestFloorReached", 0);
+        var currencies = Currencies.instance;
+        currencies.adjustGold(-currencies.getGold());
     }
 
 }

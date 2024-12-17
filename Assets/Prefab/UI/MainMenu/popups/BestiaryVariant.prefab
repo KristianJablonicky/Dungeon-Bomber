@@ -205,7 +205,7 @@ PrefabInstance:
     - target: {fileID: 6267080183956393451, guid: d0fe8122c7f3e7741b2cc69d7055142e, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 60cf425524d18304785559580e5fbf75, type: 3}
+      objectReference: {fileID: -1047573154, guid: b38a1589381acbe41a188ab4956f7d0b, type: 3}
     - target: {fileID: 8155104757560960609, guid: d0fe8122c7f3e7741b2cc69d7055142e, type: 3}
       propertyPath: m_text
       value: Animated Chess Piece
@@ -436,7 +436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7453742689440592589, guid: c421dedeead0d394d80f892b684710b9, type: 3}
       propertyPath: m_Name
-      value: Bestiary Variant
+      value: BestiaryVariant
       objectReference: {fileID: 0}
     - target: {fileID: 7453742689440592589, guid: c421dedeead0d394d80f892b684710b9, type: 3}
       propertyPath: m_IsActive

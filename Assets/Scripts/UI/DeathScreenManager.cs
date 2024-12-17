@@ -59,11 +59,6 @@ public class DeathScreenManager : MonoBehaviour
             $"Gold gained: {Currencies.instance.getGold() - DataStorage.instance.startingGold}\n" +
             $"Player level reached: {Dungeon.instance.getPlayer().getPlayerLevel()}";
 
-        foreach(var button in deathScreenButtons)
-        {
-            button.enabled = true;
-        }
-
         StartCoroutine(slowDownTime());
         StartCoroutine(youDiedFade(sender is Boss));
     }
@@ -150,7 +145,13 @@ public class DeathScreenManager : MonoBehaviour
         youDiedGraphic.alpha = 0f;
 
         // Run recap screen
+        foreach (var button in deathScreenButtons)
+        {
+            button.enabled = true;
+        }
+
         timeElapsed = 0f;
+
         while(timeElapsed < fadeInScreenTime)
         {
             timeElapsed += Time.unscaledDeltaTime;

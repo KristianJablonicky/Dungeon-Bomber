@@ -74,6 +74,7 @@ public class Dungeon : MonoBehaviour
         if (DataStorage.instance != null)
         {
             floor = DataStorage.instance.floor;
+            DataStorage.instance.resetStartingGold(); // fix for a tiny bug
         }
         else
         {
