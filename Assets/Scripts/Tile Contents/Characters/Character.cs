@@ -39,7 +39,10 @@ public abstract class Character : TileContent
 
     public void increaseMaxHp(int increase, bool restoreHealth = false)
     {
-        maxHp += increase;
+        if (this is not Boss)
+        {
+            maxHp += increase;
+        }
         if (restoreHealth)
         {
             heal(increase, damageTags.MaxHpIncreaseHeal);

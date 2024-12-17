@@ -19,7 +19,7 @@ public class Boss : Enemy
 
     public override int getBaseMaxHp()
     {
-        return 60;
+        return 300;
     }
 
     protected override int getUpdateEveryNTicks()

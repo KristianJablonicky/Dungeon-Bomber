@@ -91,7 +91,7 @@ public class Dungeon : MonoBehaviour
         }
         else if (floor == 3)
         {
-            currentFloorColor = new Color(0.5f, 0.5f, 0.1f);
+            currentFloorColor = new Color(0.14f, 0.14f, 0.35f);
         }
         else
         {

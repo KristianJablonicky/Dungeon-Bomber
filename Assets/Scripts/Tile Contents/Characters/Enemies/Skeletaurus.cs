@@ -16,11 +16,11 @@ public class Skeletaurus : Enemy
     {
         if (character is Player && isCharging)
         {
-            character.takeDamage(getScaledDamage(3));
+            character.takeDamage(getScaledDamage(4));
         }
         else if (character is Player)
         {
-            character.takeDamage(getScaledDamage(1));
+            character.takeDamage(getScaledDamage(2));
         }
     }
     protected override void Start()
@@ -38,7 +38,7 @@ public class Skeletaurus : Enemy
 
     public override int getBaseMaxHp()
     {
-        return 6;
+        return 4;
     }
 
     protected override int getPlayerDetectionRadius()

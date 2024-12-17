@@ -28,7 +28,7 @@ public class Bonenado : Enemy
 
     public override int getBaseMaxHp()
     {
-        return 2;
+        return 4;
     }
     protected override int getUpdateEveryNTicks()
     {

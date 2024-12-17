@@ -10,7 +10,7 @@ public class ChessHorse : Enemy
     {
         if (character is Player)
         {
-            character.takeDamage(getScaledDamage(1));
+            character.takeDamage(getScaledDamage(2));
         }
     }
     protected override void Start()
@@ -22,7 +22,7 @@ public class ChessHorse : Enemy
 
     public override int getBaseMaxHp()
     {
-        return 6;
+        return 5;
     }
 
     protected override int getPlayerDetectionRadius()

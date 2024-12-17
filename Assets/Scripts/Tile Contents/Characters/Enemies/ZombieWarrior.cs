@@ -5,12 +5,12 @@ public class ZombieWarrior : Enemy
 {
     public override void collideWithCharacter(Character character)
     {
-        character.takeDamage(getScaledDamage(1));
+        character.takeDamage(getScaledDamage(2));
     }
 
     public override int getBaseMaxHp()
     {
-        return 2;
+        return 3;
     }
 
     protected override int getPlayerDetectionRadius()

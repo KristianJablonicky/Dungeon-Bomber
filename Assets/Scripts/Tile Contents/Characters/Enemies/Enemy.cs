@@ -12,7 +12,7 @@ public abstract class Enemy : Character
         base.Start();
         metronome.onBeatEnemy += onTick;
         int floor = DataStorage.instance.floor;
-        increaseMaxHp((int)(getBaseMaxHp() * (floor - 1) * 0.5f), true);
+        increaseMaxHp((int)Math.Round((float)getBaseMaxHp() * (floor * floor - 1) * 0.25f), true);
         damageScaling = 1f + ((floor - 1) * 0.5f);
         updateEveryNTicks = getUpdateEveryNTicks();
     }
