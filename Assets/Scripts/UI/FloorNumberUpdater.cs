@@ -21,6 +21,13 @@ public class Floor : MonoBehaviour
 
     private void setText()
     {
-        floorText.text = $"Beat: {storage.currentBeats}\nBest: {storage.highScore}";
+        if (storage.highScore == -1)
+        {
+            floorText.text = $"Beat: {storage.currentBeats}";
+        }
+        else
+        {
+            floorText.text = $"Beat: {storage.currentBeats}\nBest: {storage.highScore}";
+        }
     }
 }
