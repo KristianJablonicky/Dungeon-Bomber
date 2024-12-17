@@ -8,7 +8,7 @@ public class MenuMusicPlayer : MonoBehaviour
     void Awake()
     {
         instance = this;
-        audioSourceSingleNote.volume = PlayerPrefs.GetFloat("musicVolume");
+        audioSourceSingleNote.volume = PlayerPrefs.GetFloat("musicVolume", 0.25f);
     }
     
     public static AudioSource getAudioSourceSong()
