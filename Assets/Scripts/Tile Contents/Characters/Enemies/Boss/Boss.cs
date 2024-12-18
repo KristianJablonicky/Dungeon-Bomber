@@ -19,7 +19,7 @@ public class Boss : Enemy
 
     public override int getBaseMaxHp()
     {
-        return 300;
+        return 100;
     }
 
     protected override int getUpdateEveryNTicks()
@@ -117,6 +117,14 @@ public class Boss : Enemy
         if (type == currentWeakness)
         {
             damage *= 2;
+        }
+        else
+        {
+            damage /= 2;
+            if (damage == 0)
+            {
+                damage = 1;
+            }
         }
 
         base.takeDamage(damage, tag);

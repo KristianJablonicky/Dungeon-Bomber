@@ -230,7 +230,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4502545940770383809, guid: d0fe8122c7f3e7741b2cc69d7055142e, type: 3}
       propertyPath: m_text
-      value: Loves to groove to the rhythms of the dead vertically.
+      value: Loves to choose their favorite tile. Hates to go too far away from it.
       objectReference: {fileID: 0}
     - target: {fileID: 4925736693454869094, guid: d0fe8122c7f3e7741b2cc69d7055142e, type: 3}
       propertyPath: m_Pivot.x

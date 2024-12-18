@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoreManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text title, lyrics;
     [SerializeField] private List<AudioClip> songAudioClips;
+    [SerializeField] private Image buttonPrevious, buttonNext;
 
 
     List<Lyrics> songs;
@@ -54,22 +56,52 @@ public class LoreManager : MonoBehaviour
     {
         title.text = songs[index].title;
         lyrics.text = songs[index].lyrics;
+
+        recolorButtonIfAvailable(true, buttonNext);
+        recolorButtonIfAvailable(false, buttonPrevious);
+    }
+
+    private void recolorButtonIfAvailable(bool next, Image button)
+    {
+        if (pageUnlocked(next))
+        {
+            button.color = Color.white;
+        }
+        else
+        {
+            button.color = Color.grey;
+        }
     }
 
     public void changeSong(bool next)
     {
+        if (pageUnlocked(next))
+        {
+            if (next)
+            {
+                index++;
+            }
+            else
+            {
+                index--;
+            }
+            updateTexts();
+        }
+    }
+
+    private bool pageUnlocked(bool next)
+    {
         if (next &&
-            (index+1) < songs.Count &&
+            (index + 1) < songs.Count &&
             highestFloor > index)
         {
-            index++;
-            updateTexts();
+            return true;
         }
         else if (!next && index > 0)
         {
-            index--;
-            updateTexts();
+            return true;
         }
+        return false;
     }
 
     private class Lyrics

@@ -129,6 +129,7 @@ public class Player : Character
         metronome.onPlayerInputStart -= enableInput;
         metronome.onBeat -= summonSpirit;
         dungeon.enemyKilled -= onEnemyKill;
+        StopAllCoroutines();
         base.die();
 
         //DataStorage.instance.updateHighScore();
@@ -206,6 +207,10 @@ public class Player : Character
         if (metronome.isInPlayerWindowInputStart())
         {
             metronome.prematureBeat();
+            if (hp == 0)
+            {
+                return;
+            }
             /*
             metronome.onBeatLowerPriority += delayMove;
             delayedMovementDirection = movement;

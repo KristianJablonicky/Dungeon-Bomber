@@ -13,6 +13,9 @@ public class Spirit : TileContent
     private int currentBeatsUntilImpact, beatsUntilImpact, damage, range;
     private spiritType type;
     private damageTags damageTag;
+
+    private bool layedDamageUnderBoss = false;
+
     public void setUp (SpiritAttributes attributes, int length, spiritType type)
     {
         Start();
@@ -83,15 +86,6 @@ public class Spirit : TileContent
                 }
             }
         }
-        /*
-        for(int xOffset = -1 * length; xOffset <= length; xOffset++)
-        {
-            if (Mathf.Abs(xOffset) > areaSize)
-            {
-                addExplosion(beatsUntilImpact, damage, xOffset, 0);
-            }
-        }
-        */
     }
 
     private void addVerticalExplosions(int length)
@@ -151,8 +145,14 @@ public class Spirit : TileContent
     {
         var content = dungeon.isTileOccupied(targetTile);
         int x = (int)(targetTile.x - transform.position.x), y = (int)(targetTile.y - transform.position.y);
-        if (content == null || content is Character || content is BossHitbox)
+        if (content == null || (content is Character && content is not Boss))
         {
+            addExplosion(distance, x, y);
+            return false;
+        }
+        else if (!layedDamageUnderBoss && (content is BossHitbox || content is Boss))
+        {
+            layedDamageUnderBoss = true;
             addExplosion(distance, x, y);
             return false;
         }

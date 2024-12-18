@@ -22,7 +22,7 @@ public class ChessHorse : Enemy
 
     public override int getBaseMaxHp()
     {
-        return 5;
+        return 3;
     }
 
     protected override int getPlayerDetectionRadius()

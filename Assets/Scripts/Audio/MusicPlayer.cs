@@ -30,7 +30,7 @@ public class MusicPlayer : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("musicVolume"))
         {
-            PlayerPrefs.SetFloat("musicVolume", 1.0f);
+            PlayerPrefs.SetFloat("musicVolume", 0.25f);
             PlayerPrefs.SetInt("vox", 0);
         }
 

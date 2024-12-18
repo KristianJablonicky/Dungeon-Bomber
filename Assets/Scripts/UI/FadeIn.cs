@@ -9,10 +9,16 @@ public class FadeIn : MonoBehaviour
         canvasGroup.alpha = 1f;
         //StartCoroutine(fadeOut());
     }
-
     private void Start()
     {
-        Metronome.instance.countInBeat += flickerFade;
+        Metronome.instance.countInBeat += delayFadeIn;
+        //Metronome.instance.countInBeat += flickerFade;
+    }
+
+    private void delayFadeIn(object sender, System.EventArgs e)
+    {
+        Metronome.instance.countInBeat -= delayFadeIn;
+        StartCoroutine(fadeOut());
     }
 
     private void flickerFade(object sender, System.EventArgs e)
@@ -22,7 +28,8 @@ public class FadeIn : MonoBehaviour
 
     private IEnumerator fadeOut()
     {
-        float timeElapsed = 0f, duration = 1f;
+        yield return new WaitForSeconds(0.5f);
+        float timeElapsed = 0f, duration = 1.5f;
         while(timeElapsed < duration)
         {
             timeElapsed += Time.deltaTime;
