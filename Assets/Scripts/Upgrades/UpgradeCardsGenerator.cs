@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,14 +7,16 @@ using UnityEngine;
 public class UpgradeCardsGenerator : MonoBehaviour
 {
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private TMP_Text hintText;
+    [SerializeField] private TMP_Text hintText, selectionsLeft;
     [SerializeField] private UpgradeCard upgradeCard;
     [SerializeField] private List<Upgrade> upgrades, upgradesRare;
     [SerializeField] private Upgrade sacrifice;
 
     private List<UpgradeCard> upgradeCards;
     private float duration = 0.5f, maxScale, maxAlpha = 0.6f;
-    private int pairsToBeGenerated = 1;
+    private int pairsToBeGenerated = 3;
+
+    public static EventHandler upgradePicked;
     
     private void Start()
     {
@@ -22,7 +25,7 @@ public class UpgradeCardsGenerator : MonoBehaviour
         maxScale = upgradeCard.transform.localScale.x;
     }
 
-    private void generateUpgrades(object sender, System.EventArgs e)
+    private void generateUpgrades(object sender, EventArgs e)
     {
         pairsToBeGenerated += Dungeon.instance.getPlayer().getCurrentFloorUpgrades();
         generatePair(true);
@@ -48,6 +51,13 @@ public class UpgradeCardsGenerator : MonoBehaviour
             }
             yield return null;
         }
+
+
+        foreach (var card in upgradeCards)
+        {
+            card.transform.localScale = new Vector2(maxScale, maxScale);
+        }
+        canvasGroup.alpha = maxAlpha;
         StartCoroutine(showText());
     }
 
@@ -70,7 +80,12 @@ public class UpgradeCardsGenerator : MonoBehaviour
 
     private void generatePair(bool fadeInAnimation)
     {
-
+        string s = "";
+        if (pairsToBeGenerated > 1)
+        {
+            s = "s";
+        }
+        selectionsLeft.text = $"You have {pairsToBeGenerated} selection{s} remaining.";
         pairsToBeGenerated--;
         int totalNumberOfCards = 4;
         
@@ -90,12 +105,12 @@ public class UpgradeCardsGenerator : MonoBehaviour
             }
             else if (cardNumber == totalNumberOfCards - 2)
             {
-                var upgrade = Instantiate(upgradesRare[Random.Range(0, upgradesRare.Count)]);
+                var upgrade = Instantiate(upgradesRare[UnityEngine.Random.Range(0, upgradesRare.Count)]);
                 newCard.setUpgrade(upgrade, this);
             }
             else
             {
-                var upgrade = Instantiate(upgrades[Random.Range(0, upgrades.Count)]);
+                var upgrade = Instantiate(upgrades[UnityEngine.Random.Range(0, upgrades.Count)]);
                 
                 newCard.setUpgrade(upgrade, this);
             }
@@ -118,6 +133,10 @@ public class UpgradeCardsGenerator : MonoBehaviour
         else
         {
             deleteCards();
+
+            upgradePicked?.Invoke(this, EventArgs.Empty);
+
+
             generatePair(false);
         }
     }

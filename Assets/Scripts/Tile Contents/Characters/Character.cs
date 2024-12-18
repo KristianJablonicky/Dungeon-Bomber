@@ -62,6 +62,10 @@ public abstract class Character : TileContent
             tag = damageTags.CriticalDamage;
             damage *= 2;
         }
+        else if (type != spiritType.none)
+        {
+            damage = (int)Mathf.Ceil(damage / 2f);
+        }
 
         damage = Math.Min(damage, hp);
         hp -= damage;

@@ -19,7 +19,7 @@ public class Boss : Enemy
 
     public override int getBaseMaxHp()
     {
-        return 100;
+        return 450;
     }
 
     protected override int getUpdateEveryNTicks()
@@ -51,6 +51,10 @@ public class Boss : Enemy
             sendWave();
         }
         else
+        {
+            summonAid();
+        }
+        if (Random.value >= 0.5f)
         {
             summonAid();
         }

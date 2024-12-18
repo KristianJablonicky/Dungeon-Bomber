@@ -69,7 +69,7 @@ public class Explosion : TileContent
             ((BossHitbox)hitObject).takeDamage(baseDamage, damageTag, type);
         }
 
-        spriteRenderer.sprite = tendrilFrames[currentTendrilFrame];
+        spriteRenderer.sprite = tendrilFrames[currentTendrilFrame%tendrilFrames.Count];
 
 
         currentTendrilFrame++;

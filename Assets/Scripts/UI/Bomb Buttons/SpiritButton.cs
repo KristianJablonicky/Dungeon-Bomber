@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +8,8 @@ public class SpiritButton : MonoBehaviour
     [SerializeField] private TMP_Text hotKey, attributes;
     [SerializeField] private Image spiritImage, highlight;
     [SerializeField] private Sprite spiritBear, spiritWolf, spiritOwl;
+
+    private SpiritAttributes spiritAttributes;
 
     private Player player;
     private spiritType type;
@@ -39,6 +39,7 @@ public class SpiritButton : MonoBehaviour
 
     private void setSpecificSpirit(Sprite sprite, string hotKey, SpiritAttributes spiritAttributes)
     {
+        this.spiritAttributes = spiritAttributes;
         spiritImage.sprite = sprite;
         if (Application.isMobilePlatform)
         {
@@ -49,21 +50,31 @@ public class SpiritButton : MonoBehaviour
             this.hotKey.text = hotKey;
         }
 
+        updateAttributes();
+    }
+
+    private void updateAttributes()
+    {
         int range = spiritLengthUtility.getLength(spiritAttributes);
-        
         attributes.text = $"{spiritAttributes.damage}<sprite name=\"Damage\">\r\n{range}<sprite name=\"Range\">\r\n{spiritAttributes.ticksUntilExplosion}<sprite name=\"Delay\">";
     }
 
     private void Start()
     {
         Dungeon.instance.playerSpawned += setPlayer;
+        UpgradeCardsGenerator.upgradePicked += updateAttributes;
     }
 
-    private void setPlayer(object sender, System.EventArgs e)
+    private void setPlayer(object sender, EventArgs e)
     {
         player = (Player)sender;
         player.spiritChanged += highlightSpirit;
         setUp(player);
+    }
+
+    private void updateAttributes(object sender, EventArgs e)
+    {
+        updateAttributes();
     }
 
     private void highlightSpirit(object sender, EventArgs e)

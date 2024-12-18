@@ -64,6 +64,7 @@ public class UpgradeCard : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (heldDuration >= 1f)
         {
             upgrade.equip();
+            upgrade.equipEffect(Dungeon.instance.getPlayer());
             generator.cardChosen();
         }
         else
