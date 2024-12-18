@@ -100,6 +100,7 @@ public class RuneForgeItemButton : MonoBehaviour
     {
         StopAllCoroutines();
         Time.timeScale = 1f;
+        Currencies.instance.goldChanged -= updateTexts;
     }
 
     private abstract class RuneForgeItem

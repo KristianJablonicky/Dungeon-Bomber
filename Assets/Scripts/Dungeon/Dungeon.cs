@@ -36,7 +36,7 @@ public class Dungeon : MonoBehaviour
     private void Update()
     {
         // Reset the run
-        if (Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
             playerInstance.die();
             //reset();
@@ -49,10 +49,6 @@ public class Dungeon : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.P))
         {
             DataStorage.instance.resetCurrecies();
-        }
-        else if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            Application.Quit();
         }
 
     }
@@ -199,7 +195,7 @@ public class Dungeon : MonoBehaviour
                 {
                     instantiate(tile, x, y);
 
-                    if ((x > 6 || y > 6 ) && UnityEngine.Random.Range(0, 15) == 0)
+                    if (( y > 6 ) && UnityEngine.Random.Range(0, 20) == 0)
                     {
                         layout[x, y] = instantiate(enemies[UnityEngine.Random.Range(0, enemies.Count)], x, y);
                     }

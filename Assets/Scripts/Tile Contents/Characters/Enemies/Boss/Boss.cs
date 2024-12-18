@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Boss : Enemy
@@ -19,7 +18,7 @@ public class Boss : Enemy
 
     public override int getBaseMaxHp()
     {
-        return 450;
+        return 400;
     }
 
     protected override int getUpdateEveryNTicks()
@@ -54,7 +53,7 @@ public class Boss : Enemy
         {
             summonAid();
         }
-        if (Random.value >= 0.5f)
+        if (Random.value <= 0.25f)
         {
             summonAid();
         }
