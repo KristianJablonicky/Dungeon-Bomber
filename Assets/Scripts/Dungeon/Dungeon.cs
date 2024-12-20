@@ -167,6 +167,8 @@ public class Dungeon : MonoBehaviour
         mapGenerator.startTileGeneration(3, dungeonWidth, dungeonHeight);
         var obstacles = mapGenerator.getTerrainMap();
 
+        int playerX = mapGenerator.getPlayerX();
+        int playerY = mapGenerator.getPlayerY();
 
         for (int x = 0; x < dungeonWidth; x++)
         {
@@ -176,7 +178,7 @@ public class Dungeon : MonoBehaviour
                 {
                     layout[x, y] = instantiate(wall, x, y);
                 }
-                else if (x == mapGenerator.getPlayerX() && y == mapGenerator.getPlayerY())
+                else if (x == playerX && y == playerY)
                 {
                     instantiate(tile, x, y);
                     playerInstance = (Player)instantiate(player, x, y, false);
@@ -195,7 +197,7 @@ public class Dungeon : MonoBehaviour
                 {
                     instantiate(tile, x, y);
 
-                    if (( y > 6 ) && UnityEngine.Random.Range(0, 20) == 0)
+                    if ((Math.Abs(x - playerX) + Math.Abs(y - playerY)) > 3 && UnityEngine.Random.Range(0, 15) == 0)
                     {
                         layout[x, y] = instantiate(enemies[UnityEngine.Random.Range(0, enemies.Count)], x, y);
                     }

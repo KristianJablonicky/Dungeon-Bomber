@@ -207,7 +207,12 @@ public class MapGenerator : MonoBehaviour
         bool isMomentum = false;
         int currentMomentum = 0;
 
-        ClearAdjacent(currentX, currentY, false);
+        ClearPath(currentX, currentY);
+        ClearPath(currentX, currentY - 1);
+        ClearPath(currentX, currentY + 1);
+        ClearPath(currentX + 1, currentY);
+        ClearPath(currentX + 1, currentY - 1);
+        ClearPath(currentX + 1, currentY + 1);
         visitedMapSecond[currentX, currentY] = true;
 
         while (currentX != width - 2)
