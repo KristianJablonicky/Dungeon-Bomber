@@ -110,7 +110,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2, y: 2}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6427854544446936643
 CanvasRenderer:
@@ -465,8 +465,8 @@ RectTransform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9196145576263456700}
   - {fileID: 3569581510354293234}
+  - {fileID: 9196145576263456700}
   - {fileID: 6887026716457225233}
   - {fileID: 1355357359929295174}
   m_Father: {fileID: 0}
