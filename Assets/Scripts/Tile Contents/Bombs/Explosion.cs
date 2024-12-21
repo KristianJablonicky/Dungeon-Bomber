@@ -5,22 +5,19 @@ using UnityEngine;
 public class Explosion : TileContent
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private List<Sprite> tendrilFrames;
-    //[SerializeField] private Animator animator;
-    private int baseDamage, distance;
+    private int damage, currentDistance, range;
     private CharacterType target;
     private spiritType type;
     private damageTags damageTag;
-    private int currentTendrilFrame = 0;
 
-    public void setUp(CharacterType target, int baseDamage, int distance, spiritType type, damageTags damageTag)
+    public void setUp(CharacterType target, int baseDamage, int currentDistance, int range, spiritType type, damageTags damageTag)
     {
         this.target = target;
-        this.baseDamage = baseDamage;
-        this.distance = distance;
+        this.damage = baseDamage * (1 + range - currentDistance);
+        this.currentDistance = currentDistance;
         this.type = type;
+        this.range = range;
         this.damageTag = damageTag;
-
         setColor(type);
     }
 
@@ -46,19 +43,17 @@ public class Explosion : TileContent
                 newAlpha);
     }
 
-    public void dealDamage(int distance)
+    public void setFrame(Sprite frame)
     {
-        if (this.distance > distance)
-        {
-            spriteRenderer.sprite = null;
-            return;
-        }
-
+        spriteRenderer.sprite = frame;
+    }
+    public void dealDamge()
+    {
         var hitObject = Dungeon.instance.isTileOccupied(transform.position);
         if ((target == CharacterType.Player && hitObject is Player)
             || (target == CharacterType.NPC && (hitObject is Enemy)))
         {
-            ((Character)hitObject).takeDamage(baseDamage, damageTag, type);
+            ((Character)hitObject).takeDamage(damage, damageTag, type);
         }
         else if (hitObject is Destructable)
         {
@@ -66,14 +61,10 @@ public class Explosion : TileContent
         }
         else if (hitObject is BossHitbox)
         {
-            ((BossHitbox)hitObject).takeDamage(baseDamage, damageTag, type);
+            ((BossHitbox)hitObject).takeDamage(damage, damageTag, type);
         }
 
-        spriteRenderer.sprite = tendrilFrames[currentTendrilFrame%tendrilFrames.Count];
-
-
-        currentTendrilFrame++;
-
+        spriteRenderer.color = new Color(1f, 1f, 1f, (range - (currentDistance - 1)) / (float)range);
     }
 
     public void fade(float duration)

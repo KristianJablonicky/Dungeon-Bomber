@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class Spirit : TileContent
 {
@@ -24,6 +25,7 @@ public class Spirit : TileContent
         this.beatsUntilImpact = attributes.ticksUntilExplosion;
         currentBeatsUntilImpact = beatsUntilImpact;
         this.damage = attributes.damage;
+        this.range = length;
 
         if (Random.value <= attributes.criticalHitChance)
         {
@@ -35,8 +37,6 @@ public class Spirit : TileContent
             damageTag = damageTags.Damage;
         }
 
-
-        this.range = length;
         explosionList = new List<Explosion>();
 
         setSpiritType();
@@ -67,7 +67,7 @@ public class Spirit : TileContent
     {
         var offset = new Vector3(xOffset, yOffset);
         var exp = Instantiate(explosion, transform.position + offset, Quaternion.identity);
-        exp.setUp(CharacterType.NPC, damage, distance, type, damageTag);
+        exp.setUp(CharacterType.NPC, damage, distance, range, type, damageTag);
         explosionList.Add(exp);
         exp.transform.SetParent(transform);
     }
@@ -205,22 +205,27 @@ public class Spirit : TileContent
     private void explode()
     {
         Metronome.instance.onSpiritUpdate -= reduceBeatsUntilImpact;
-        StartCoroutine(dealDamageRepeatedly());
+        StartCoroutine(dealDamage());
     }
 
-    private IEnumerator dealDamageRepeatedly()
+    private IEnumerator dealDamage()
     {
         var metrnonome = Metronome.instance;
-        float tickLength = (metrnonome.getBeatLength() * (1 - metrnonome.getBeatProgress())) / (range + 1);
+        var explosionSpritesList = ExplosionFrames.instance.getExplosionList(type);
+        float tickLength = (metrnonome.getBeatLength() * (1 - metrnonome.getBeatProgress())) / (explosionSpritesList.Count + 1);
 
-        for (int damageInstance = 0; damageInstance < range; damageInstance++)
+        foreach (var exp in explosionList)
+        {
+            exp.dealDamge();
+        }
+
+        for (int frame = 0; frame < explosionSpritesList.Count; frame++)
         {
             foreach (var exp in explosionList)
             {
-                exp.dealDamage(damageInstance+1);
+                exp.setFrame(explosionSpritesList[frame]);
             }
-
-            yield return new WaitForSeconds(tickLength);
+            yield return new WaitForSeconds(2f * tickLength);
         }
 
         foreach (var exp in explosionList)

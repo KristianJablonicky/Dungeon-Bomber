@@ -116,10 +116,11 @@ public class Boss : Enemy
         {
             return;
         }
-
+        var damageTag = tag;
         if (type == currentWeakness)
         {
             damage *= 2;
+            damageTag = damageTags.CriticalDamage;
         }
         else
         {
@@ -130,13 +131,14 @@ public class Boss : Enemy
             }
         }
 
-        base.takeDamage(damage, tag);
+        base.takeDamage(damage, damageTag, type);
     }
 
     protected override void Start()
     {
         base.Start();
         Metronome.instance.onBeat += startGrooving;
+        weakness = spiritType.none;
         updateWeakness();
     }
 

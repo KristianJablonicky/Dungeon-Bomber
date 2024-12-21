@@ -20,7 +20,7 @@ public class Dash : Upgrade
 
     public override string getDescription()
     {
-        return $"+ {dashRange} {getTypeString()} {Icons.dash},\n" +
+        return $"+ {dashRange} {getTypeString()} {Icons.dash}\n" +
             $"+ {increase} {getTypeString()} {Icons.damage}\n" +
             $"+ {increase} {getTypeString()} {Icons.range}";
     }

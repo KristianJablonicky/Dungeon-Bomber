@@ -3902,6 +3902,7 @@ GameObject:
   - component: {fileID: 1511086838}
   - component: {fileID: 1511086841}
   - component: {fileID: 1511086842}
+  - component: {fileID: 1511086843}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -4000,6 +4001,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coin: {fileID: 1234047035105622570, guid: bab3e998f04a9dc42b4fd4e497c503c0, type: 3}
+--- !u!114 &1511086843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511086837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 152a9d4b85e660c4782aedbe82e219c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redExplosion:
+  - {fileID: -134279218, guid: 4641c69c1dad2b045ae66504972b6bc7, type: 3}
+  - {fileID: -1483130790, guid: 4641c69c1dad2b045ae66504972b6bc7, type: 3}
+  - {fileID: 1708105727, guid: 4641c69c1dad2b045ae66504972b6bc7, type: 3}
+  - {fileID: 371478842, guid: 4641c69c1dad2b045ae66504972b6bc7, type: 3}
+  - {fileID: 794768359, guid: 4641c69c1dad2b045ae66504972b6bc7, type: 3}
+  - {fileID: 459026636, guid: 4641c69c1dad2b045ae66504972b6bc7, type: 3}
+  - {fileID: -1293340057, guid: 4641c69c1dad2b045ae66504972b6bc7, type: 3}
+  - {fileID: 1322713409, guid: 4641c69c1dad2b045ae66504972b6bc7, type: 3}
+  greenExplosion:
+  - {fileID: 1119777972, guid: d1d23f9e261a59049806666f56f3f50f, type: 3}
+  - {fileID: -1290772239, guid: d1d23f9e261a59049806666f56f3f50f, type: 3}
+  - {fileID: 383998839, guid: d1d23f9e261a59049806666f56f3f50f, type: 3}
+  - {fileID: 208307795, guid: d1d23f9e261a59049806666f56f3f50f, type: 3}
+  - {fileID: -1833938745, guid: d1d23f9e261a59049806666f56f3f50f, type: 3}
+  - {fileID: -1252389795, guid: d1d23f9e261a59049806666f56f3f50f, type: 3}
+  - {fileID: -1811611405, guid: d1d23f9e261a59049806666f56f3f50f, type: 3}
+  blueExplosion:
+  - {fileID: -1432662410, guid: bca4a593cdf075d4681004f6630f4985, type: 3}
+  - {fileID: -725379874, guid: bca4a593cdf075d4681004f6630f4985, type: 3}
+  - {fileID: -1782177700, guid: bca4a593cdf075d4681004f6630f4985, type: 3}
+  - {fileID: 30465096, guid: bca4a593cdf075d4681004f6630f4985, type: 3}
+  - {fileID: -2019325464, guid: bca4a593cdf075d4681004f6630f4985, type: 3}
+  - {fileID: 479234136, guid: bca4a593cdf075d4681004f6630f4985, type: 3}
+  - {fileID: 1454087405, guid: bca4a593cdf075d4681004f6630f4985, type: 3}
+  - {fileID: 230518094, guid: bca4a593cdf075d4681004f6630f4985, type: 3}
 --- !u!1 &1554032796
 GameObject:
   m_ObjectHideFlags: 0

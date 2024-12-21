@@ -8,7 +8,7 @@ public abstract class Character : TileContent
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
 
-    private spiritType weakness;
+    protected spiritType weakness;
 
     public event EventHandler<DamageArgs> hpChanged;
     public event EventHandler defeated;
@@ -62,7 +62,7 @@ public abstract class Character : TileContent
             tag = damageTags.CriticalDamage;
             damage *= 2;
         }
-        else if (type != spiritType.none)
+        else if (weakness != spiritType.none)
         {
             damage = (int)Mathf.Ceil(damage / 2f);
         }
