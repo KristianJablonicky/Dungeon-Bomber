@@ -149,6 +149,11 @@ public class Player : Character
 
     private void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            die();
+        }
+
         if (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.Alpha1))
         {
             changeSummon(spiritType.bear);

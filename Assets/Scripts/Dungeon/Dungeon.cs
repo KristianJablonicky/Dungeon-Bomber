@@ -33,26 +33,6 @@ public class Dungeon : MonoBehaviour
 
     public event EventHandler playerSpawned, ladderReached, enemyKilled;
 
-    private void Update()
-    {
-        // Reset the run
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            playerInstance.die();
-            //reset();
-        }
-        // Skip floor
-        else if (Input.GetKeyUp(KeyCode.T))
-        {
-            callLadderReached();
-        }
-        else if (Input.GetKeyUp(KeyCode.P))
-        {
-            DataStorage.instance.resetCurrecies();
-        }
-
-    }
-
     private IEnumerator resetAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
