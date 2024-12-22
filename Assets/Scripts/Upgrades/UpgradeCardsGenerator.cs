@@ -12,6 +12,8 @@ public class UpgradeCardsGenerator : MonoBehaviour
     [SerializeField] private List<Upgrade> upgrades, upgradesRare;
     [SerializeField] private Upgrade sacrifice;
 
+    [SerializeField] private GameObject playerHealth;
+
     private List<UpgradeCard> upgradeCards;
     private float duration = 0.5f, maxScale, maxAlpha = 0.6f;
     private int pairsToBeGenerated = 3;
@@ -28,6 +30,7 @@ public class UpgradeCardsGenerator : MonoBehaviour
     private void generateUpgrades(object sender, EventArgs e)
     {
         pairsToBeGenerated += Dungeon.instance.getPlayer().getCurrentFloorUpgrades();
+        playerHealth.SetActive(true);
         generatePair(true);
     }
 

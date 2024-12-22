@@ -160,7 +160,7 @@ public class RuneForgeItemButton : MonoBehaviour
     {
         public override int getCost()
         {
-            return 30 + currentBonus * 5;
+            return 30 + currentBonus * 15;
         }
 
         public override int getCurrentValue()

@@ -11,8 +11,12 @@ public abstract class Enemy : Character
     {
         base.Start();
         metronome.onBeatEnemy += onTick;
+
+        // max HP scaling (capped at floor 3)
         int floor = DataStorage.instance.floor;
+        floor = Math.Min(floor, 3);
         increaseMaxHp((int)Math.Round((float)getBaseMaxHp() * (floor * floor - 1) * 1f), true);
+
         damageScaling = 1f + ((floor - 1) * 0.5f);
         updateEveryNTicks = getUpdateEveryNTicks();
     }

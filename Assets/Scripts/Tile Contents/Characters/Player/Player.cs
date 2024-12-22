@@ -161,14 +161,6 @@ public class Player : Character
         {
             changeSummon(spiritType.owl);
         }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            onEnemyKill(this, EventArgs.Empty);
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            Currencies.instance.increaseGold(10, gameObject);
-        }
         if (movementEnabled)
         {
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
