@@ -201,20 +201,6 @@ public class Player : Character
             return;
         }
 
-        if (metronome.isInPlayerWindowInputStart())
-        {
-            metronome.prematureBeat();
-            if (hp == 0)
-            {
-                return;
-            }
-            /*
-            metronome.onBeatLowerPriority += delayMove;
-            delayedMovementDirection = movement;
-            disableInput(this, System.EventArgs.Empty);
-            return;
-            */
-        }
 
         createMovementParticles();
         
@@ -232,6 +218,15 @@ public class Player : Character
 
 
         disableInput(this, EventArgs.Empty);
+        
+        if (metronome.isInPlayerWindowInputStart())
+        {
+            metronome.prematureBeat();
+            if (hp == 0)
+            {
+                return;
+            }
+        }
     }
 
     private void delayMove(object sender, EventArgs e)
