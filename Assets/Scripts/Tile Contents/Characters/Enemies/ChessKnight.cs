@@ -4,7 +4,8 @@ public class ChessHorse : Enemy
 {
     private int moveTick;
     private int direction;
-    public Sprite[] horseSprites;
+
+    private string up = "lookUp", forward = "lookForwards", down = "lookDown", back = "lookBackwards"; 
 
     public override void collideWithCharacter(Character character)
     {
@@ -38,37 +39,35 @@ public class ChessHorse : Enemy
     {
         if (moveTick >= 0 && moveTick < 3)
         {
-            SpriteRenderer sr = GetComponent<SpriteRenderer>();
-
             if ((Movement)direction == Movement.Right)
             {
                 if (turnedRight)
                 {
-                    sr.sprite = horseSprites[0];
+                    animator.SetTrigger(forward);
                 }
                 else
                 {
-                    sr.sprite = horseSprites[2];
+                    animator.SetTrigger(back);
                 }
             }
             else if ((Movement)direction == Movement.Down)
             {
-                sr.sprite = horseSprites[1];
+                animator.SetTrigger(down);
             }
             else if ((Movement)direction == Movement.Left)
             {
                 if (turnedRight)
                 {
-                    sr.sprite = horseSprites[2];
+                    animator.SetTrigger(back);
                 }
                 else
                 {
-                    sr.sprite = horseSprites[0];
+                    animator.SetTrigger(forward);
                 }
             }
             else
             {
-                sr.sprite = horseSprites[3];
+                animator.SetTrigger(up);
             }
         }
         if (moveTick == 3)

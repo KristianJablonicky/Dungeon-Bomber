@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class Spirit : TileContent
 {
@@ -205,6 +203,7 @@ public class Spirit : TileContent
     private void explode()
     {
         Metronome.instance.onSpiritUpdate -= reduceBeatsUntilImpact;
+        SoundPlayer.getInstance().playSpiritAnimalSound(type);
         StartCoroutine(dealDamage());
     }
 

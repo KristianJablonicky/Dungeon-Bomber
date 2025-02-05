@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7504702568712201003}
   - component: {fileID: -1465716034457299918}
   - component: {fileID: 8887606633946736097}
+  - component: {fileID: 6324764913265143375}
   m_Layer: 0
   m_Name: ChessKnight
   m_TagString: Untagged
@@ -98,9 +99,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: -1465716034457299918}
-  animator: {fileID: 0}
+  animator: {fileID: 6324764913265143375}
   horseSprites:
   - {fileID: -1047573154, guid: b38a1589381acbe41a188ab4956f7d0b, type: 3}
   - {fileID: -1599955373, guid: b38a1589381acbe41a188ab4956f7d0b, type: 3}
   - {fileID: 770995470, guid: b38a1589381acbe41a188ab4956f7d0b, type: 3}
   - {fileID: 400282483, guid: b38a1589381acbe41a188ab4956f7d0b, type: 3}
+--- !u!95 &6324764913265143375
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043728679561389335}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 78e257a42d4ae074fb3507c1542bde54, type: 2}
+  m_CullingMode: 2
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -6,7 +6,7 @@ public abstract class Character : TileContent
 {
     protected int hp, maxHp;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private Animator animator;
+    [SerializeField] protected Animator animator;
 
     protected spiritType weakness;
 
@@ -16,6 +16,8 @@ public abstract class Character : TileContent
     private Coroutine runningHurtAnimation;
 
     private HitSplat hitSplatInstance = null;
+
+    protected SoundPlayer soundPlayer;
 
     protected bool turnedRight = true;
 
@@ -30,6 +32,8 @@ public abstract class Character : TileContent
             var healthBar = Instantiate(Prefabs.i.healthBar);
             healthBar.setCharacter(this);
         }
+
+        soundPlayer = SoundPlayer.getInstance();
     }
 
     public int getMaxHp()

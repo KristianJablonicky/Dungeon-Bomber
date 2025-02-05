@@ -131,7 +131,7 @@ public class MusicPlayer : MonoBehaviour
 
     public void setVolume()
     {
-        AudioListener.volume = PlayerPrefs.GetFloat("musicVolume");
+        AudioListener.volume = 0.5f * PlayerPrefs.GetFloat("musicVolume");
         voxEnabled = PlayerPrefs.GetInt("vox");
     }
 }

@@ -82,6 +82,14 @@ public abstract class Enemy : Character
     protected void onDeath()
     {
         dungeon.onEnemyKilled();
+        if (this is not ChessHorse)
+        {
+            soundPlayer.playUndeadDeathSound();
+        }
+        else
+        {
+            soundPlayer.playChessPieceDeathSound();
+        }
     }
 
     protected Movement? detectPlayer()

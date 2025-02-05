@@ -83,7 +83,6 @@ public class Metronome : MonoBehaviour
     private void Update()
     {
         currentBeatProgress += Time.deltaTime;
-        //Debug.Log($"{currentBeatProgress} -> {getBeatProgress()}");
         updateCurrentBeatState();
     }
 

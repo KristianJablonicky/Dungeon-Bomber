@@ -352,4 +352,10 @@ public class Player : Character
         }
         transform.localScale = formerScale;
     }
+
+    public override void takeDamage(int damage, damageTags tag = damageTags.Damage, spiritType? type = null)
+    {
+        base.takeDamage(damage, tag, type);
+        soundPlayer.playHurtSound();
+    }
 }
