@@ -22,4 +22,13 @@ public class MainMenuIntroFade : MonoBehaviour
         canvasGroup.alpha = 0f;
         gameObject.SetActive(false);
     }
+
+    public void clicked()
+    {
+        var popUp = PopupController.instance;
+        if (popUp != null)
+        {
+            popUp.closePopup();
+        }
+    }
 }

@@ -12,7 +12,8 @@ public class DeathScreenManager : MonoBehaviour
     [SerializeField] private TMP_Text summary;
     [SerializeField] private TMP_Text youDiedText;
 
-    [SerializeField] private List<Button> deathScreenButtons;
+    [SerializeField] private List<Image> buttonsRaycasts;
+    [SerializeField] private List<Button> buttonsFunctionality;
 
     void Start()
     {
@@ -24,7 +25,12 @@ public class DeathScreenManager : MonoBehaviour
             boss.defeated += runEnded;
         }
 
-        foreach (var button in deathScreenButtons)
+        foreach (var button in buttonsRaycasts)
+        {
+            button.raycastTarget = false;
+            button.enabled = false;
+        }
+        foreach (var button in buttonsFunctionality)
         {
             button.enabled = false;
         }
@@ -145,7 +151,12 @@ public class DeathScreenManager : MonoBehaviour
         youDiedGraphic.alpha = 0f;
 
         // Run recap screen
-        foreach (var button in deathScreenButtons)
+        foreach (var button in buttonsRaycasts)
+        {
+            button.raycastTarget = true;
+            button.enabled = true;
+        }
+        foreach (var button in buttonsFunctionality)
         {
             button.enabled = true;
         }

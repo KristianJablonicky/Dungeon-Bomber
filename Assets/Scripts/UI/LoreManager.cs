@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class LoreManager : MonoBehaviour
     [SerializeField] private TMP_Text title, lyrics;
     [SerializeField] private List<AudioClip> songAudioClips;
     [SerializeField] private Image buttonPrevious, buttonNext;
+    [SerializeField] private RectTransform lyricsTransform;
 
 
     List<Lyrics> songs;
@@ -24,9 +26,13 @@ public class LoreManager : MonoBehaviour
         songs = new List<Lyrics> {
                 new ("Introduction", "Welcome to Necroblaster: Rhythm of the Dead!\n" +
                 "Reach lower floors of the catacomb to unveil more lore.\n" +
-                "Move by either arrows or WASD, switch spells by either JKL or 123\n" +
+                "Move using WASD or arrow keys, and switch spells with JKL or 123.\n" +
+                "These spells cast automatically on the start of each measure.\n" +
                 "Defeat foes to level up - this increases your vitality " +
-                "and allows you to select more upgrades.\n\n" +
+                "and allows you to select more upgrades.\n" +
+                "Enemies closest to the spirit explosions take the most damage.\n" +
+                "This damage is further amplified by the total range of the explosion.\n" +
+                "Try to match the spell color with the color of enemy's healthbar to deal double damage.\n\n" +
                 "See if you can purge the crypt of the undead in the lowest amount of time.\n" +
                 "Good luck!"),
 
@@ -57,8 +63,18 @@ public class LoreManager : MonoBehaviour
         title.text = songs[index].title;
         lyrics.text = songs[index].lyrics;
 
+        //StartCoroutine(updateTextHeight());
+        lyrics.ForceMeshUpdate();
+        lyricsTransform.sizeDelta = new Vector2(lyricsTransform.sizeDelta.x, lyrics.renderedHeight);
+
         recolorButtonIfAvailable(true, buttonNext);
         recolorButtonIfAvailable(false, buttonPrevious);
+    }
+
+    private IEnumerator updateTextHeight()
+    {
+        yield return null;
+        lyricsTransform.sizeDelta = new Vector2(lyricsTransform.sizeDelta.x, lyrics.renderedHeight);
     }
 
     private void recolorButtonIfAvailable(bool next, Image button)

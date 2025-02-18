@@ -13,7 +13,7 @@ public abstract class Character : TileContent
     public event EventHandler<DamageArgs> hpChanged;
     public event EventHandler defeated;
 
-    private Coroutine runningHurtAnimation;
+    private Coroutine runningHurtAnimation, runningSlideAnimation;
 
     private HitSplat hitSplatInstance = null;
 
@@ -65,6 +65,7 @@ public abstract class Character : TileContent
         {
             tag = damageTags.CriticalDamage;
             damage *= 2;
+            damage = Math.Max(damage, getMaxHp() / 2);
         }
         else if (weakness != spiritType.none)
         {
@@ -130,10 +131,6 @@ public abstract class Character : TileContent
                 StartCoroutine(deathAnimation());
             }
         }
-        else
-        {
-            Debug.Log("Bugol bys");
-        }
     }
 
     private IEnumerator deathAnimation(float duration = 0.25f)
@@ -193,7 +190,7 @@ public abstract class Character : TileContent
                     }
                     else
                     {
-                        StartCoroutine(slide());
+                        moveAnimation();
                     }
                 
                     if (targetTile is Character)
@@ -219,7 +216,7 @@ public abstract class Character : TileContent
                 dungeon.moveToTile(this, x, y);
             }
         }
-        StartCoroutine(slide());
+        moveAnimation();
 
 
         if (movement == Movement.Right)
@@ -239,6 +236,17 @@ public abstract class Character : TileContent
 
     private float animationDuration = 0.2f;
 
+    private void moveAnimation()
+    {
+        if (runningSlideAnimation != null)
+        {
+            StopCoroutine(runningSlideAnimation);
+            runningSlideAnimation = null;
+            transform.position = new Vector3(x, y);
+        }
+        runningSlideAnimation = StartCoroutine(slide());
+    }
+
     protected IEnumerator slide()
     {
         Vector3 start = transform.position;
@@ -255,6 +263,7 @@ public abstract class Character : TileContent
             yield return null;
         }
         transform.position = new Vector3(x, y);
+        runningSlideAnimation = null;
     }
 
     protected virtual void movementMethod() { }

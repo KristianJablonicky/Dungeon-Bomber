@@ -7,6 +7,10 @@ public class CursorChanger : MonoBehaviour
 
     void Start()
     {
+        if (SystemInfo.deviceType != DeviceType.Desktop)
+        {
+            Destroy(gameObject);
+        }
         Cursor.SetCursor(cursorNormal, hotspot, CursorMode.Auto);
     }
 
