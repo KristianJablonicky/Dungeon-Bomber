@@ -410,7 +410,7 @@ Canvas:
   m_GameObject: {fileID: 43006719}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 1
   m_PixelPerfect: 0
@@ -1955,7 +1955,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 10
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 4
   m_Depth: -1
   m_CullingMask:
@@ -1980,13 +1980,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.08715578, y: 0, z: 0, w: 0.9961947}
   m_LocalPosition: {x: 1, y: 1, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -10, y: 0, z: 0}
 --- !u!114 &519420033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4807,7 +4807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 1072424596656189817, guid: 16b0f3c8f1c350e4d88950a34f85f173, type: 3}
-  wall: {fileID: 3422410795458762465, guid: 92f257c738c8c8248bd9e7f330891de2, type: 3}
+  wall: {fileID: -422942739474412051, guid: 228bd4019a558794b9da57ee296caf56, type: 3}
   ladder: {fileID: 4081774379934491100, guid: 3d14a9d175e8e3c42b2a3e6120f96f55, type: 3}
   player: {fileID: 4911686401216230282, guid: a4290a91bb8ce8d4bb338135edaff64f, type: 3}
   boss: {fileID: 3526149469037980957, guid: 8ce432c7daa294a4da9bbb58790fb6f7, type: 3}
@@ -6147,7 +6147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2104383720
 RectTransform:
   m_ObjectHideFlags: 0

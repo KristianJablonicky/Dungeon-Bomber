@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpiritAttributes
 {
 
-    public int ticksUntilExplosion = 2, damage = 1, horizontalLength = 0, verticalLength = 0, diagonalLength = 0;
+    public int ticksUntilExplosion = 1, damage = 1, horizontalLength = 0, verticalLength = 0, diagonalLength = 0;
     public double criticalHitChance, criticalHitMultiplier = 2d;
     public SpiritAttributes()
     {

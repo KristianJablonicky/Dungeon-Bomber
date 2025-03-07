@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         Dungeon.instance.playerSpawned += onPlayerSpawn;
-        offset = new Vector3(0, 0, -0.5f);
+        offset = new Vector3(0, -1, -6f);
     }
 
     private void onPlayerSpawn(object sender, System.EventArgs e)

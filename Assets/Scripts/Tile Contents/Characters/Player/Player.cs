@@ -9,6 +9,10 @@ public class Player : Character
     [SerializeField] private Spirit spirit;
     public SpiritAttributes bear, wolf, owl;
 
+    [SerializeField] private GameObject currentTile;
+
+    private float speed;
+
     private int level = 1;
     private int expCount = 0;
     private int currentExpThreshhold = 2;
@@ -50,6 +54,8 @@ public class Player : Character
         StartCoroutine(fallDown());
         metronome.onPlayerInputStart += enableInput;
         dungeon.enemyKilled += onEnemyKill;
+
+        speed = 1f / metronome.getBeatLength();
 
         metronome.onBeat += summonSpirit;
 
@@ -166,6 +172,7 @@ public class Player : Character
         {
             changeSummon(spiritType.owl);
         }
+        
         if (movementEnabled)
         {
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
@@ -184,6 +191,60 @@ public class Player : Character
             {
                 jump(Movement.Left);
             }
+        }
+        /*
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            walk(Movement.Right);
+        }
+        else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        {
+            walk(Movement.Up);
+        }
+        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            walk(Movement.Down);
+        }
+        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            walk(Movement.Left);
+        }
+        */
+    }
+
+    private void walk(Movement movement)
+    {
+        float newX = 0f, newY = 0f, moveAmount = 1f / metronome.getBeatLength() * Time.deltaTime;
+        switch (movement)
+        {
+            case (Movement.Right): newX = moveAmount; transform.localScale = new Vector2(1f, 1f); break;
+            case (Movement.Down): newY = -moveAmount; break;
+            case (Movement.Left): newX = -moveAmount; transform.localScale = new Vector2(-1f, 1f); break;
+            case (Movement.Up): newY = moveAmount; break;
+        }
+        var newPos = transform.position + new Vector3(newX, newY);
+        var content = dungeon.isTileOccupied(newPos);
+        if (content == null || content == this)
+        {
+            dungeon.removeFromTile(x, y);
+            x = (int)Math.Round(transform.position.x);
+            y = (int)Math.Round(transform.position.y);
+            dungeon.moveToTile(this, x, y);
+            transform.position += new Vector3(newX, newY);
+
+            currentTile.transform.position = new Vector3(x, y);
+        }
+        else if (content is Ladder)
+        {
+            ((Ladder)content).onPlayerContact();
+            enabled = false;
+        }
+
+
+        if (currentCoolDown < 0)
+        {
+            summonSpirit();
+            summonedSpiritAlready = true;
         }
     }
 

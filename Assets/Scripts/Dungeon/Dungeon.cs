@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -192,7 +193,12 @@ public class Dungeon : MonoBehaviour
 
     private TileContent instantiate(TileContent content, int x, int y, bool setParent = true)
     {
-        var tile = Instantiate(content, new Vector2(x, y), Quaternion.identity);
+        float zOffset = 0.08f;
+        if (content is Wall)
+        {
+            zOffset = 0;
+        }
+        var tile = Instantiate(content, new Vector3(x, y, zOffset), Quaternion.identity);
         if (setParent)
         {
             tile.transform.SetParent(transform);
@@ -202,7 +208,9 @@ public class Dungeon : MonoBehaviour
 
     private TileContent instantiate(Character content, int x, int y, bool setParent = true)
     {
-        var character = Instantiate(content, new Vector2(x, y), Quaternion.identity);
+        var character = Instantiate(content, new Vector2(x, y),
+            Quaternion.AngleAxis(-10f, new Vector3(1f, 0f)));
+        
         if (setParent)
         {
             character.transform.SetParent(transform);
@@ -223,8 +231,8 @@ public class Dungeon : MonoBehaviour
     }
     public TileContent isTileOccupied(Vector3 tile)
     {
-        int x = (int)tile.x;
-        int y = (int)tile.y;
+        int x = (int)Math.Round(tile.x);
+        int y = (int)Math.Round(tile.y);
         return isTileOccupied(x, y);
     }
     public TileContent isTileOccupied(int x, int y)
